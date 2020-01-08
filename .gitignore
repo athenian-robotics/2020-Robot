@@ -210,3 +210,4 @@ gradle-app.setting
 .vscode
 .idea
 build
+.gradle
