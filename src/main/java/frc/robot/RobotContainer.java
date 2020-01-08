@@ -10,8 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -23,7 +23,6 @@ import frc.robot.subsystems.Drivetrain;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain();
-
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
 
 
@@ -33,14 +32,9 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
-    drivetrain.setDefaultCommand(
-            // A split-stick arcade command, with forward/backward controlled by the left
-            // hand, and turning controlled by the right.
-            new RunCommand(() -> drivetrain
-                    .tankDrive(xboxController.getY(GenericHID.Hand.kLeft),
-                            xboxController.getY(GenericHID.Hand.kRight)), drivetrain));
-
+    drivetrain.setDefaultCommand(new DriveTank(drivetrain, xboxController));
+    //TODO: Figure out how to change command of drivetrain, create a button for switching
+    //TODO: Implement arcade drive
   }
 
   /**

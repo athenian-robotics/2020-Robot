@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -9,10 +11,12 @@ import frc.robot.subsystems.Drivetrain;
 public class DriveTank extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final Drivetrain drivetrain;
+    private final XboxController xboxController;
 
 
-    public DriveTank(Drivetrain drivetrain) {
+    public DriveTank(Drivetrain drivetrain, XboxController xboxController) {
         this.drivetrain = drivetrain;
+        this.xboxController = xboxController;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(drivetrain);
     }
@@ -25,6 +29,8 @@ public class DriveTank extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        drivetrain.tankDrive(xboxController.getY(GenericHID.Hand.kLeft),
+                xboxController.getY(GenericHID.Hand.kRight));
     }
 
     // Called once the command ends or is interrupted.
