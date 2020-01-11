@@ -11,7 +11,7 @@ import frc.robot.lib.RobotType;
 
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.DriveConstants.*;
-import static frc.robot.lib.RobotType.*;
+import static frc.robot.lib.RobotType.JANKBOT;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -26,17 +26,21 @@ public class Drivetrain extends SubsystemBase {
     public Drivetrain(RobotType robotType) {
         final SpeedController[] leftCtrls;
         final SpeedController[] rightCtrls;
-        if (robotType == JANKBOT) {
-            leftCtrls = new SpeedController[]{new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port)};
-            rightCtrls = new SpeedController[]{new WPI_VictorSPX(rightMotor1Port), new WPI_VictorSPX(rightMotor2Port)};
-        } else if (robotType == KITBOT) {
-            leftCtrls = new SpeedController[]{new WPI_TalonSRX(leftMotor1Port), new WPI_TalonSRX(leftMotor2Port)};
-            rightCtrls = new SpeedController[]{new WPI_TalonSRX(rightMotor1Port), new WPI_TalonSRX(rightMotor2Port)};
-        } else if (robotType == TESTBOT) {
-            leftCtrls = new SpeedController[]{new WPI_TalonSRX(leftMotor1Port), new CANSparkMax(leftMotor2Port, kBrushless)};
-            rightCtrls = new SpeedController[]{new WPI_TalonSRX(rightMotor1Port), new CANSparkMax(rightMotor2Port, kBrushless)};
-        } else {
-            throw new IllegalArgumentException("We will never get here");
+        switch (robotType) {
+            case JANKBOT:
+                leftCtrls = new SpeedController[]{new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port)};
+                rightCtrls = new SpeedController[]{new WPI_VictorSPX(rightMotor1Port), new WPI_VictorSPX(rightMotor2Port)};
+                break;
+            case KITBOT:
+                leftCtrls = new SpeedController[]{new WPI_TalonSRX(leftMotor1Port), new WPI_TalonSRX(leftMotor2Port)};
+                rightCtrls = new SpeedController[]{new WPI_TalonSRX(rightMotor1Port), new WPI_TalonSRX(rightMotor2Port)};
+                break;
+            case TESTBOT:
+                leftCtrls = new SpeedController[]{new WPI_TalonSRX(leftMotor1Port), new CANSparkMax(leftMotor2Port, kBrushless)};
+                rightCtrls = new SpeedController[]{new WPI_TalonSRX(rightMotor1Port), new CANSparkMax(rightMotor2Port, kBrushless)};
+                break;
+            default:
+                throw new IllegalArgumentException("We will never get here");
         }
 
         SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftCtrls[0], leftCtrls[1]);
