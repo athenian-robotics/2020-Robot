@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 
 
 public class ColorWheelSubsystem extends SubsystemBase {
@@ -18,14 +17,9 @@ public class ColorWheelSubsystem extends SubsystemBase {
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
 
-    //TODO Do we need any of this robot container stuff?
-    //Create a class attribute
-    RobotContainer robotContainer;
-
     //Create class constructor
-    public ColorWheelSubsystem(RobotContainer robotContainer) {
-        //Set initial value for class attribute robotContainer
-        this.robotContainer = robotContainer;
+    public ColorWheelSubsystem() {
+
     }
 
 
