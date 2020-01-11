@@ -39,6 +39,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain(ROBOT.KITBOT);
   ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
 
