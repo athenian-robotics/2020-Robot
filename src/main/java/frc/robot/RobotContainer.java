@@ -10,11 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.lib.RobotType;
+import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -36,6 +38,8 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain(RobotType.KITBOT);
+  ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
 
@@ -45,6 +49,8 @@ public class RobotContainer {
   public RobotContainer() {
     buttonSetup();
     configureButtonBindings();
+
+    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem);
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
@@ -73,6 +79,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+
   }
 
 
@@ -85,4 +92,7 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return null;
   }
+
+
+
 }
