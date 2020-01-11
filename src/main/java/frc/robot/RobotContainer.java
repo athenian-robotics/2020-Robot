@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
-import frc.robot.lib.ROBOT;
+import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.Drivetrain;
 
@@ -37,12 +37,11 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain = new Drivetrain(ROBOT.KITBOT);
+  private final Drivetrain drivetrain = new Drivetrain(RobotType.KITBOT);
   ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
-
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -52,8 +51,6 @@ public class RobotContainer {
     configureButtonBindings();
 
     CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem);
-
-
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
