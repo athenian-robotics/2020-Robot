@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
@@ -39,12 +40,14 @@ public class RobotContainer {
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
 
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     buttonSetup();
     configureButtonBindings();
+
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
@@ -85,4 +88,22 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return null;
   }
+
+  public void setColor(double red, double green, double blue) {
+
+    SmartDashboard.putNumber("Red", red * 255);
+    SmartDashboard.putNumber("Green", green * 255);
+    SmartDashboard.putNumber("Blue", blue * 255);
+
+  }
+
+  public void setProximity(double proximity) {
+    SmartDashboard.putNumber("Proximity", proximity);
+  }
+
+  public void setIR(double IR) {
+    SmartDashboard.putNumber("Infrared", IR);
+  }
+
+
 }
