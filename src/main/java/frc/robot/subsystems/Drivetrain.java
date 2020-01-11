@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,27 +23,24 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public Drivetrain(RobotType robotType) {
-        final SpeedController[] leftCtrls;
-        final SpeedController[] rightCtrls;
+        final SpeedControllerGroup leftMotors;
+        final SpeedControllerGroup rightMotors;
         switch (robotType) {
             case JANKBOT:
-                leftCtrls = new SpeedController[]{new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port)};
-                rightCtrls = new SpeedController[]{new WPI_VictorSPX(rightMotor1Port), new WPI_VictorSPX(rightMotor2Port)};
+                leftMotors = new SpeedControllerGroup(new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port));
+                rightMotors = new SpeedControllerGroup(new WPI_VictorSPX(rightMotor1Port), new WPI_VictorSPX(rightMotor2Port));
                 break;
             case KITBOT:
-                leftCtrls = new SpeedController[]{new WPI_TalonSRX(leftMotor1Port), new WPI_TalonSRX(leftMotor2Port)};
-                rightCtrls = new SpeedController[]{new WPI_TalonSRX(rightMotor1Port), new WPI_TalonSRX(rightMotor2Port)};
+                leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(leftMotor1Port), new WPI_TalonSRX(leftMotor2Port));
+                rightMotors = new SpeedControllerGroup(new WPI_TalonSRX(rightMotor1Port), new WPI_TalonSRX(rightMotor2Port));
                 break;
             case TESTBOT:
-                leftCtrls = new SpeedController[]{new WPI_TalonSRX(leftMotor1Port), new CANSparkMax(leftMotor2Port, kBrushless)};
-                rightCtrls = new SpeedController[]{new WPI_TalonSRX(rightMotor1Port), new CANSparkMax(rightMotor2Port, kBrushless)};
+                leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(leftMotor1Port), new CANSparkMax(leftMotor2Port, kBrushless));
+                rightMotors = new SpeedControllerGroup(new WPI_TalonSRX(rightMotor1Port), new CANSparkMax(rightMotor2Port, kBrushless));
                 break;
             default:
-                throw new IllegalArgumentException("We will never get here");
+                throw new IllegalStateException("We will never get here");
         }
-
-        SpeedControllerGroup leftMotors = new SpeedControllerGroup(leftCtrls[0], leftCtrls[1]);
-        SpeedControllerGroup rightMotors = new SpeedControllerGroup(rightCtrls[0], rightCtrls[1]);
 
         leftMotors.setInverted(robotType.isInverted());
         rightMotors.setInverted(robotType.isInverted());
