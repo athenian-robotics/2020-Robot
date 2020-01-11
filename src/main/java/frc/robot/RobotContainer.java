@@ -9,7 +9,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
@@ -89,21 +88,6 @@ public class RobotContainer {
     return null;
   }
 
-  public void setColor(double red, double green, double blue) {
-
-    SmartDashboard.putNumber("Red", red * 255);
-    SmartDashboard.putNumber("Green", green * 255);
-    SmartDashboard.putNumber("Blue", blue * 255);
-
-  }
-
-  public void setProximity(double proximity) {
-    SmartDashboard.putNumber("Proximity", proximity);
-  }
-
-  public void setIR(double IR) {
-    SmartDashboard.putNumber("Infrared", IR);
-  }
 
 
 }
