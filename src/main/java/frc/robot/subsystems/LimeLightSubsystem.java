@@ -14,7 +14,7 @@ public class LimeLightSubsystem extends SubsystemBase {
     }
 
     public void periodic() {
-        final NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
+        final NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight-2");
 
         final boolean tv = limelight.getEntry("tv").getBoolean(false);
         SmartDashboard.putBoolean("tv", tv);
