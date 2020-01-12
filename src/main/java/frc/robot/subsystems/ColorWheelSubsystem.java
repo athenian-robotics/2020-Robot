@@ -10,7 +10,6 @@ import frc.robot.RobotContainer;
 
 public class ColorWheelSubsystem extends SubsystemBase {
 
-
     /**
      * Declare ports and products
      */
@@ -27,13 +26,10 @@ public class ColorWheelSubsystem extends SubsystemBase {
         this.robotContainer = robotContainer;
     }
 
-
     public static void updateColor(double red, double green, double blue) {
-
         SmartDashboard.putNumber("Red", red * 255);
         SmartDashboard.putNumber("Green", green * 255);
         SmartDashboard.putNumber("Blue", blue * 255);
-
     }
 
     public static void updateProximity(double proximity) {
@@ -43,7 +39,6 @@ public class ColorWheelSubsystem extends SubsystemBase {
     public static void updateIR(double IR) {
         SmartDashboard.putNumber("Infrared", IR);
     }
-
 
     public void periodic() {
 
@@ -63,6 +58,4 @@ public class ColorWheelSubsystem extends SubsystemBase {
         ColorWheelSubsystem.updateProximity(colorSensor.getProximity());
         ColorWheelSubsystem.updateIR(colorSensor.getIR());
     }
-
-
 }

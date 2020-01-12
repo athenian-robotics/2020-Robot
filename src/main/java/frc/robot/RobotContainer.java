@@ -18,6 +18,7 @@ import frc.robot.commands.DriveTank;
 import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.LimeLightSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,9 +37,12 @@ public class RobotContainer {
   public static JoystickButton xboxStart;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
+
   // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain(RobotType.KITBOT);
-  ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+
+  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+  private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem();
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -50,7 +54,7 @@ public class RobotContainer {
     buttonSetup();
     configureButtonBindings();
 
-    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem);
+    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, limeLightSubsystem);
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
@@ -79,9 +83,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
