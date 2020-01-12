@@ -17,12 +17,11 @@ public class LimeLightSubsystem extends SubsystemBase {
         final NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
         final boolean tv = limelight.getEntry("tv").getBoolean(false);
-        SmartDashboard.putBoolean("Valid Target", tv);
-
         final double ta = limelight.getEntry("ta").getDouble(-1.1);
-        SmartDashboard.putNumber("Target Area", ta);
-
         final double ts = limelight.getEntry("ts").getDouble(-1.1);
+
+        SmartDashboard.putBoolean("Valid Target", tv);
+        SmartDashboard.putNumber("Target Area", ta);
         SmartDashboard.putNumber("Image Rotation", ts);
     }
 }
