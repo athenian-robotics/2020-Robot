@@ -14,15 +14,15 @@ public class LimeLightSubsystem extends SubsystemBase {
     }
 
     public void periodic() {
-        final NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight-two");
+        final NetworkTable limelight = NetworkTableInstance.getDefault().getTable("limelight");
 
         final boolean tv = limelight.getEntry("tv").getBoolean(false);
-        SmartDashboard.putBoolean("tv", tv);
+        SmartDashboard.putBoolean("Valid Target", tv);
 
-        final double ta = limelight.getEntry("ta").getDouble(-1.0);
-        SmartDashboard.putNumber("ta", ta);
+        final double ta = limelight.getEntry("ta").getDouble(-1.1);
+        SmartDashboard.putNumber("Target Area", ta);
 
-        final double ts = limelight.getEntry("ts").getDouble(-1.0);
-        SmartDashboard.putNumber("ts", ts);
+        final double ts = limelight.getEntry("ts").getDouble(-1.1);
+        SmartDashboard.putNumber("Image Rotation", ts);
     }
 }
