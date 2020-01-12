@@ -42,7 +42,7 @@ public class RobotContainer {
   private final Drivetrain drivetrain = new Drivetrain(RobotType.JANKBOT);
 
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem();
+  private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
