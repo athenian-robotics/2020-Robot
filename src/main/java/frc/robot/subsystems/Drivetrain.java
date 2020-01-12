@@ -58,6 +58,6 @@ public class Drivetrain extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println("Drivetrain subsystem");
+        //System.out.println("Drivetrain subsystem");
     }
 }
