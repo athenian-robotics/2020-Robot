@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // See http://docs.limelightvision.io/en/latest/networktables_api.html
 
-public class LimeLightSubsystem extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase {
 
     final NetworkTable limelight;
 
-    public LimeLightSubsystem(String tableName) {
+    public ShooterSubsystem(String tableName) {
         limelight = NetworkTableInstance.getDefault().getTable(tableName);
     }
 

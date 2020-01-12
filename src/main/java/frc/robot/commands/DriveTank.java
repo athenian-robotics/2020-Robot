@@ -3,22 +3,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
  * An example command that uses an example subsystem.
  */
 public class DriveTank extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Drivetrain drivetrain;
+    private final DrivetrainSubsystem drivetrainSubsystem;
     private final XboxController xboxController;
 
 
-    public DriveTank(Drivetrain drivetrain, XboxController xboxController) {
-        this.drivetrain = drivetrain;
+    public DriveTank(DrivetrainSubsystem drivetrainSubsystem, XboxController xboxController) {
+        this.drivetrainSubsystem = drivetrainSubsystem;
         this.xboxController = xboxController;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(drivetrain);
+        addRequirements(drivetrainSubsystem);
     }
 
     // Called when the command is initially scheduled.
@@ -30,7 +30,7 @@ public class DriveTank extends CommandBase {
     @Override
     public void execute() {
 
-        drivetrain.tankDrive(xboxController.getY(GenericHID.Hand.kLeft),
+        drivetrainSubsystem.tankDrive(xboxController.getY(GenericHID.Hand.kLeft),
                 xboxController.getY(GenericHID.Hand.kRight));
     }
 

@@ -12,17 +12,17 @@ import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.DriveConstants.*;
 import static frc.robot.lib.RobotType.JANKBOT;
 
-public class Drivetrain extends SubsystemBase {
+public class DrivetrainSubsystem extends SubsystemBase {
 
     public final SpeedControllerGroup motorTest = new SpeedControllerGroup(new WPI_VictorSPX(0));
 
     private final DifferentialDrive drive;
 
-    public Drivetrain() {
+    public DrivetrainSubsystem() {
         this(JANKBOT);
     }
 
-    public Drivetrain(RobotType robotType) {
+    public DrivetrainSubsystem(RobotType robotType) {
         final SpeedControllerGroup leftMotors;
         final SpeedControllerGroup rightMotors;
         switch (robotType) {
