@@ -18,5 +18,11 @@ public class LimeLightSubsystem extends SubsystemBase {
 
         final boolean tv = limelight.getEntry("tv").getBoolean(false);
         SmartDashboard.putBoolean("tv", tv);
+
+        final double ta = limelight.getEntry("ta").getDouble(-1.0);
+        SmartDashboard.putNumber("ta", ta);
+
+        final double ts = limelight.getEntry("ts").getDouble(-1.0);
+        SmartDashboard.putNumber("ts", ts);
     }
 }
