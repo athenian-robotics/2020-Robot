@@ -78,6 +78,8 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+
+    //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
 
