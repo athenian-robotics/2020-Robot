@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
+import frc.robot.commands.ForwardDriveCommand;
 import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.Drivetrain;
@@ -37,7 +38,7 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain = new Drivetrain(RobotType.KITBOT);
+  private final Drivetrain drivetrain = new Drivetrain(RobotType.JANKBOT);
   ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
 
   // Define all OI devices here
@@ -90,7 +91,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new ForwardDriveCommand(drivetrain);
   }
 
 
