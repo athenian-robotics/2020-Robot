@@ -6,20 +6,19 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import static frc.robot.Constants.DriveConstants.speedScale;
 
 public class AutoDriveForwardForever extends CommandBase {
-    private final DrivetrainSubsystem drivetrainSubsystem;
+    private final DrivetrainSubsystem drivetrain;
 
 
-    public AutoDriveForwardForever(DrivetrainSubsystem drivetrainSubsystem) {
-        this.drivetrainSubsystem = drivetrainSubsystem;
-        addRequirements(drivetrainSubsystem);
+    public AutoDriveForwardForever(DrivetrainSubsystem drivetrain) {
+        this.drivetrain = drivetrain;
+        addRequirements(drivetrain);
     }
 
     public void initialize() {
-
+        drivetrain.tankDrive(speedScale, speedScale);
     }
 
     public void execute() {
-        drivetrainSubsystem.tankDrive(speedScale, speedScale);
     }
 
     public boolean isFinished() {
@@ -27,7 +26,7 @@ public class AutoDriveForwardForever extends CommandBase {
     }
 
     public void end(boolean interrupted) {
-        drivetrainSubsystem.tankDrive(0, 0);
+        drivetrain.tankDrive(0, 0);
     }
 
 }
