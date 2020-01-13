@@ -10,15 +10,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AutoDriveForwardForever;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
-import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+
+import static frc.robot.Constants.robotType;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -39,10 +41,10 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
 
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain drivetrain = new Drivetrain(RobotType.JANKBOT);
-
-  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
+  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(robotType);
+  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -54,9 +56,10 @@ public class RobotContainer {
     buttonSetup();
     configureButtonBindings();
 
-    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, limeLightSubsystem);
+//    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
+//  We do not need to register subsystems, this is done automatically
 
-    drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
+    drivetrainSubsystem.setDefaultCommand(new DriveArcade(drivetrainSubsystem, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
     //TODO: Implement arcade drive
   }
@@ -81,8 +84,9 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
-    xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+    //MODE BUTTONS
+    xboxLB.whenPressed(new DriveTank(drivetrainSubsystem, xboxController));
+    xboxRB.whenPressed(new DriveArcade(drivetrainSubsystem, xboxController));
   }
 
   /**
@@ -92,6 +96,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new AutoDriveForwardForever(drivetrainSubsystem);
   }
 }
