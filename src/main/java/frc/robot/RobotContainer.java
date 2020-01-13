@@ -16,6 +16,7 @@ import frc.robot.commands.AutoDriveForwardForever;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.ColorWheelSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -40,6 +41,7 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
 
   // The robot's subsystems and commands are defined here...
+  private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(robotType);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
@@ -82,7 +84,6 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrainSubsystem, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrainSubsystem, xboxController));
