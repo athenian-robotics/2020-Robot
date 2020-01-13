@@ -6,14 +6,14 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 /**
  * An example command that uses an example subsystem.
  */
-public class ButtonDriveTestCommand extends CommandBase {
+public class ButtonDriveTest extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final DrivetrainSubsystem drivetrainSubsystem;
     private double leftMotorSpeed;
     private double rightMotorSpeed;
 
 
-    public ButtonDriveTestCommand(DrivetrainSubsystem drivetrainSubsystem, double leftMotorSpeed, double rightMotorSpeed) {
+    public ButtonDriveTest(DrivetrainSubsystem drivetrainSubsystem, double leftMotorSpeed, double rightMotorSpeed) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.leftMotorSpeed = leftMotorSpeed;
         this.rightMotorSpeed = rightMotorSpeed;
