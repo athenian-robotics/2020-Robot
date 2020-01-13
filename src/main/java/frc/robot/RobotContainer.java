@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ButtonDriveTestCommand;
+import frc.robot.commands.AutoDriveForwardForever;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.lib.RobotType;
@@ -41,7 +41,7 @@ public class RobotContainer {
 
 
   // The robot's subsystems and commands are defined here...
-  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(RobotType.TESTBOT);
+  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(RobotType.OFFICIAL);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
 
@@ -55,6 +55,7 @@ public class RobotContainer {
   public RobotContainer() {
     buttonSetup();
     configureButtonBindings();
+
 
 
 //    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
@@ -91,9 +92,15 @@ public class RobotContainer {
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrainSubsystem, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrainSubsystem, xboxController));
-    xboxA.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0, 0));
-    xboxX.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0.5, 0.5));
-    xboxB.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, -0.5, -0.5));
+
+    /**
+     * Test Buttons if you need to STOP, FORWARD OR REVERSE
+     *
+     * Comment out as needed, and change ROBT TYPE!
+     */
+    //xboxA.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0, 0));
+    //xboxX.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0.5, 0.5));
+    //xboxB.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, -0.5, -0.5));
 
   }
 
@@ -104,7 +111,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new AutoDriveForwardForever(drivetrainSubsystem, this);
   }
 
 
