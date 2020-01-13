@@ -1,7 +1,7 @@
 package frc.robot.lib;
 
 public enum RobotType {
-    JANKBOT(true), KITBOT(true), TESTBOT(false);
+    JANKBOT(true), KITBOT(true), TESTBOT(false), OFFICIAL(false);
 
     private final boolean inverted;
 

@@ -1,8 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.lib.Direction;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
@@ -10,17 +8,16 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public class ButtonDriveTestCommand extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final Direction direction;
     private final DrivetrainSubsystem drivetrainSubsystem;
+    private double leftMotorSpeed;
+    private double rightMotorSpeed;
 
 
-    public ButtonDriveTestCommand(Direction direction, DrivetrainSubsystem drivetrainSubsystem, RobotContainer robotContainer) {
-        this.direction = direction;
+    public ButtonDriveTestCommand(DrivetrainSubsystem drivetrainSubsystem, double leftMotorSpeed, double rightMotorSpeed) {
         this.drivetrainSubsystem = drivetrainSubsystem;
-        robotContainer.setNewCommand(this);
+        this.leftMotorSpeed = leftMotorSpeed;
+        this.rightMotorSpeed = rightMotorSpeed;
 
-
-        // Use addRequirements() here to declare subsystem dependencies.
 
     }
 
@@ -28,39 +25,19 @@ public class ButtonDriveTestCommand extends CommandBase {
     @Override
     public void initialize() {
         drivetrainSubsystem.tankDrive(0, 0);
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        switch (direction) {
-            case FORWARD:
-                drivetrainSubsystem.tankDrive(0.5, 0.5);
-                System.out.println("XXX HAS BEEN PRESSED");
-                break;
-
-            case STOP:
-                drivetrainSubsystem.tankDrive(0, 0);
-                System.out.println("AAA HAS BEEN PRESSED");
-
-                break;
-            case REVERSE:
-                drivetrainSubsystem.tankDrive(-0.5, -0.5);
-                System.out.println("BBB HAS BEEN PRESSED");
-                break;
-            default:
-                System.out.println("BROKEN");
-                break;
-        }
-
+        drivetrainSubsystem.tankDrive(leftMotorSpeed, rightMotorSpeed);
     }
 
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        System.out.println("EEEEND");
+        System.out.println("END");
     }
 
     // Returns true when the command should end.

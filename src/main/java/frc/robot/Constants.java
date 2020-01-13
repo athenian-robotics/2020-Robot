@@ -21,6 +21,10 @@ public final class Constants {
     public static final RobotType robotType = RobotType.JANKBOT;
 
     public static final class DriveConstants {
+
+        /**
+         * Change these to 0, 1, 2, 3 for any other robot than OFFICIAL
+         */
         public static final int leftMotor1Port = 1;
         public static final int leftMotor2Port = 2;
         public static final int rightMotor1Port = 3;

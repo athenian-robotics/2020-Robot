@@ -12,11 +12,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AutoDriveForwardForever;
 import frc.robot.commands.ButtonDriveTestCommand;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
-import frc.robot.lib.Direction;
 import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -39,7 +37,6 @@ public class RobotContainer {
   public static JoystickButton xboxStart;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
-  public static Command currentCommand = null;
 
 
 
@@ -94,9 +91,9 @@ public class RobotContainer {
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrainSubsystem, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrainSubsystem, xboxController));
-    xboxX.whenPressed(new ButtonDriveTestCommand(Direction.FORWARD, drivetrainSubsystem, this));
-    xboxB.whenPressed(new ButtonDriveTestCommand(Direction.REVERSE, drivetrainSubsystem, this));
-    xboxA.whenPressed(new ButtonDriveTestCommand(Direction.STOP, drivetrainSubsystem, this));
+    xboxA.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0, 0));
+    xboxX.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0.5, 0.5));
+    xboxB.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, -0.5, -0.5));
 
   }
 
@@ -107,20 +104,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutoDriveForwardForever(drivetrainSubsystem);
+    return null;
   }
 
 
-  public void setNewCommand(Command command) {
-
-    if (currentCommand != null) {
-      currentCommand.cancel();
-      currentCommand = command;
-    } else {
-
-      currentCommand = command;
-
-    }
-
-  }
 }
