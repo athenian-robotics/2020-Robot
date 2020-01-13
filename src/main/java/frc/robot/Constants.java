@@ -21,10 +21,10 @@ public final class Constants {
     public static final RobotType robotType = RobotType.JANKBOT;
 
     public static final class DriveConstants {
-        public static final int leftMotor1Port = 0;
-        public static final int leftMotor2Port = 1;
-        public static final int rightMotor1Port = 2;
-        public static final int rightMotor2Port = 3;
+        public static final int leftMotor1Port = 1;
+        public static final int leftMotor2Port = 2;
+        public static final int rightMotor1Port = 3;
+        public static final int rightMotor2Port = 0;
 
         public static double speedScale = 0.8;
     }
