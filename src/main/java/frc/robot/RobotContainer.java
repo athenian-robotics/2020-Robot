@@ -15,11 +15,11 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AutoDriveForwardTimer;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
-import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
-import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
+import static frc.robot.Constants.robotType;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
