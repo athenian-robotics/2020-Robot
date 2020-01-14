@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AutoDriveForwardForever;
+import frc.robot.commands.AutoDriveForwardTimer;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.lib.RobotType;
@@ -111,7 +111,11 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutoDriveForwardForever(drivetrainSubsystem, this);
+
+
+      //return new AutoDriveForwardForever(drivetrainSubsystem, this);
+      return new AutoDriveForwardTimer(drivetrainSubsystem, 3.0);
+
   }
 
 
