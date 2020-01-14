@@ -9,7 +9,7 @@ public class AutoDriveForwardTimer extends CommandBase {
     Timer driveTimer = new Timer();
     double secondsTodrive;
 
-    public AutoDriveForwardTimer(DrivetrainSubsystem drivetrainSubsystem, Double secondsToDrive) {
+    public AutoDriveForwardTimer(DrivetrainSubsystem drivetrainSubsystem, double secondsToDrive) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.secondsTodrive = secondsToDrive;
 
@@ -21,17 +21,12 @@ public class AutoDriveForwardTimer extends CommandBase {
     }
 
     public void execute() {
-
-        if (driveTimer.get() < secondsTodrive) {
-            drivetrainSubsystem.tankDrive(0.4, 0.4);
-        } else {
-            drivetrainSubsystem.tankDrive(0, 0);
-        }
+        drivetrainSubsystem.tankDrive(0.4, 0.4);
 
     }
 
     public boolean isFinished() {
-        return false;
+        return driveTimer.hasPeriodPassed(secondsTodrive);
     }
 
     public void end(boolean interrupted) {
