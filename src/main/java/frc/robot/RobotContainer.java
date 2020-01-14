@@ -98,9 +98,9 @@ public class RobotContainer {
      *
      * Comment out as needed, and change ROBT TYPE!
      */
-    //xboxA.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0, 0));
-    //xboxX.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, 0.5, 0.5));
-    //xboxB.whenPressed(new ButtonDriveTestCommand(drivetrainSubsystem, -0.5, -0.5));
+      //xboxA.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0, 0));
+      //xboxX.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0.5, 0.5));
+      //xboxB.whenPressed(new ButtonDriveTest(drivetrainSubsystem, -0.5, -0.5));
 
   }
 
