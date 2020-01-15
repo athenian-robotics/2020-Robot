@@ -20,7 +20,7 @@ import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-import static frc.robot.Constants.robotType;
+import static frc.robot.Constants.ROBOT_TYPE;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -43,7 +43,7 @@ public class RobotContainer {
 
 
   // The robot's subsystems and commands are defined here...
-  private final DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem(robotType);
+  private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
 
@@ -63,7 +63,7 @@ public class RobotContainer {
 //    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
 //  We do not need to register subsystems, this is done automatically
 
-    drivetrainSubsystem.setDefaultCommand(new DriveArcade(drivetrainSubsystem, xboxController));
+    drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
     //TODO: Implement arcade drive
 
@@ -91,12 +91,12 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //MODE BUTTONS
-    xboxLB.whenPressed(new DriveTank(drivetrainSubsystem, xboxController));
-    xboxRB.whenPressed(new DriveArcade(drivetrainSubsystem, xboxController));
+    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
+    xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
 
-    xboxA.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0.0, 0.0));
-    xboxX.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0.4, 0.4));
-    xboxB.whenPressed(new ButtonDriveTest(drivetrainSubsystem, -0.4, -0.4));
+    xboxA.whenPressed(new ButtonDriveTest(drivetrain, 0.0, 0.0));
+    xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
+    xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
 
 
 
@@ -119,7 +119,7 @@ public class RobotContainer {
 
 
       //return new AutoDriveForwardForever(drivetrainSubsystem, this);
-      return new AutoDriveForwardTimer(drivetrainSubsystem, 3.0);
+    return new AutoDriveForwardTimer(drivetrain, 3.0);
 
   }
 

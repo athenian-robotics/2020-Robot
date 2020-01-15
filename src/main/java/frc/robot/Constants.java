@@ -18,7 +18,7 @@ import frc.robot.lib.RobotType;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final RobotType robotType = RobotType.KITBOT;
+    public static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
     public static final class DriveConstants {
 
