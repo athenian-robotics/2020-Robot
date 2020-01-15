@@ -19,16 +19,13 @@ public class ButtonDriveTest extends CommandBase {
         this.leftMotorSpeed = leftMotorSpeed;
         this.rightMotorSpeed = rightMotorSpeed;
         addRequirements(drivetrain);
-
-
-
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Timer.delay(0.1);
         drivetrain.tankDrive(0, 0);
+        Timer.delay(0.1);
         drivetrain.tankDrive(leftMotorSpeed, rightMotorSpeed);
     }
 
