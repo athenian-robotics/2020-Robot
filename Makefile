@@ -8,6 +8,9 @@ compile:
 
 build: compile
 
+deploy: compile
+	./gradlew deploy
+
 versioncheck:
 	./gradlew dependencyUpdates
 
