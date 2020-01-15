@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AutoDriveForwardTimer;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.ColorWheelSubsystem;
@@ -120,10 +119,18 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
 
+      //Uncomment this if you'd like to drive forward, forever
+      //Make sure ROBOT_TYPE is set!
 
       //return new AutoDriveForwardForever(drivetrainSubsystem, this);
-    return new AutoDriveForwardTimer(drivetrain, 7.0);
 
+
+      //Edit the second argument for the amount of seconds you'd like to drive
+      //Make sure ROBOT_TYPE is set!
+
+      //return new AutoDriveForwardTimer(drivetrain, 7.0);
+
+      return null;
   }
 
 
