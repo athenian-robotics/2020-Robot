@@ -29,12 +29,13 @@ public class ButtonDriveTest extends CommandBase {
     public void initialize() {
         Timer.delay(0.1);
         drivetrain.tankDrive(0, 0);
+        drivetrain.tankDrive(leftMotorSpeed, rightMotorSpeed);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drivetrain.tankDrive(leftMotorSpeed, rightMotorSpeed);
+
     }
 
 
