@@ -122,7 +122,7 @@ public class RobotContainer {
 
 
       //return new AutoDriveForwardForever(drivetrainSubsystem, this);
-    return new AutoDriveForwardTimer(drivetrain, 3.0);
+    return new AutoDriveForwardTimer(drivetrain, 7.0);
 
   }
 

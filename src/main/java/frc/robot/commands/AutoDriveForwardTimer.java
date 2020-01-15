@@ -5,13 +5,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoDriveForwardTimer extends CommandBase {
-    DrivetrainSubsystem drivetrainSubsystem;
+    DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
     double secondsTodrive;
 
-    public AutoDriveForwardTimer(DrivetrainSubsystem drivetrainSubsystem, double secondsToDrive) {
-        this.drivetrainSubsystem = drivetrainSubsystem;
+    public AutoDriveForwardTimer(DrivetrainSubsystem drivetrain, double secondsToDrive) {
+        this.drivetrain = drivetrain;
         this.secondsTodrive = secondsToDrive;
+        addRequirements(drivetrain);
 
     }
 
@@ -21,7 +22,7 @@ public class AutoDriveForwardTimer extends CommandBase {
     }
 
     public void execute() {
-        drivetrainSubsystem.tankDrive(0.4, 0.4);
+        drivetrain.tankDrive(0.4, 0.4);
 
     }
 
@@ -30,7 +31,7 @@ public class AutoDriveForwardTimer extends CommandBase {
     }
 
     public void end(boolean interrupted) {
-        drivetrainSubsystem.tankDrive(0, 0);
+        drivetrain.tankDrive(0, 0);
     }
 
 }
