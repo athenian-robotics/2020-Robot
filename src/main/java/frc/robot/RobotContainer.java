@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AutoDriveForwardTimer;
-import frc.robot.commands.ButtonDriveTest;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.ColorWheelSubsystem;
@@ -94,9 +93,13 @@ public class RobotContainer {
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
 
-    xboxA.whenPressed(new ButtonDriveTest(drivetrain, 0.0, 0.0));
-    xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
-    xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
+    /**
+     * ButtonDriveTest xbox controller Mapping
+     * Uncomment as needed, make sure ROBOT_TYPE is correctly assigned!
+     */
+    //xboxA.whenPressed(new ButtonDriveTest(drivetrain, 0.0, 0.0));
+    //xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
+    //xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
 
 
 

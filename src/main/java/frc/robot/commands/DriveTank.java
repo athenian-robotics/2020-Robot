@@ -14,11 +14,11 @@ public class DriveTank extends CommandBase {
     private final XboxController xboxController;
 
 
-    public DriveTank(DrivetrainSubsystem drivetrainSubsystem, XboxController xboxController) {
-        this.drivetrainSubsystem = drivetrainSubsystem;
+    public DriveTank(DrivetrainSubsystem drivetrain, XboxController xboxController) {
+        this.drivetrainSubsystem = drivetrain;
         this.xboxController = xboxController;
         // Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(drivetrainSubsystem);
+        addRequirements(drivetrain);
     }
 
     // Called when the command is initially scheduled.
