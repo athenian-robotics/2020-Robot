@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AutoDriveForwardTimer;
+import frc.robot.commands.ButtonDriveTest;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.ColorWheelSubsystem;
@@ -93,14 +94,18 @@ public class RobotContainer {
     xboxLB.whenPressed(new DriveTank(drivetrainSubsystem, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrainSubsystem, xboxController));
 
+    xboxA.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0.0, 0.0));
+    xboxX.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0.4, 0.4));
+    xboxB.whenPressed(new ButtonDriveTest(drivetrainSubsystem, -0.4, -0.4));
+
+
+
     /**
      * Test Buttons if you need to STOP, FORWARD OR REVERSE
      *
      * Comment out as needed, and change ROBT TYPE!
      */
-      //xboxA.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0, 0));
-      //xboxX.whenPressed(new ButtonDriveTest(drivetrainSubsystem, 0.5, 0.5));
-      //xboxB.whenPressed(new ButtonDriveTest(drivetrainSubsystem, -0.5, -0.5));
+
 
   }
 

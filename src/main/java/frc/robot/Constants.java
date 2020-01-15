@@ -18,7 +18,7 @@ import frc.robot.lib.RobotType;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final RobotType robotType = RobotType.OFFICIAL;
+    public static final RobotType robotType = RobotType.KITBOT;
 
     public static final class DriveConstants {
 
@@ -27,10 +27,10 @@ public final class Constants {
          *
          * Change these to 1, 2, 3, 0 for OFFICIAL 
          */
-        public static final int leftMotor1Port = 1;
-        public static final int leftMotor2Port = 2;
-        public static final int rightMotor1Port = 3;
-        public static final int rightMotor2Port = 0;
+        public static final int leftMotor1Port = 0;
+        public static final int leftMotor2Port = 1;
+        public static final int rightMotor1Port = 2;
+        public static final int rightMotor2Port = 3;
 
         public static double speedScale = 0.8;
     }

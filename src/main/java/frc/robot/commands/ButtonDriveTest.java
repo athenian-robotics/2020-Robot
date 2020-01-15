@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
@@ -8,7 +9,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public class ButtonDriveTest extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final DrivetrainSubsystem drivetrainSubsystem;
+    private DrivetrainSubsystem drivetrainSubsystem;
     private double leftMotorSpeed;
     private double rightMotorSpeed;
 
@@ -19,11 +20,13 @@ public class ButtonDriveTest extends CommandBase {
         this.rightMotorSpeed = rightMotorSpeed;
 
 
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Timer.delay(0.1);
         drivetrainSubsystem.tankDrive(0, 0);
     }
 
@@ -37,6 +40,7 @@ public class ButtonDriveTest extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        drivetrainSubsystem.tankDrive(0, 0);
         System.out.println("END");
     }
 
