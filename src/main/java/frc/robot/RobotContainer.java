@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
+import frc.robot.commands.GearBoxTest;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -91,7 +92,6 @@ public class RobotContainer {
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-
     /**
      * ButtonDriveTest xbox controller Mapping
      * Uncomment as needed, make sure ROBOT_TYPE is correctly assigned!
@@ -99,6 +99,15 @@ public class RobotContainer {
     //xboxA.whenPressed(new ButtonDriveTest(drivetrain, 0.0, 0.0));
     //xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
     //xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
+
+    /**
+     * GearBoxTest xbox controller Mapping
+     * Uncomment as needed, make sure ROBOT_TYPE is correctly assigned!
+     */
+    //xboxY.whenPressed(new GearBoxTest(drivetrain, xboxController, 1.0, 1.0));
+    //xboxA.whenPressed(new GearBoxTest(drivetrain, xboxController, -1.0, -1.0));
+    //xboxX.whenPressed(new GearBoxTest(drivetrain, xboxController, 0.0, 0.0));
+
 
 
 

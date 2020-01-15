@@ -32,6 +32,7 @@ public final class Constants {
         public static final int rightMotor1Port = 2;
         public static final int rightMotor2Port = 3;
 
+
         public static double speedScale = 0.8;
     }
 
