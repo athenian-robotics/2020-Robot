@@ -14,12 +14,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
-import frc.robot.commands.GearBoxTest;
+import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-
-import static frc.robot.Constants.ROBOT_TYPE;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -40,6 +38,7 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
 
 
+  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
