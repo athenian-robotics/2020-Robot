@@ -57,6 +57,7 @@ public class RobotContainer {
   public RobotContainer() {
     buttonSetup();
     configureButtonBindings();
+      colorWheelSubsystem.checkColor();
     //dashboardSendables.schedule();
 
 
@@ -103,15 +104,6 @@ public class RobotContainer {
     //xboxA.whenPressed(new ButtonDriveTest(drivetrain, 0.0, 0.0));
     //xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
     //xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
-
-
-
-    /**
-     * Test Buttons if you need to STOP, FORWARD OR REVERSE
-     *
-     * Comment out as needed, and change ROBT TYPE!
-     */
-
 
   }
 
