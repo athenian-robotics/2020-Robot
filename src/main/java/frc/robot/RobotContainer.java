@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.DashboardSendables;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.subsystems.ColorWheelSubsystem;
@@ -44,6 +45,7 @@ public class RobotContainer {
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
+  private final DashboardSendables dashboardSendables = new DashboardSendables();
 
 
   // Define all OI devices here
@@ -55,6 +57,8 @@ public class RobotContainer {
   public RobotContainer() {
     buttonSetup();
     configureButtonBindings();
+    //dashboardSendables.schedule();
+
 
 
 
