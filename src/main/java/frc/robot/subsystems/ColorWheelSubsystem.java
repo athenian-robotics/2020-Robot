@@ -14,11 +14,14 @@ public class ColorWheelSubsystem extends SubsystemBase {
      * Declare ports and products
      */
 
-    public double checkColorRed;
+    public final I2C.Port i2cPort = I2C.Port.kOnboard;
     public double checkColorGreen;
     public double checkColorBlue;
+    /**
+     * Init extra variables for the checkColor function
+     */
 
-    public final I2C.Port i2cPort = I2C.Port.kOnboard;
+    public double checkColorRed;
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
 
@@ -32,6 +35,8 @@ public class ColorWheelSubsystem extends SubsystemBase {
     }
 
     public static void updateColor(double red, double green, double blue) {
+
+        //Put values on Shuffleboard
         SmartDashboard.putNumber("Red", red * 255);
         SmartDashboard.putNumber("Green", green * 255);
         SmartDashboard.putNumber("Blue", blue * 255);
@@ -67,8 +72,8 @@ public class ColorWheelSubsystem extends SubsystemBase {
         ColorWheelSubsystem.updateIR(colorSensor.getIR());
 
         checkColor();
-    }
 
+    }
 
     public void updateString(String colorString) {
         SmartDashboard.putString("COLOR", colorString);
@@ -84,7 +89,7 @@ public class ColorWheelSubsystem extends SubsystemBase {
         } else if ((checkColorBlue >= checkColorGreen) && (checkColorBlue - 30 <= checkColorGreen)
                 || (checkColorBlue <= checkColorGreen) && (checkColorBlue + 30 >= checkColorGreen)) {
             updateString("BLUE");
-        } else if ((checkColorGreen >= checkColorRed) && (checkColorGreen >= checkColorBlue)) {
+        } else if ((checkColorGreen >= checkColorRed + 20) && (checkColorGreen >= checkColorBlue + 20)) {
             updateString("GREEN");
         } else {
             updateString("UNCLEAR");
@@ -93,3 +98,5 @@ public class ColorWheelSubsystem extends SubsystemBase {
     }
 
 }
+
+
