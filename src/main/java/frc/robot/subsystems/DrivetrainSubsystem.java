@@ -3,8 +3,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
 
@@ -17,14 +19,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public final SpeedControllerGroup motorTest = new SpeedControllerGroup(new WPI_VictorSPX(0));
 
     private final DifferentialDrive drive;
+    private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, false, Encoder.EncodingType.k2X);
+    private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
 
     public DrivetrainSubsystem() {
         this(JANKBOT);
     }
 
     public DrivetrainSubsystem(RobotType robotType) {
-        final SpeedControllerGroup leftMotors;
-        final SpeedControllerGroup rightMotors;
+        leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
+        rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
+        SpeedControllerGroup leftMotors;
+        SpeedControllerGroup rightMotors;
         switch (robotType) {
             case JANKBOT:
                 leftMotors = new SpeedControllerGroup(new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port));
@@ -59,9 +65,30 @@ public class DrivetrainSubsystem extends SubsystemBase {
         drive.arcadeDrive(xSpeed * speedScale, -zRotation * speedScale);
     }
 
+    public double getLeftEncoderDistance() {
+        return leftEncoder.getDistance();
+    }
+
+    public double getRightEncoderDistance() {
+        return rightEncoder.getDistance();
+    }
+
+    public double getLeftEncoderRate() {
+        return leftEncoder.getRate();
+    }
+
+    public double getRightEncoderRate() {
+        return rightEncoder.getRate();
+    }
+
 
     @Override
     public void periodic() {
         //System.out.println("Drivetrain subsystem");
+        SmartDashboard.putNumber("Left Encoder Distance", getLeftEncoderDistance());
+        SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
+        SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
+        SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
+
     }
 }

@@ -30,7 +30,11 @@ public final class Constants {
         public static final int rightMotor2Port = 3;
 
 
-        public static double speedScale = 0.8;
+        public static final int encoderLeftA = 1;
+        public static final int encoderLeftB = 2;
+        public static final int encoderRightA = 5;
+        public static final int encoderRightB = 6;
+        public static double speedScale = 0.4;
     }
 
     public static final class OIConstants {
