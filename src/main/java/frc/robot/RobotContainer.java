@@ -17,7 +17,7 @@ import frc.robot.commands.DriveTank;
 import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -43,7 +43,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
+  private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
 
 
   // Define all OI devices here
