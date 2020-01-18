@@ -1,5 +1,5 @@
 package frc.robot.colorwheel;
 
-public enum Colors {
+public enum DifferentColors {
     RED, YELLOW, BLUE, GREEN
 }

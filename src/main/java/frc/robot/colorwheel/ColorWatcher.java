@@ -2,7 +2,7 @@ package frc.robot.colorwheel;
 
 import frc.robot.subsystems.ColorWheelSubsystem;
 
-import static frc.robot.colorwheel.Colors.RED;
+import static frc.robot.colorwheel.DifferentColors.RED;
 
 
 public class ColorWatcher {
@@ -15,8 +15,10 @@ public class ColorWatcher {
 
 
     public void trackMovement(WatcherEvent watcherEvent, int direction) {
-        Colors currentColor = colorWheel.currentColor();
+        DifferentColors currentColor = colorWheel.currentColor();
 
+
+        //TODO Complete this
         while (true) {
             if (currentColor == RED) {
 
