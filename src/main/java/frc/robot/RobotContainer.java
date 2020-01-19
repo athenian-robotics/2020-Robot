@@ -40,9 +40,9 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
 
 
-
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
+
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
   private final DashboardSendables dashboardSendables = new DashboardSendables();
@@ -57,7 +57,6 @@ public class RobotContainer {
   public RobotContainer() {
     buttonSetup();
     configureButtonBindings();
-      colorWheelSubsystem.checkColor();
     //dashboardSendables.schedule();
 
 
