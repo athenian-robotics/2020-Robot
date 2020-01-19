@@ -4,51 +4,29 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.subsystems.ColorWheelSubsystem;
 
 import static frc.robot.colorwheel.DifferentColors.*;
 
 public class ColorWheelUtils {
 
-    public final I2C.Port i2cPort = I2C.Port.kOnboard;
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    public int direction;
-    public int tilesToGo;
-    int[] nearestValues = {direction, tilesToGo};
-    double checkColorRed;
-    double checkColorGreen;
-    double checkColorBlue;
+    private final I2C.Port i2cPort = I2C.Port.kOnboard;
+    private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+
+    private int direction = 0;
+    private int tilesToGo = 0;
+    private int[] nearestValues = {direction, tilesToGo};
+
+    private double currentColorRed = 0;
+    private double currentColorGreen = 0;
+    private double currentColorBlue = 0;
     //Create a class attribute
-    ColorWheelSubsystem colorWheelSubsystem;
 
     //Create class constructor
-    public ColorWheelUtils(ColorWheelSubsystem colorWheelSubsystem) {
+    public ColorWheelUtils() {
         //Set initial value for class attribute robotContainer
-        this.colorWheelSubsystem = colorWheelSubsystem;
     }
 
-
-    /**
-     * Extra methods for use later if needed.
-     */
-    public double currentColorRed() {
-        //Get the current RED value from the color sensor
-        Color currentColor = colorSensor.getColor();
-        return currentColor.red;
-    }
-
-    public double currentColorBlue() {
-        //Get the current BLUE value from the color sensor
-        Color currentColor = colorSensor.getColor();
-        return currentColor.blue;
-    }
-
-    public double currentColorGreen() {
-        //Get the current GREEN value from the color sensor
-        Color currentColor = colorSensor.getColor();
-        return currentColor.green;
-    }
-
+    //A method that puts Strings onto SmartDashboard for organization purposes
     public void updateString(String currentColor) {
         SmartDashboard.putString("Current Color", currentColor);
     }
@@ -62,28 +40,28 @@ public class ColorWheelUtils {
     public DifferentColors currentColor() {
         //If RED values are larger than green or blue, return RED
         Color detectedColor = colorSensor.getColor();
-        checkColorRed = detectedColor.red * 255;
-        checkColorGreen = detectedColor.green * 255;
-        checkColorBlue = detectedColor.blue * 255;
+        currentColorRed = detectedColor.red * 255;
+        currentColorGreen = detectedColor.green * 255;
+        currentColorBlue = detectedColor.blue * 255;
 
-        if ((checkColorRed >= checkColorGreen + 30) && (checkColorRed >= checkColorBlue + 30)) {
+        if ((currentColorRed >= currentColorGreen + 30) && (currentColorRed >= currentColorBlue + 30)) {
             updateString("RED");
             return RED;
         }
         //If BLUE is within range 30 of GREEN, return BLUE
-        else if ((checkColorBlue >= checkColorGreen) && (checkColorBlue - 60 <= checkColorGreen)
-                || (checkColorBlue <= checkColorGreen) && (checkColorBlue + 60 >= checkColorGreen)) {
+        else if ((currentColorBlue >= currentColorGreen) && (currentColorBlue - 60 <= currentColorGreen)
+                || (currentColorBlue <= currentColorGreen) && (currentColorBlue + 60 >= currentColorGreen)) {
             updateString("BLUE");
             return BLUE;
         }
         //If RED is within range 30 of GREEN, return YELLOW
-        else if ((checkColorRed >= checkColorGreen) && (checkColorRed - 20 <= checkColorGreen)
-                || (checkColorRed <= checkColorGreen) && (checkColorRed + 20 >= checkColorGreen)) {
+        else if ((currentColorRed >= currentColorGreen) && (currentColorRed - 20 <= currentColorGreen)
+                || (currentColorRed <= currentColorGreen) && (currentColorRed + 20 >= currentColorGreen)) {
             updateString("YELLOW");
             return YELLOW;
         }
         //If GREEN values are larger than red or blue, return GREEN
-        else if ((checkColorGreen >= checkColorRed + 60) && (checkColorGreen >= checkColorBlue + 60)) {
+        else if ((currentColorGreen >= currentColorRed + 60) && (currentColorGreen >= currentColorBlue + 60)) {
             updateString("GREEN");
             return GREEN;
         }
