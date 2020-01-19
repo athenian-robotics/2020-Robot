@@ -3,7 +3,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,8 +21,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public final SpeedControllerGroup motorTest = new SpeedControllerGroup(new WPI_VictorSPX(0));
 
     private final DifferentialDrive drive;
-    private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, false, Encoder.EncodingType.k2X);
+    private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
+    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP); //TODO: Implement gyro
 
     public DrivetrainSubsystem() {
         this(JANKBOT);
@@ -55,14 +58,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
         rightMotors.setInverted(robotType.isInverted());
 
         drive = new DifferentialDrive(leftMotors, rightMotors);
+        drive.setDeadband(deadband);
+        drive.setMaxOutput(speedScale);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
-        drive.tankDrive(leftSpeed * speedScale, rightSpeed * speedScale);
+        int leftSign = leftSpeed > 0 ? 1 : -1;
+        int rightSign = rightSpeed > 0 ? 1 : -1;
+
+        double leftPower = ((speedScale - 0.28) * leftSpeed + 0.28) * leftSign;
+        double rightPower = ((speedScale - 0.28) * rightSpeed + 0.28) * rightSign;
+
+
+        drive.tankDrive(leftPower, rightPower);
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        drive.arcadeDrive(xSpeed * speedScale, -zRotation * speedScale);
+        drive.arcadeDrive(xSpeed, -zRotation);
     }
 
     public double getLeftEncoderDistance() {

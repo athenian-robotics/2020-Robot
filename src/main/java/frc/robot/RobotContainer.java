@@ -93,7 +93,7 @@ public class RobotContainer {
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.0));
+    xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
     /**
      * ButtonDriveTest xbox controller Mapping
      * Uncomment as needed, make sure ROBOT_TYPE is correctly assigned!

@@ -9,25 +9,28 @@ public class AutoDriveForwardDistance extends CommandBase {
     DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
     double metersToDrive;
-    PIDController pid = new PIDController(2, 0, 0);
+    PIDController pid = new PIDController(1.38, 0, 0.552);
     double setpoint;
 
     public AutoDriveForwardDistance(DrivetrainSubsystem drivetrain, double metersToDrive) {
         this.drivetrain = drivetrain;
         this.metersToDrive = metersToDrive;
-        pid.setTolerance(0.01);
+        pid.setTolerance(0.05);
         addRequirements(drivetrain);
-        this.setpoint = drivetrain.getRightEncoderDistance() + metersToDrive;
-
     }
 
     public void initialize() {
         driveTimer.reset();
         driveTimer.start();
+        this.setpoint = drivetrain.getRightEncoderDistance() + metersToDrive;
+        System.out.println("Current right encoder distance: " + drivetrain.getRightEncoderDistance());
+        System.out.println("Setting setpoint to " + setpoint);
+        pid.setSetpoint(setpoint);
     }
 
     public void execute() {
-        double power = pid.calculate(drivetrain.getLeftEncoderDistance(), setpoint);
+        double power = pid.calculate(drivetrain.getRightEncoderDistance());
+        System.out.println(power);
         drivetrain.tankDrive(power, power);
     }
 
@@ -37,6 +40,7 @@ public class AutoDriveForwardDistance extends CommandBase {
 
     public void end(boolean interrupted) {
         drivetrain.tankDrive(0, 0);
+        System.out.println("Reached setpoint");
     }
 
 }

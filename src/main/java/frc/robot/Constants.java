@@ -34,7 +34,9 @@ public final class Constants {
         public static final int encoderLeftB = 2;
         public static final int encoderRightA = 5;
         public static final int encoderRightB = 6;
-        public static double speedScale = 0.4;
+        public static double speedScale = 1;
+
+        public static double deadband = 0.02;
     }
 
     public static final class OIConstants {
