@@ -23,7 +23,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final DifferentialDrive drive;
     private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
-    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP); //TODO: Implement gyro
+    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    private final ADXRS450_Gyro gyro1 = new ADXRS450_Gyro(SPI.Port.kOnboardCS1);
+    private final ADXRS450_Gyro gyro2 = new ADXRS450_Gyro(SPI.Port.kOnboardCS2);
+    private final ADXRS450_Gyro gyro3 = new ADXRS450_Gyro(SPI.Port.kOnboardCS3);
+    private final ADXRS450_Gyro gyro4 = new ADXRS450_Gyro(SPI.Port.kMXP);
+
 
     public DrivetrainSubsystem() {
         this(JANKBOT);
@@ -66,11 +71,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
         int leftSign = leftSpeed > 0 ? 1 : -1;
         int rightSign = rightSpeed > 0 ? 1 : -1;
 
-        double leftPower = ((speedScale - 0.28) * leftSpeed + 0.28) * leftSign;
-        double rightPower = ((speedScale - 0.28) * rightSpeed + 0.28) * rightSign;
+        double leftPower = ((speedScale - 0.31) * Math.abs(leftSpeed) + 0.31) * leftSign;
+        double rightPower = ((speedScale - 0.31) * Math.abs(rightSpeed) + 0.31) * rightSign;
 
 
         drive.tankDrive(leftPower, rightPower);
+//        System.out.println(leftPower + " " + rightPower);
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
@@ -93,6 +99,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return rightEncoder.getRate();
     }
 
+    public double getGyroAngle() {
+//        System.out.println(gyro.getAngle());
+        return gyro.getAngle();
+    }
+
 
     @Override
     public void periodic() {
@@ -101,6 +112,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
         SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
         SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
-
+        SmartDashboard.putNumber("Gyro0", gyro.getAngle());
     }
 }

@@ -12,9 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AutoDriveForwardDistance;
-import frc.robot.commands.DriveArcade;
-import frc.robot.commands.DriveTank;
+import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -94,6 +92,8 @@ public class RobotContainer {
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
     xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
+    xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
     /**
      * ButtonDriveTest xbox controller Mapping
      * Uncomment as needed, make sure ROBOT_TYPE is correctly assigned!
