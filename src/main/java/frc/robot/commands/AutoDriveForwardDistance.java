@@ -9,13 +9,13 @@ public class AutoDriveForwardDistance extends CommandBase {
     DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
     double metersToDrive;
-    PIDController pid = new PIDController(1.38, 0, 0.552);
+    PIDController pid = new PIDController(0.39, 0.0, 0.01);
     double setpoint;
 
     public AutoDriveForwardDistance(DrivetrainSubsystem drivetrain, double metersToDrive) {
         this.drivetrain = drivetrain;
         this.metersToDrive = metersToDrive;
-        pid.setTolerance(0.05);
+        pid.setTolerance(0.5);
         addRequirements(drivetrain);
     }
 

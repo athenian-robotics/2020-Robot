@@ -12,7 +12,7 @@ public class AutoDriveForwardDistanceTrapezoid extends CommandBase {
     double metersToDrive;
     ProfiledPIDController pid = new ProfiledPIDController(
             1.38, 0, 0.552,
-            new TrapezoidProfile.Constraints(1, 0.5));
+            new TrapezoidProfile.Constraints(-0.1, -0.5));
 
     double setpoint;
 
