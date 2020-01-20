@@ -37,7 +37,7 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
 
 
-  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -94,6 +94,13 @@ public class RobotContainer {
     xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
     xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
     xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
+
+    //Intake Controlls
+    //xboxLB.whenHeld(new IntakeTest(-0.8));
+    //xboxB.whenHeld(new IntakeTest(0.8));
+
+
+
     /**
      * ButtonDriveTest xbox controller Mapping
      * Uncomment as needed, make sure ROBOT_TYPE is correctly assigned!
