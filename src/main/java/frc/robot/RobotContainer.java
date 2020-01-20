@@ -14,11 +14,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
+import frc.robot.commands.ShootLowGoal;
 import frc.robot.lib.RobotType;
-import frc.robot.subsystems.ColorWheelSubsystem;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -45,6 +43,7 @@ public class RobotContainer {
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final LowGoalSubsystem lowGoalSubsystem = new LowGoalSubsystem();
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -87,6 +86,7 @@ public class RobotContainer {
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+    xboxA.whenHeld(new ShootLowGoal(lowGoalSubsystem), true);
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
