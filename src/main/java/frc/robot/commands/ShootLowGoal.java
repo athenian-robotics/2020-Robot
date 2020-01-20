@@ -15,7 +15,7 @@ import frc.robot.subsystems.LowGoalSubsystem;
  */
 public class ShootLowGoal extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private final LowGoalSubsystem m_subsystem;
+    private final LowGoalSubsystem subsystem;
 
     /**
      * Creates a new ExampleCommand.
@@ -23,7 +23,7 @@ public class ShootLowGoal extends CommandBase {
      * @param subsystem The subsystem used by this command.
      */
     public ShootLowGoal(LowGoalSubsystem subsystem) {
-        m_subsystem = subsystem;
+        this.subsystem = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(subsystem);
     }
@@ -31,22 +31,14 @@ public class ShootLowGoal extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
-        m_subsystem.shootBalls(true);
-
+        subsystem.shootBalls(true);
     }
 
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute() {
-    }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
-        m_subsystem.shootBalls(false);
-
+        subsystem.shootBalls(false);
     }
 
     // Returns true when the command should end.
