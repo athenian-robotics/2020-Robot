@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ChangeIntakeMode;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
 import frc.robot.commands.RunIntake;
@@ -93,7 +94,7 @@ public class RobotContainer {
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    xboxX.whenHeld(new RunIntake(intakeSubsystem));
+    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping
