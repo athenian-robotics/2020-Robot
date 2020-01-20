@@ -19,6 +19,7 @@ import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.lib.RobotType;
 
 import static frc.robot.Constants.ROBOT_TYPE;
 
@@ -40,7 +41,7 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-
+  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -58,16 +59,12 @@ public class RobotContainer {
     buttonSetup();
     configureButtonBindings();
 
-
-
-//    CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
-//  We do not need to register subsystems, this is done automatically
+    //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
+    //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
     //TODO: Implement arcade drive
-
-
   }
 
   /**
@@ -103,15 +100,19 @@ public class RobotContainer {
     //xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
     //xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
 
-
+    /**
+     * GearBoxTest xbox controller Mapping
+     * Uncomment as needed, make sure ROBOT_TYPE is correctly assigned!
+     */
+    //xboxY.whenPressed(new GearBoxTest(drivetrain, xboxController, 1.0, 1.0));
+    //xboxA.whenPressed(new GearBoxTest(drivetrain, xboxController, -1.0, -1.0));
+    //xboxX.whenPressed(new GearBoxTest(drivetrain, xboxController, 0.0, 0.0));
 
     /**
      * Test Buttons if you need to STOP, FORWARD OR REVERSE
      *
      * Comment out as needed, and change ROBT TYPE!
      */
-
-
   }
 
   /**
@@ -125,8 +126,7 @@ public class RobotContainer {
       //Uncomment this if you'd like to drive forward, forever
       //Make sure ROBOT_TYPE is set!
 
-    //return new AutoDriveForwardForever(drivetrain, this);
-
+      //return new AutoDriveForwardForever(drivetrain, this);
 
       //Edit the second argument for the amount of seconds you'd like to drive
       //Make sure ROBOT_TYPE is set!
@@ -134,8 +134,5 @@ public class RobotContainer {
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
       return null;
-
   }
-
-
 }
