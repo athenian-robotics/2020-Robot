@@ -10,17 +10,19 @@ import static frc.robot.colorwheel.DirectionTiles.*;
 
 public class ColorWheelUtils {
 
+    //Init basic variables
     public final I2C.Port i2cPort = I2C.Port.kOnboard;
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     double checkColorRed;
     double checkColorGreen;
     double checkColorBlue;
-    //Create a class attribute
+
 
     //Create class constructor
     public ColorWheelUtils() {
-        //Set initial value for class attribute robotContainer
+
     }
+
 
     //A method that puts Strings onto SmartDashboard for organization purposes
     public void updateString(String currentColor) {
@@ -67,6 +69,7 @@ public class ColorWheelUtils {
         }
     }
 
+
     public boolean isCurrentColorKnown() {
         DifferentColors currentColor = currentColor();
         //If no color is known, return false
@@ -78,6 +81,7 @@ public class ColorWheelUtils {
             return true;
         }
     }
+
 
     public DifferentColors getLeftColor(DifferentColors currentColor) {
         //Take the current color, and return ONE color to the left
@@ -94,6 +98,7 @@ public class ColorWheelUtils {
         }
     }
 
+
     public DifferentColors getRightColor(DifferentColors currentColor) {
         //Take the current color and return 1 color to the right
         if (currentColor == RED) {
@@ -109,14 +114,18 @@ public class ColorWheelUtils {
         }
     }
 
+
     public DirectionTiles nearestColor(DifferentColors colorWanted) {
         //Grab current sensor values
         DifferentColors currentColor = currentColor();
+
+        //Give default value to directionTiles
         DirectionTiles directionTiles = NOWHERE;
 
-        /**
-         * DirectionTiles ENUM may be useful to look at
-         */
+        //Format
+        //[DIRECTION][NUMBER OF TILES TO GO]
+        //Example: Direction = LEFT, Tiles to go = 1
+        //LEFT1
         if (isCurrentColorKnown()) {
             if (currentColor == RED) {
                 if (colorWanted == RED) {

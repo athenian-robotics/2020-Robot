@@ -6,25 +6,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
-import frc.robot.colorwheel.ColorWatcher;
-import frc.robot.colorwheel.ColorWheelUtils;
 
 
 public class ColorWheelSubsystem extends SubsystemBase {
+    //Create class attributes
+    public final RobotContainer robotContainer;
     /**
      * Declare ports and products
      */
-    public final I2C.Port i2cPort = I2C.Port.kOnboard;
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    double colorSensorIR;
-    double colorSensorProximity;
+    private final I2C.Port i2cPort = I2C.Port.kOnboard;
+    private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+    private double colorSensorIR;
+    private double colorSensorProximity;
 
-
-    //Create class attributes
-    RobotContainer robotContainer;
-
-    ColorWheelUtils colorWheelUtils = new ColorWheelUtils();
-    ColorWatcher colorWatcher = new ColorWatcher();
+    //ColorWheelUtils colorWheelUtils = new ColorWheelUtils();
+    //ColorWatcher colorWatcher = new ColorWatcher();
 
     //Create class constructor
     public ColorWheelSubsystem(RobotContainer robotContainer) {
@@ -52,27 +48,24 @@ public class ColorWheelSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Infrared", IR);
     }
 
-
     /**
      * PERIODIC
      * Gather RGB values, Proximity values and IR values
      * Update them to smartdashboard
      */
     public void periodic() {
+
         //Gather data from color sensor
-
         Color detectedColor = colorSensor.getColor();
-
         colorSensorProximity = colorSensor.getProximity();
         colorSensorIR = colorSensor.getIR();
-
 
         //Put above data onto SmartDashboard using above methods
         updateColor(detectedColor.red, detectedColor.blue, detectedColor.green);
         updateProximity(colorSensorProximity);
         updateIR(colorSensorIR);
 
-        //colorWatcher.getTilesPassed();
+        //Use ColorWatcher with currentColor to calculate # of rotations on ColorWheel
         //colorWatcher.getTilesPassed();
 
     }
