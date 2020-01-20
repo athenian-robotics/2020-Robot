@@ -73,7 +73,7 @@ public class ColorWheelSubsystem extends SubsystemBase {
         updateIR(colorSensorIR);
 
         //colorWatcher.getTilesPassed();
-        colorWatcher.getTilesPassed();
+        //colorWatcher.getTilesPassed();
 
     }
 

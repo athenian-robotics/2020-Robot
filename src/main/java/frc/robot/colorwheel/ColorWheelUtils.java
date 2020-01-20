@@ -6,14 +6,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
 import static frc.robot.colorwheel.DifferentColors.*;
+import static frc.robot.colorwheel.DirectionTiles.*;
 
 public class ColorWheelUtils {
 
     public final I2C.Port i2cPort = I2C.Port.kOnboard;
     public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    public int direction = 0;
-    public int tilesToGo = 0;
-    int[] nearestValues = {direction, tilesToGo};
     double checkColorRed;
     double checkColorGreen;
     double checkColorBlue;
@@ -111,96 +109,75 @@ public class ColorWheelUtils {
         }
     }
 
-    public int[] nearestColor(DifferentColors color) {
+    public DirectionTiles nearestColor(DifferentColors colorWanted) {
         //Grab current sensor values
         DifferentColors currentColor = currentColor();
+        DirectionTiles directionTiles = NOWHERE;
 
         /**
-         * nearestValues [0]   = DIRECTION TO GO
-         *  0 if to stop
-         *  1 if to go right
-         *  -1 if to go left
-         *
-         *  nearestValues [1]  = TILES TO GO
-         *   Yes, it has taken into account the direction it is returning
+         * DirectionTiles ENUM may be useful to look at
          */
         if (isCurrentColorKnown()) {
             if (currentColor == RED) {
-                if (color == RED) {
-                    nearestValues[0] = 0;
-                    nearestValues[1] = 0;
+                if (colorWanted == RED) {
+                    directionTiles = NOWHERE;
                 }
-                if (color == BLUE) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 2;
+                if (colorWanted == BLUE) {
+                    directionTiles = LEFT2;
                 }
-                if (color == GREEN) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 1;
+                if (colorWanted == GREEN) {
+                    directionTiles = LEFT1;
                 }
-                if (color == YELLOW) {
-                    nearestValues[0] = 1;
-                    nearestValues[1] = 1;
+                if (colorWanted == YELLOW) {
+                    directionTiles = RIGHT1;
                 }
             }
 
             if (currentColor == BLUE) {
-                if (color == RED) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 2;
+                if (colorWanted == RED) {
+                    directionTiles = LEFT2;
                 }
-                if (color == BLUE) {
-                    nearestValues[0] = 0;
-                    nearestValues[1] = 0;
+                if (colorWanted == BLUE) {
+                    directionTiles = NOWHERE;
                 }
-                if (color == GREEN) {
-                    nearestValues[0] = 1;
-                    nearestValues[1] = 1;
+                if (colorWanted == GREEN) {
+                    directionTiles = RIGHT1;
                 }
-                if (color == YELLOW) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 1;
+                if (colorWanted == YELLOW) {
+                    directionTiles = LEFT1;
                 }
             }
 
             if (currentColor == GREEN) {
-                if (color == RED) {
-                    nearestValues[0] = 1;
-                    nearestValues[1] = 1;
+                if (colorWanted == RED) {
+                    directionTiles = RIGHT1;
                 }
-                if (color == BLUE) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 1;
+                if (colorWanted == BLUE) {
+                    directionTiles = LEFT1;
                 }
-                if (color == GREEN) {
-                    nearestValues[0] = 0;
-                    nearestValues[1] = 0;
+                if (colorWanted == GREEN) {
+                    directionTiles = NOWHERE;
                 }
-                if (color == YELLOW) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 2;
+                if (colorWanted == YELLOW) {
+                    directionTiles = LEFT2;
                 }
             }
 
             if (currentColor == YELLOW) {
-                if (color == RED) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 1;
+                if (colorWanted == RED) {
+                    directionTiles = LEFT1;
                 }
-                if (color == BLUE) {
-                    nearestValues[0] = 1;
-                    nearestValues[1] = 1;
+                if (colorWanted == BLUE) {
+                    directionTiles = RIGHT1;
                 }
-                if (color == GREEN) {
-                    nearestValues[0] = -1;
-                    nearestValues[1] = 2;
+                if (colorWanted == GREEN) {
+                    directionTiles = LEFT2;
                 }
-                if (color == YELLOW) {
-                    nearestValues[0] = 0;
-                    nearestValues[1] = 0;
+                if (colorWanted == YELLOW) {
+                    directionTiles = NOWHERE;
                 }
             }
         }
-        return nearestValues;
+        return directionTiles;
     }
 }
