@@ -63,19 +63,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
         rightMotors.setInverted(robotType.isInverted());
 
         drive = new DifferentialDrive(leftMotors, rightMotors);
-        drive.setDeadband(deadband);
+        drive.setDeadband(0.02);
         drive.setMaxOutput(speedScale);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
-        int leftSign = leftSpeed > 0 ? 1 : -1;
-        int rightSign = rightSpeed > 0 ? 1 : -1;
+        int leftSign = leftSpeed >= 0 ? 1 : -1;
+        int rightSign = rightSpeed >= 0 ? 1 : -1;
 
-        double leftPower = ((speedScale - 0.31) * Math.abs(leftSpeed) + 0.31) * leftSign;
-        double rightPower = ((speedScale - 0.31) * Math.abs(rightSpeed) + 0.31) * rightSign;
+        double leftPower = ((speedScale - minDrivePower) * Math.abs(leftSpeed) + minDrivePower) * leftSign;
+        double rightPower = ((speedScale - minDrivePower) * Math.abs(rightSpeed) + minDrivePower) * rightSign;
 
-
+//        double leftPower = leftSpeed;
+//        double rightPower = rightSpeed;
         drive.tankDrive(leftPower, rightPower);
+
+        SmartDashboard.putNumber("Left Power:", leftPower);
+        SmartDashboard.putNumber("Right Power:", rightPower);
 //        System.out.println(leftPower + " " + rightPower);
     }
 
@@ -113,5 +117,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
         SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
         SmartDashboard.putNumber("Gyro0", gyro.getAngle());
+
     }
 }

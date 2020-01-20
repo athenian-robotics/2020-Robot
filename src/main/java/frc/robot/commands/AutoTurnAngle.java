@@ -2,26 +2,29 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoTurnAngle extends CommandBase {
     DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
+    double tolerance;
     double angleToTurn;
-    PIDController pid = new PIDController(0.003, 0, 0.002);
+    PIDController pid = new PIDController(0.003, 0, 0.001);
     double setpoint;
 
     public AutoTurnAngle(DrivetrainSubsystem drivetrain, double angleToTurn) {
+        this.tolerance = 0.5;
         this.drivetrain = drivetrain;
         this.angleToTurn = angleToTurn;
-        pid.setTolerance(0.1);
+        pid.setTolerance(tolerance);
         addRequirements(drivetrain);
 //        System.out.println(setpoint);
     }
 
     public void initialize() {
-        setpoint = drivetrain.getGyroAngle() + angleToTurn;
+        setpoint = drivetrain.getGyroAngle() + angleToTurn + tolerance;
         pid.setSetpoint(setpoint);
     }
 
@@ -29,6 +32,7 @@ public class AutoTurnAngle extends CommandBase {
         double power = pid.calculate(drivetrain.getGyroAngle());
 //        System.out.println(power);
         drivetrain.tankDrive(power, -power);
+        SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
     }
 
 

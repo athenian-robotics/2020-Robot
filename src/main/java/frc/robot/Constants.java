@@ -36,7 +36,7 @@ public final class Constants {
         public static final int encoderRightB = 6;
         public static double speedScale = 1;
 
-        public static double deadband = 0.02;
+        public static double minDrivePower = 0.32;
     }
 
     public static final class OIConstants {
