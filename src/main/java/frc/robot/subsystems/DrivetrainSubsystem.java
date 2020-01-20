@@ -49,6 +49,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         rightMotors.setInverted(robotType.isInverted());
 
         drive = new DifferentialDrive(leftMotors, rightMotors);
+
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
