@@ -14,14 +14,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
 import frc.robot.commands.DriveTank;
-import frc.robot.commands.RunIntake;
+import frc.robot.lib.RobotType;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.lib.RobotType;
-
-import static frc.robot.Constants.ROBOT_TYPE;
+import frc.robot.subsystems.LimeLightSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -46,7 +43,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
+  private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   // Define all OI devices here
@@ -90,7 +87,7 @@ public class RobotContainer {
     //MODE BUTTONS
     xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    xboxX.whenHeld(new RunIntake(intakeSubsystem));
+    //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping
