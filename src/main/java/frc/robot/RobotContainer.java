@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.DriveArcade;
-import frc.robot.commands.DriveTank;
 import frc.robot.commands.ShootLowGoal;
 import frc.robot.lib.RobotType;
 import frc.robot.subsystems.*;
@@ -84,9 +83,9 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //MODE BUTTONS
-    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
+//    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    xboxA.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**

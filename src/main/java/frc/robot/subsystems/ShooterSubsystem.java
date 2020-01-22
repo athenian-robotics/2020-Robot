@@ -1,10 +1,15 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
 
 public class ShooterSubsystem extends SubsystemBase {
     public boolean isRunning = false;
+    private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
+
 
     public void FlatShooterSubsystem() {
 
@@ -14,8 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void startShooter() {
-        //turnOnMotor();
-        //openPistonGate();
+        shooterMotor.set(1);
         System.out.println("Low goal shooter now shooting!");
         isRunning = true;
     }
@@ -23,6 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void stopShooter() {
         //closePistonGate();
         //turnOffMotor();
+        shooterMotor.set(0);
         System.out.println("Low goal shooter now not shooting!");
         isRunning = false;
     }
