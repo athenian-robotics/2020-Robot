@@ -29,10 +29,7 @@ public class DashboardSendables extends CommandBase {
 
     public void execute() {
         //Getting active values
-
         SmartDashboard.putData("testingDriveTrainCommandsDashboard", CommandScheduler.getInstance());
-
-
     }
 
     public boolean isFinished() {
