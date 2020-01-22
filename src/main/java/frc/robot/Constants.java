@@ -37,6 +37,8 @@ public final class Constants {
         public static final int encoderRightB = 6;
         public static double speedScale = 1.0;
 
+        public static double EncoderDistancePerPulse = 1.0/2048.0;
+
         public static double minDrivePower = 0.32;
     }
 

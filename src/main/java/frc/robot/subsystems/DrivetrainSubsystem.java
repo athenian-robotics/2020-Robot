@@ -24,11 +24,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-    private final ADXRS450_Gyro gyro1 = new ADXRS450_Gyro(SPI.Port.kOnboardCS1);
-    private final ADXRS450_Gyro gyro2 = new ADXRS450_Gyro(SPI.Port.kOnboardCS2);
-    private final ADXRS450_Gyro gyro3 = new ADXRS450_Gyro(SPI.Port.kOnboardCS3);
-    private final ADXRS450_Gyro gyro4 = new ADXRS450_Gyro(SPI.Port.kMXP);
-
 
     public DrivetrainSubsystem() {
         this(JANKBOT);

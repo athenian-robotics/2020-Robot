@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
+//import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
@@ -37,12 +38,13 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
 
 
-  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
+  //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
 
 
   // Define all OI devices here
@@ -148,7 +150,8 @@ public class RobotContainer {
 
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
-      return null;
+//      return new FollowTrajectory(autodrive);
+    return null;
 
   }
 
