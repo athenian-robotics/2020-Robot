@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import frc.robot.lib.RobotType;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -18,7 +16,6 @@ import frc.robot.lib.RobotType;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
     public static final class DriveConstants {
 
@@ -31,6 +28,7 @@ public final class Constants {
         public static final int leftMotor2Port = 1;
         public static final int rightMotor1Port = 2;
         public static final int rightMotor2Port = 3;
+
 
         public static double speedScale = 0.8;
     }
