@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class DashboardSendables extends CommandBase {
-    public final double[] testArray = {1, 2, 3};
-    public final int testInt = 2;
+    private final double[] testArray = {1, 2, 3};
+    private final int testInt = 2;
     private final boolean testingDashboard = true;
     ShuffleboardTab testBooleanColors = Shuffleboard.getTab("testBooleanColors");
     private DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();

@@ -1,5 +1,5 @@
 package frc.robot.colorwheel;
 
 public enum DirectionTiles {
-    LEFT1, LEFT2, RIGHT1, NOWHERE
+    LEFT_1TILE, LEFT_2TILES, RIGHT_1TILE, NOWHERE
 }

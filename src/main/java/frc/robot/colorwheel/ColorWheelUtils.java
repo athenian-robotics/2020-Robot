@@ -2,27 +2,24 @@ package frc.robot.colorwheel;
 
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
-import static frc.robot.colorwheel.DifferentColors.*;
 import static frc.robot.colorwheel.DirectionTiles.*;
+import static frc.robot.colorwheel.WheelColors.*;
 
 public class ColorWheelUtils {
 
     //Init basic variables
-    public final I2C.Port i2cPort = I2C.Port.kOnboard;
-    public final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    double checkColorRed;
-    double checkColorGreen;
-    double checkColorBlue;
+    private final I2C.Port i2cPort = I2C.Port.kOnboard;
+    private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
 
     //Create class constructor
     public ColorWheelUtils() {
 
     }
-
 
     //A method that puts Strings onto SmartDashboard for organization purposes
     public void updateString(String currentColor) {
@@ -35,12 +32,12 @@ public class ColorWheelUtils {
      * COLOR WHEEL METHODS
      * =-=-=-=-=-=-=-=-=-=
      */
-    public DifferentColors currentColor() {
+    public WheelColors currentColor() {
         //If RED values are larger than green or blue, return RED
         Color detectedColor = colorSensor.getColor();
-        checkColorRed = detectedColor.red * 255;
-        checkColorGreen = detectedColor.green * 255;
-        checkColorBlue = detectedColor.blue * 255;
+        double checkColorRed = detectedColor.red * 255;
+        double checkColorGreen = detectedColor.green * 255;
+        double checkColorBlue = detectedColor.blue * 255;
 
         if ((checkColorRed >= checkColorGreen + 30) && (checkColorRed >= checkColorBlue + 30)) {
             updateString("RED");
@@ -71,53 +68,49 @@ public class ColorWheelUtils {
 
 
     public boolean isCurrentColorKnown() {
-        DifferentColors currentColor = currentColor();
+        WheelColors currentColor = currentColor();
         //If no color is known, return false
-        if (currentColor == null) {
-            return false;
-        }
-        //If we have any color values, no matter what values, return true
-        else {
-            return true;
-        }
+        return currentColor != null;
     }
 
 
-    public DifferentColors getLeftColor(DifferentColors currentColor) {
+    public WheelColors getLeftColor(WheelColors currentColor) {
         //Take the current color, and return ONE color to the left
-        if (currentColor == RED) {
-            return GREEN;
-        } else if (currentColor == BLUE) {
-            return YELLOW;
-        } else if (currentColor == GREEN) {
-            return BLUE;
-        } else if (currentColor == YELLOW) {
-            return RED;
-        } else {
-            return null;
+        switch (currentColor) {
+            case RED:
+                return GREEN;
+            case BLUE:
+                return YELLOW;
+            case GREEN:
+                return BLUE;
+            case YELLOW:
+                return RED;
+            default:
+                return null;
         }
     }
 
 
-    public DifferentColors getRightColor(DifferentColors currentColor) {
+    public WheelColors getRightColor(WheelColors currentColor) {
         //Take the current color and return 1 color to the right
-        if (currentColor == RED) {
-            return YELLOW;
-        } else if (currentColor == BLUE) {
-            return GREEN;
-        } else if (currentColor == GREEN) {
-            return RED;
-        } else if (currentColor == YELLOW) {
-            return BLUE;
-        } else {
-            return null;
+        switch (currentColor) {
+            case RED:
+                return YELLOW;
+            case BLUE:
+                return GREEN;
+            case GREEN:
+                return RED;
+            case YELLOW:
+                return BLUE;
+            default:
+                return null;
         }
     }
 
 
-    public DirectionTiles nearestColor(DifferentColors colorWanted) {
+    public DirectionTiles nearestColor(WheelColors colorWanted) {
         //Grab current sensor values
-        DifferentColors currentColor = currentColor();
+        WheelColors currentColor = currentColor();
 
         //Give default value to directionTiles
         DirectionTiles directionTiles = NOWHERE;
@@ -127,66 +120,83 @@ public class ColorWheelUtils {
         //Example: Direction = LEFT, Tiles to go = 1
         //LEFT1
         if (isCurrentColorKnown()) {
-            if (currentColor == RED) {
-                if (colorWanted == RED) {
-                    directionTiles = NOWHERE;
-                }
-                if (colorWanted == BLUE) {
-                    directionTiles = LEFT2;
-                }
-                if (colorWanted == GREEN) {
-                    directionTiles = LEFT1;
-                }
-                if (colorWanted == YELLOW) {
-                    directionTiles = RIGHT1;
-                }
-            }
+            switch (currentColor) {
+                case RED:
+                    if (colorWanted == RED) {
+                        directionTiles = NOWHERE;
+                    }
+                    if (colorWanted == BLUE) {
+                        directionTiles = LEFT_2TILES;
+                    }
+                    if (colorWanted == GREEN) {
+                        directionTiles = LEFT_1TILE;
+                    }
+                    if (colorWanted == YELLOW) {
+                        directionTiles = RIGHT_1TILE;
+                    }
+                    break;
 
-            if (currentColor == BLUE) {
-                if (colorWanted == RED) {
-                    directionTiles = LEFT2;
-                }
-                if (colorWanted == BLUE) {
-                    directionTiles = NOWHERE;
-                }
-                if (colorWanted == GREEN) {
-                    directionTiles = RIGHT1;
-                }
-                if (colorWanted == YELLOW) {
-                    directionTiles = LEFT1;
-                }
-            }
+                case BLUE:
+                    if (colorWanted == RED) {
+                        directionTiles = LEFT_2TILES;
+                    }
+                    if (colorWanted == BLUE) {
+                        directionTiles = NOWHERE;
+                    }
+                    if (colorWanted == GREEN) {
+                        directionTiles = RIGHT_1TILE;
+                    }
+                    if (colorWanted == YELLOW) {
+                        directionTiles = LEFT_1TILE;
+                    }
+                    break;
 
-            if (currentColor == GREEN) {
-                if (colorWanted == RED) {
-                    directionTiles = RIGHT1;
-                }
-                if (colorWanted == BLUE) {
-                    directionTiles = LEFT1;
-                }
-                if (colorWanted == GREEN) {
-                    directionTiles = NOWHERE;
-                }
-                if (colorWanted == YELLOW) {
-                    directionTiles = LEFT2;
-                }
-            }
+                case GREEN:
+                    if (colorWanted == RED) {
+                        directionTiles = RIGHT_1TILE;
+                    }
+                    if (colorWanted == BLUE) {
+                        directionTiles = LEFT_1TILE;
+                    }
+                    if (colorWanted == GREEN) {
+                        directionTiles = NOWHERE;
+                    }
+                    if (colorWanted == YELLOW) {
+                        directionTiles = LEFT_2TILES;
+                    }
+                    break;
 
-            if (currentColor == YELLOW) {
-                if (colorWanted == RED) {
-                    directionTiles = LEFT1;
-                }
-                if (colorWanted == BLUE) {
-                    directionTiles = RIGHT1;
-                }
-                if (colorWanted == GREEN) {
-                    directionTiles = LEFT2;
-                }
-                if (colorWanted == YELLOW) {
-                    directionTiles = NOWHERE;
-                }
+                case YELLOW:
+                    if (colorWanted == RED) {
+                        directionTiles = LEFT_1TILE;
+                    }
+                    if (colorWanted == BLUE) {
+                        directionTiles = RIGHT_1TILE;
+                    }
+                    if (colorWanted == GREEN) {
+                        directionTiles = LEFT_2TILES;
+                    }
+                    if (colorWanted == YELLOW) {
+                        directionTiles = NOWHERE;
+                    }
+                    break;
             }
         }
         return directionTiles;
+    }
+
+    public int getTilesPassed() {
+        int tilesPassed = 0;
+        WheelColors oldColor = currentColor();
+        //Grab the current color
+        //Wait .3 seconds before grabbing the detected color again
+        Timer.delay(0.3);
+        WheelColors newColor = currentColor();
+
+        if (newColor != oldColor) {
+            tilesPassed++;
+            System.out.println(tilesPassed);
+        }
+        return tilesPassed;
     }
 }
