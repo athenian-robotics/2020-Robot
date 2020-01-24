@@ -14,16 +14,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ChangeIntakeMode;
 import frc.robot.commands.DriveArcade;
-import frc.robot.commands.DriveTank;
-import frc.robot.commands.RunIntake;
-import frc.robot.subsystems.ColorWheelSubsystem;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.lib.RobotType;
-
-import static frc.robot.Constants.ROBOT_TYPE;
 import frc.robot.commands.ShootLowGoal;
+import frc.robot.lib.RobotType;
 import frc.robot.subsystems.*;
 
 /**
