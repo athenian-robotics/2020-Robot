@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ChangeIntakeMode;
-import frc.robot.commands.DriveArcade;
-import frc.robot.commands.ShootLowGoal;
+import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
+//import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
+//import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.*;
 
 /**
@@ -36,17 +36,20 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
+
+  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
-  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+  //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
+  //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -86,6 +89,15 @@ public class RobotContainer {
     //MODE BUTTONS
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+    xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
+    xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
+
+    //Intake Controlls
+    //xboxLB.whenHeld(new IntakeTest(-0.8));
+    //xboxB.whenHeld(new IntakeTest(0.8));
+
+
     xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
@@ -131,6 +143,7 @@ public class RobotContainer {
 
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
+//      return new FollowTrajectory(autodrive);
       return null;
   }
 }
