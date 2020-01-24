@@ -218,4 +218,11 @@ public class ColorWheelUtils {
         }
     }
 
+
+    public void nearestColor2(WheelColors colorWanted) {
+        WheelColors currentColor = currentColor();
+        int tilesToGo = (32 + colorWanted.i - currentColor.i) % 4;
+
+    }
+
 }

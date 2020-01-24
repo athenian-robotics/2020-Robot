@@ -1,11 +1,13 @@
 package frc.robot.colorwheel;
 
 public enum WheelColors {
-    RED(0), YELLOW(1), BLUE(3), GREEN(2);
+    RED(1), YELLOW(2), GREEN(3), BLUE(4);
 
-    private final int i;
+    public final int i;
 
     WheelColors(int i) {
         this.i = i;
     }
+
+
 }
