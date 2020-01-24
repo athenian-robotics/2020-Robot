@@ -199,4 +199,23 @@ public class ColorWheelUtils {
         }
         return tilesPassed;
     }
+
+
+    public void moveTiles(int tilesToMove) {
+        WheelColors currentColor1 = currentColor();
+        Timer.delay(0.2);
+        WheelColors currentColor2 = currentColor();
+
+        for (int i = 0; i < tilesToMove; i++) {
+            if (currentColor1 != currentColor2) {
+                tilesToMove--;
+            }
+            if (tilesToMove != 0) {
+                //TURN MOTORS ON
+            } else {
+                //TURN MOTORS OFF
+            }
+        }
+    }
+
 }
