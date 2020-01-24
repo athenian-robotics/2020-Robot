@@ -23,6 +23,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.lib.RobotType;
 
 import static frc.robot.Constants.ROBOT_TYPE;
+import frc.robot.commands.ShootLowGoal;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -47,8 +49,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
+  private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -89,9 +92,11 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //MODE BUTTONS
-    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
+//    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
     xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping
