@@ -62,6 +62,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         drive = new DifferentialDrive(leftMotors, rightMotors);
         drive.setDeadband(0.02);
         drive.setMaxOutput(speedScale);
+
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {

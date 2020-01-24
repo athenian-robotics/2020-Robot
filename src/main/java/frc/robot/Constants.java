@@ -21,8 +21,8 @@ public final class Constants {
 
         /**
          * Change these to 0, 1, 2, 3 for any other robot than OFFICIAL
-         *
-         * Change these to 1, 2, 3, 0 for OFFICIAL 
+         * <p>
+         * Change these to 1, 2, 3, 0 for OFFICIAL
          */
         public static final int leftMotor1Port = 0;
         public static final int leftMotor2Port = 1;
@@ -45,6 +45,10 @@ public final class Constants {
     public static final class OIConstants {
         public static final int xboxControllerPort = 0;
         public static final int fightStickPort = 1;
+    }
+
+    public static final class MechanismConstants {
+        public static final int shooterMotorPort = 4;
     }
 
 }
