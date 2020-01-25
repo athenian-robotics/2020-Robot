@@ -29,8 +29,9 @@ public class DriveArcade extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drivetrainSubsystem.arcadeDrive(xboxController.getY(GenericHID.Hand.kLeft),
-                xboxController.getX(GenericHID.Hand.kRight));
+//        System.out.println(-xboxController.getY(GenericHID.Hand.kLeft));
+        drivetrainSubsystem.arcadeDrive(-xboxController.getY(GenericHID.Hand.kLeft),
+                -xboxController.getX(GenericHID.Hand.kRight));
     }
 
     // Called once the command ends or is interrupted.

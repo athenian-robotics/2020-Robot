@@ -30,8 +30,8 @@ public class DriveTank extends CommandBase {
     @Override
     public void execute() {
 
-        drivetrainSubsystem.tankDrive(xboxController.getY(GenericHID.Hand.kLeft),
-                xboxController.getY(GenericHID.Hand.kRight));
+        drivetrainSubsystem.tankDrive(-xboxController.getY(GenericHID.Hand.kLeft),
+                -xboxController.getY(GenericHID.Hand.kRight));
     }
 
     // Called once the command ends or is interrupted.
