@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.robot.colorwheel.ColorWheelUtils;
+
+import static frc.robot.colorwheel.WheelColors.RED;
 
 
 public class ColorWheelSubsystem extends SubsystemBase {
@@ -16,6 +19,7 @@ public class ColorWheelSubsystem extends SubsystemBase {
      */
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+    private final ColorWheelUtils colorWheelUtils = new ColorWheelUtils();
     private double colorSensorIR;
     private double colorSensorProximity;
 
@@ -67,6 +71,10 @@ public class ColorWheelSubsystem extends SubsystemBase {
 
         //Use ColorWatcher with currentColor to calculate # of rotations on ColorWheel
         //colorWatcher.getTilesPassed();
+
+        colorWheelUtils.currentColor();
+        colorWheelUtils.nearestColorTiles(RED);
+
 
     }
 

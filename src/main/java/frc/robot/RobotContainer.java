@@ -46,7 +46,6 @@ public class RobotContainer {
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
 
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem("limelight");
   private final DashboardSendables dashboardSendables = new DashboardSendables();
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
 
@@ -59,7 +58,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     buttonSetup();
-    configureButtonBindings();
+      //configureButtonBindings();
+      colorWheelSubsystem.periodic();
 
 
 
@@ -81,6 +81,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void buttonSetup() {
+    /*
     xboxA = new JoystickButton(xboxController, 1);
     xboxB = new JoystickButton(xboxController, 2);
     xboxX = new JoystickButton(xboxController, 3);
@@ -91,6 +92,8 @@ public class RobotContainer {
     xboxStart = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
+
+     */
   }
 
   private void configureButtonBindings() {
