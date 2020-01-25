@@ -35,7 +35,7 @@ public final class Constants {
         public static final int encoderLeftB = 2;
         public static final int encoderRightA = 5;
         public static final int encoderRightB = 6;
-        public static double speedScale = 1.0;
+        public static double speedScale = 0.6;
 
         public static double EncoderDistancePerPulse = 1.0/2048.0;
 

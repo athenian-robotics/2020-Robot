@@ -43,9 +43,9 @@ public class RobotContainer {
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
-  //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final FollowTrajectory autonomous = new FollowTrajectory(drivetrain);
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -90,8 +90,11 @@ public class RobotContainer {
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
     xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
-    xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
     xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
+
+    //Example Autonomous Command
+    xboxB.whenPressed(autonomous.ExampleAutonomousCommand());
 
     //Intake Controlls
     //xboxLB.whenHeld(new IntakeTest(-0.8));
@@ -143,7 +146,8 @@ public class RobotContainer {
 
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
-//      return new FollowTrajectory(autodrive);
+      //Autonomous Command that doesnt work
+      //return new FollowTrajectory(drivetrain);
       return null;
   }
 }
