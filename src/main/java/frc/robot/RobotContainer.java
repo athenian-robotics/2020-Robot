@@ -98,7 +98,7 @@ public class RobotContainer {
     xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
     xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
     xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
-    xboxX.whenPressed(new TurnToBall(limeLightSubsystem));
+    xboxX.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
 
     //Intake Controlls
     //xboxLB.whenHeld(new IntakeTest(-0.8));

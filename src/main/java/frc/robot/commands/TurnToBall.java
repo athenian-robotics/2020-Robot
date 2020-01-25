@@ -2,24 +2,30 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 
 public class TurnToBall extends CommandBase {
-    private final LimeLightSubsystem subsystem;
+    private final LimeLightSubsystem limelight;
+    private final DrivetrainSubsystem drivetrain;
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
-    public TurnToBall(LimeLightSubsystem limelight) {
+    public TurnToBall(LimeLightSubsystem limelight, DrivetrainSubsystem drivetrain) {
         // Use addRequirements() here to declare subsystem dependencies.
-        this.subsystem = limelight;
-        addRequirements(subsystem);
+        this.limelight = limelight;
+        addRequirements(this.limelight);
+        this.drivetrain = drivetrain;
+        addRequirements(this.drivetrain);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        double[] list = this.subsystem.grabValues();
-        SmartDashboard.putNumber("turntoball tv", list[0]);
+        double[] list = this.limelight.grabValues();
+        double angleToTurn = list[3];
+        SmartDashboard.putNumber("turntoball tx", angleToTurn);
+        new AutoTurnAngle(this.drivetrain, angleToTurn);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
