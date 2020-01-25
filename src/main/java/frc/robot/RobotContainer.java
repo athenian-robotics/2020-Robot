@@ -36,12 +36,13 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-
   private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
+  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+  private final DashboardSendables dashboardSendables = new DashboardSendables();
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -109,6 +110,7 @@ public class RobotContainer {
     //xboxA.whenPressed(new ButtonDriveTest(drivetrain, 0.0, 0.0));
     //xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
     //xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
+
 
     /**
      * GearBoxTest xbox controller Mapping
