@@ -45,7 +45,7 @@ public class RobotContainer {
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final FollowTrajectory autonomous = new FollowTrajectory(drivetrain);
+  private final FollowTrajectory followTrajectory = new FollowTrajectory(drivetrain);
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -94,7 +94,7 @@ public class RobotContainer {
     xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //Example Autonomous Command
-    xboxB.whenPressed(autonomous.ExampleAutonomousCommand());
+    xboxB.whenPressed(followTrajectory.ExampleAutonomousCommand());
 
     //Intake Controlls
     //xboxLB.whenHeld(new IntakeTest(-0.8));

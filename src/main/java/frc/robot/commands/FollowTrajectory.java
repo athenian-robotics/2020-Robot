@@ -14,26 +14,12 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 import java.util.List;
 
 public class FollowTrajectory extends CommandBase {
-    public static final double ksVolts = 1.31;
-    public static final double kvVoltSecondsPerMeter = 1.98;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.156;
-
-    public static final double kPDriveVel = 0.538;
-
-    public static final double kTrackwidthMeters = 0.65;
-    public static final DifferentialDriveKinematics kDriveKinematics =
-            new DifferentialDriveKinematics(kTrackwidthMeters);
-
-    public static final double kMaxSpeedMetersPerSecond = 1;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1;
-
-    public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
 
     PIDController pid = new PIDController(0.39, 0.0, 0.01);
 
@@ -47,7 +33,6 @@ public class FollowTrajectory extends CommandBase {
     }
 
     public void initialize() {
-
     }
 
     public void execute() {
@@ -69,18 +54,18 @@ public class FollowTrajectory extends CommandBase {
         // Create a voltage constraint to ensure we don't accelerate too fast
         var autoVoltageConstraint =
                 new DifferentialDriveVoltageConstraint(
-                        new SimpleMotorFeedforward(ksVolts,
-                                kvVoltSecondsPerMeter,
-                                kaVoltSecondsSquaredPerMeter),
-                        kDriveKinematics,
+                        new SimpleMotorFeedforward(Constants.AutonomousConstants.ksVolts,
+                                Constants.AutonomousConstants.kvVoltSecondsPerMeter,
+                                Constants.AutonomousConstants.kaVoltSecondsSquaredPerMeter),
+                        Constants.AutonomousConstants.kDriveKinematics,
                         10);
 
         // Create config for trajectory
         TrajectoryConfig config =
-                new TrajectoryConfig(kMaxSpeedMetersPerSecond,
-                        kMaxAccelerationMetersPerSecondSquared)
+                new TrajectoryConfig(Constants.AutonomousConstants.kMaxSpeedMetersPerSecond,
+                        Constants.AutonomousConstants.kMaxAccelerationMetersPerSecondSquared)
                         // Add kinematics to ensure max speed is actually obeyed
-                        .setKinematics(kDriveKinematics)
+                        .setKinematics(Constants.AutonomousConstants.kDriveKinematics)
                         // Apply the voltage constraint
                         .addConstraint(autoVoltageConstraint);
 
@@ -102,14 +87,14 @@ public class FollowTrajectory extends CommandBase {
         RamseteCommand ramseteCommand = new RamseteCommand(
                 exampleTrajectory,
                 drivetrain::getPose,
-                new RamseteController(kRamseteB, kRamseteZeta),
-                new SimpleMotorFeedforward(ksVolts,
-                        kvVoltSecondsPerMeter,
-                        kaVoltSecondsSquaredPerMeter),
-                kDriveKinematics,
+                new RamseteController(Constants.AutonomousConstants.kRamseteB, Constants.AutonomousConstants.kRamseteZeta),
+                new SimpleMotorFeedforward(Constants.AutonomousConstants.ksVolts,
+                        Constants.AutonomousConstants.kvVoltSecondsPerMeter,
+                        Constants.AutonomousConstants.kaVoltSecondsSquaredPerMeter),
+                Constants.AutonomousConstants.kDriveKinematics,
                 drivetrain::getWheelSpeeds,
-                new PIDController(kPDriveVel, 0, 0),
-                new PIDController(kPDriveVel, 0, 0),
+                new PIDController(Constants.AutonomousConstants.kPDriveVel, 0, 0),
+                new PIDController(Constants.AutonomousConstants.kPDriveVel, 0, 0),
                 // RamseteCommand passes volts to the callback
                 drivetrain::tankDriveVolts,
                 drivetrain
