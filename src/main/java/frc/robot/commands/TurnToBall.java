@@ -25,7 +25,7 @@ public class TurnToBall extends CommandBase {
         double[] list = this.limelight.grabValues();
         double angleToTurn = list[3];
         SmartDashboard.putNumber("turntoball tx", angleToTurn);
-        new AutoTurnAngle(this.drivetrain, angleToTurn);
+        new AutoTurnAngle(this.drivetrain, angleToTurn).initialize();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +41,7 @@ public class TurnToBall extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
 
