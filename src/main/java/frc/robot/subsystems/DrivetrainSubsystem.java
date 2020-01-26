@@ -32,10 +32,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SpeedControllerGroup leftMotors;
     SpeedControllerGroup rightMotors;
 
-    public DrivetrainSubsystem() {
-        this(JANKBOT);
-    }
-
     public DrivetrainSubsystem(RobotType robotType) {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
