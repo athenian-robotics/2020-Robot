@@ -29,7 +29,7 @@ public class LimeLightSubsystem extends SubsystemBase {
     double targetRoll;
 
     public LimeLightSubsystem(String tableName) {
-        limelight = NetworkTableInstance.getDefault().getTable(tableName);
+        this.limelight = NetworkTableInstance.getDefault().getTable(tableName);
     }
 
     public void periodic() {
@@ -70,4 +70,7 @@ public class LimeLightSubsystem extends SubsystemBase {
         return list;
     }
 
+    public NetworkTable grabNetworkTable() {
+        return this.limelight;
+    }
 }
