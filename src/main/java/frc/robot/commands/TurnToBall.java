@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -11,7 +10,6 @@ public class TurnToBall extends CommandBase {
     private final LimeLightSubsystem limelight;
     private final DrivetrainSubsystem drivetrain;
 
-    Timer driveTimer = new Timer();
     double tolerance;
     double setpoint;
     double Kp = 0.004;
