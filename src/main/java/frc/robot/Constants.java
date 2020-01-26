@@ -19,12 +19,11 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
  */
 public final class Constants {
 
+
     public static final class DriveConstants {
 
         /**
-         * Change these to 0, 1, 2, 3 for any other robot than OFFICIAL
-         * <p>
-         * Change these to 1, 2, 3, 0 for OFFICIAL
+         * Change these to 0, 1, 2, 3 if they aren't there
          */
         public static final int leftMotor1Port = 0;
         public static final int leftMotor2Port = 1;
