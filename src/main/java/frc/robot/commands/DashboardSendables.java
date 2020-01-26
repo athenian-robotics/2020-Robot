@@ -12,7 +12,7 @@ public class DashboardSendables extends CommandBase {
     private final int testInt = 2;
     private final boolean testingDashboard = true;
     ShuffleboardTab testBooleanColors = Shuffleboard.getTab("testBooleanColors");
-    private DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
+//    private DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
 
     public DashboardSendables() {
 
