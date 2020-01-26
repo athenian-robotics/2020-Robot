@@ -37,7 +37,7 @@ public class RobotContainer {
   public static JoystickButton xboxRS;
 
 
-  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -89,9 +89,13 @@ public class RobotContainer {
     //MODE BUTTONS
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
-    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
-    xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
+    //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
+    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05))
+    // ..xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
+
+    //Mechanism Test Code
+    xboxY.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
     //Example Autonomous Command
     xboxB.whenPressed(followTrajectory.ExampleAutonomousCommand());
@@ -101,8 +105,8 @@ public class RobotContainer {
     //xboxB.whenHeld(new IntakeTest(0.8));
 
 
-    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    //xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
@@ -147,7 +151,7 @@ public class RobotContainer {
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
       //Autonomous Command that doesnt work
-      //return new FollowTrajectory(drivetrain);
-      return null;
+      return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
+      //return null;
   }
 }

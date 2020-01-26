@@ -37,7 +37,6 @@ public class FollowTrajectory extends CommandBase {
 
     public void execute() {
 
-
     }
 
     public boolean isFinished() {

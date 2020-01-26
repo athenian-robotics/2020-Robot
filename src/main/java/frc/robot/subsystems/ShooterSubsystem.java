@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
 
 public class ShooterSubsystem extends SubsystemBase {
+
     public boolean isRunning = false;
     private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
 

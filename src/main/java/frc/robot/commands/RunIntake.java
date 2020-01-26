@@ -14,8 +14,7 @@ public class RunIntake extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.setSpeed(0);
-        intake.setSpeed(0.4);
+        intake.startIntake();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -27,7 +26,7 @@ public class RunIntake extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        intake.setSpeed(0);
+        intake.stopIntake();
     }
 
     // Returns true when the command should end.
