@@ -15,10 +15,8 @@ public class ShooterSubsystem extends SubsystemBase {
     public final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
 
     public void FlatShooterSubsystem() {
-
         //final motor_placeholder shooterMotor;
         //final pneumatic_placeholder shooterPiston;
-
     }
 
     public void startShooter() {
@@ -44,7 +42,6 @@ public class ShooterSubsystem extends SubsystemBase {
             startShooter();
         }
     }
-
 
     @Override
     public void periodic() {

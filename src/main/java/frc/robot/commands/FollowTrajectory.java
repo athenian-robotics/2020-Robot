@@ -21,18 +21,15 @@ import java.util.List;
 
 public class FollowTrajectory extends CommandBase {
 
-    PIDController pid = new PIDController(0.39, 0.0, 0.01);
-
     private final DrivetrainSubsystem drivetrain;
 
-
     public FollowTrajectory(DrivetrainSubsystem drivetrain) {
-        this.drivetrain = drivetrain;
-        pid.setTolerance(0.5);
+        this.drivetrain = drivetrain;;
         addRequirements(drivetrain);
     }
 
     public void initialize() {
+        drivetrain.resetOdometry(new Pose2d());
     }
 
     public void execute() {
@@ -74,11 +71,12 @@ public class FollowTrajectory extends CommandBase {
                 new Pose2d(0, 0, new Rotation2d(0)),
                 // Pass through these two interior waypoints, making an 's' curve path
                 List.of(
-                        new Translation2d(1, 1)//,
-                        //new Translation2d(2, -1)
+                        new Translation2d(1, 1),
+                        new Translation2d(2, 2),
+                        new Translation2d(2,0)
                 ),
                 // End 3 meters straight ahead of where we started, facing forward
-                new Pose2d(3, 0, new Rotation2d(0)),
+                new Pose2d(0, 0, new Rotation2d(0)),
                 // Pass config
                 config
         );

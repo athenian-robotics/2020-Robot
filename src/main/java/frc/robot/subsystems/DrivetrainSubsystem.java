@@ -117,6 +117,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
         SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
         SmartDashboard.putNumber("Gyro0", gyro.getAngle());
+        SmartDashboard.putNumber("PoseX", getPose().getTranslation().getX());
+        SmartDashboard.putNumber("PoseY", getPose().getTranslation().getY());
+        SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
+
+
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
                 rightEncoder.getDistance());
