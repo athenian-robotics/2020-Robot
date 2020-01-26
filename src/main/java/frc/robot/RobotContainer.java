@@ -14,9 +14,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
+import frc.robot.lib.controllers.FightStick;
+import frc.robot.subsystems.*;
+
+import static frc.robot.lib.controllers.FightStick.fightStickA;
+import static frc.robot.lib.controllers.FightStick.fightStickX;
+
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
-import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,6 +41,9 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
+//hello world, wait this isn't python
+  //machining over prog anyday
+
   private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
@@ -44,13 +52,12 @@ public class RobotContainer {
   //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final DashboardSendables dashboardSendables = new DashboardSendables();
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
-  //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Define all OI devices here
-  XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
-
+  public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
+  public static FightStick fightStick = new FightStick();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -61,6 +68,7 @@ public class RobotContainer {
 
     //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
     //  We do not need to register subsystems, this is done automatically
+    //eat a horse...
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
@@ -73,6 +81,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
+  // suck my hex shaft
   private void buttonSetup() {
     xboxA = new JoystickButton(xboxController, 1);
     xboxB = new JoystickButton(xboxController, 2);
@@ -84,10 +94,14 @@ public class RobotContainer {
     xboxStart = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
+
+
+
   }
 
   private void configureButtonBindings() {
     //MODE BUTTONS
+    //imagine being in prog
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
     xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
@@ -95,12 +109,16 @@ public class RobotContainer {
     xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //Intake Controlls
+    //you misspelled controllls
     //xboxLB.whenHeld(new IntakeTest(-0.8));
     //xboxB.whenHeld(new IntakeTest(0.8));
 
 
     xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    //p e n i s
+
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
