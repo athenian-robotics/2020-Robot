@@ -12,10 +12,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.*;
+import frc.robot.commands.ChangeIntakeMode;
+import frc.robot.commands.DriveArcade;
+import frc.robot.commands.ShootLowGoal;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 import static frc.robot.lib.controllers.FightStick.fightStickA;
 import static frc.robot.lib.controllers.FightStick.fightStickX;
@@ -101,24 +106,20 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     //MODE BUTTONS
-    //imagine being in prog
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
     //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
     //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
     //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
-    //Intake Controlls
-    //you misspelled controllls
     //xboxLB.whenHeld(new IntakeTest(-0.8));
     //xboxB.whenHeld(new IntakeTest(0.8));
     xboxX.whenPressed(new ShootLowGoal(shooterSubsystem));
     xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
     //Fight Stick Code
-    //fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
-    //fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    //p e n i s
+    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
