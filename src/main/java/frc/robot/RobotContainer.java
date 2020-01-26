@@ -44,13 +44,13 @@ public class RobotContainer {
 //hello world, wait this isn't python
   //machining over prog anyday
 
-  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
   // The robot's subsystems and commands are defined here...
-  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+//  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  private final DashboardSendables dashboardSendables = new DashboardSendables();
+  //private final DashboardSendables dashboardSendables = new DashboardSendables();
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -104,19 +104,20 @@ public class RobotContainer {
     //imagine being in prog
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
-    xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
-    xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
+    //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
+    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //Intake Controlls
     //you misspelled controllls
     //xboxLB.whenHeld(new IntakeTest(-0.8));
     //xboxB.whenHeld(new IntakeTest(0.8));
+    xboxX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
-
-    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
-    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    //Fight Stick Code
+    //fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    //fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     //p e n i s
 
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
