@@ -42,11 +42,14 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
-  //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final FollowTrajectory followTrajectory = new FollowTrajectory(drivetrain);
+
+  //Declaring Color Wheel Subsystem screws up driving, Declaring Dashboard sendables kills robot code (robot wont run) need to fix these issues
+  //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
+  //private final DashboardSendables dashboardSendables = new DashboardSendables();
 
   // Define all OI devices here
   XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -94,14 +97,14 @@ public class RobotContainer {
     //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05))
     // ..xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
-    //Mechanism Test Code
+    //Mechanism Test Code with Xbox controller
     xboxY.whenPressed(new ShootLowGoal(shooterSubsystem));
     xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     xboxX.whenPressed(new AutoDriveFeedForwardDistance(drivetrain, 1.0));
 
     //Example Autonomous Command
-
     xboxB.whenPressed(followTrajectory.ExampleAutonomousCommand());
+
 
     //Intake Controlls
     //xboxLB.whenHeld(new IntakeTest(-0.8));
