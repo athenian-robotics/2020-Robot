@@ -3,8 +3,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber;
 
 // See http://docs.limelightvision.io/en/latest/networktables_api.html
 
@@ -44,25 +45,25 @@ public class LimeLightSubsystem extends SubsystemBase {
 
         //I'm really not sure if the names match with the values, we should check this later
         if (pnpvalues[0] != 0) {
-            this.targetX = camTran.getDoubleArray(helpme)[0];
-            this.targetY = camTran.getDoubleArray(helpme)[1];
-            this.targetZ = camTran.getDoubleArray(helpme)[2];
-            this.targetPitch = camTran.getDoubleArray(helpme)[3];
-            this.targetYaw = camTran.getDoubleArray(helpme)[4];
-            this.targetRoll = camTran.getDoubleArray(helpme)[5];
+            this.targetX = pnpvalues[0];
+            this.targetY = pnpvalues[1];
+            this.targetZ = pnpvalues[2];
+            this.targetPitch = pnpvalues[3];
+            this.targetYaw = pnpvalues[4];
+            this.targetRoll = pnpvalues[5];
         }
 
-        SmartDashboard.putNumber("Valid Target", this.tv);
-        SmartDashboard.putNumber("Target Area", this.ta);
-        SmartDashboard.putNumber("Image Rotation", this.ts);
-        SmartDashboard.putNumber("Horizontal Crosshair Offset", this.tx);
-        SmartDashboard.putNumber("Vertical Crosshair Offset", this.ty);
-        SmartDashboard.putNumber("Target X", this.targetX);
-        SmartDashboard.putNumber("Target Y", this.targetY);
-        SmartDashboard.putNumber("Target Z", this.targetZ);
-        SmartDashboard.putNumber("Target Pitch", this.targetPitch);
-        SmartDashboard.putNumber("Target Yaw", this.targetYaw);
-        SmartDashboard.putNumber("Target Roll", this.targetRoll);
+        putNumber("Valid Target", this.tv);
+        putNumber("Target Area", this.ta);
+        putNumber("Image Rotation", this.ts);
+        putNumber("Horizontal Crosshair Offset", this.tx);
+        putNumber("Vertical Crosshair Offset", this.ty);
+        putNumber("Target X", this.targetX);
+        putNumber("Target Y", this.targetY);
+        putNumber("Target Z", this.targetZ);
+        putNumber("Target Pitch", this.targetPitch);
+        putNumber("Target Yaw", this.targetYaw);
+        putNumber("Target Roll", this.targetRoll);
     }
 
     public double[] grabValues() {
