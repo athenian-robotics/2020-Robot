@@ -36,7 +36,7 @@ public final class Constants {
         public static final int encoderLeftB = 2;
         public static final int encoderRightA = 5;
         public static final int encoderRightB = 6;
-        public static double speedScale = 0.6;
+        public static double speedScale = 1.0;
 
         public static double EncoderDistancePerPulse = 1.0/2048.0;
 
@@ -45,9 +45,9 @@ public final class Constants {
 
     public static final class AutonomousConstants{
 
-        public static final double ksVolts = 1.31;
-        public static final double kvVoltSecondsPerMeter = 1.98;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.156;
+        public static final double ksVolts = 0.8; //1.31;
+        public static final double kvVoltSecondsPerMeter = 0.3; //1.98
+        public static final double kaVoltSecondsSquaredPerMeter = 0.04; //0.156
 
         public static final double kPDriveVel = 0.538;
 

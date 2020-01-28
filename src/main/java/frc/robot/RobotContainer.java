@@ -100,9 +100,11 @@ public class RobotContainer {
     //Mechanism Test Code with Xbox controller
     xboxY.whenPressed(new ShootLowGoal(shooterSubsystem));
     xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxX.whenPressed(new AutoDriveFeedForwardDistance(drivetrain, 1.0));
 
     //Example Autonomous Command
-    //xboxB.whenPressed(followTrajectory.ExampleAutonomousCommand());
+    xboxB.whenPressed(followTrajectory.ExampleAutonomousCommand());
+
 
     //Intake Controlls
     //xboxLB.whenHeld(new IntakeTest(-0.8));

@@ -32,10 +32,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SpeedControllerGroup leftMotors;
     SpeedControllerGroup rightMotors;
 
-    public DrivetrainSubsystem() {
-        this(JANKBOT);
-    }
-
     public DrivetrainSubsystem(RobotType robotType) {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
@@ -121,6 +117,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
         SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
         SmartDashboard.putNumber("Gyro0", gyro.getAngle());
+        SmartDashboard.putNumber("PoseX", getPose().getTranslation().getX());
+        SmartDashboard.putNumber("PoseY", getPose().getTranslation().getY());
+        SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
+
+
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
                 rightEncoder.getDistance());
