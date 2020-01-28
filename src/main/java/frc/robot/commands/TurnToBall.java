@@ -12,6 +12,7 @@ public class TurnToBall extends CommandBase {
 
     double tolerance;
     double setpoint;
+    double validTarget;
     double Kp = 0.004;
     double Ki = 0.0;
     double Kd = 0.001;
@@ -29,7 +30,6 @@ public class TurnToBall extends CommandBase {
 
         this.tolerance = 0.5;
         pid.setTolerance(tolerance);
-        addRequirements(drivetrain);
     }
 
     // Called when the command is initially scheduled.
@@ -38,18 +38,26 @@ public class TurnToBall extends CommandBase {
         this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(1);
         double[] list = this.limelight.grabValues();
         double angleToTurn = list[3];
+
+        double validTarget = list[0];
+        this.validTarget = validTarget;
+
         SmartDashboard.putNumber("turntoball tx", angleToTurn);
 
-        setpoint = drivetrain.getGyroAngle() + angleToTurn + tolerance;
-        pid.setSetpoint(setpoint);
+        if (this.validTarget == 1) {
+            setpoint = drivetrain.getGyroAngle() + angleToTurn + tolerance;
+            pid.setSetpoint(setpoint);
+        }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        double power = pid.calculate(drivetrain.getGyroAngle());
-        drivetrain.tankDrive(power, -power);
-        SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
+        if (this.validTarget == 1) {
+            double power = pid.calculate(drivetrain.getGyroAngle());
+            drivetrain.tankDrive(power, -power);
+            SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
+        }
     }
 
     // Called once the command ends or is interrupted.
@@ -60,7 +68,9 @@ public class TurnToBall extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (pid.getPositionError() < 5) {
+        if ((pid.getPositionError() < 5) && (pid.getPositionError() > -5)) {
+            return true;
+        } else if (this.validTarget == 1) {
             return true;
         } else {
             return false;
