@@ -12,11 +12,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isRunning = false;
     private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
-    public final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
+    private final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
+
 
     public void FlatShooterSubsystem() {
+
         //final motor_placeholder shooterMotor;
         //final pneumatic_placeholder shooterPiston;
+
     }
 
     public void startShooter() {

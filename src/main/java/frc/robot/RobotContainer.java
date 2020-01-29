@@ -12,8 +12,20 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.*;
+import frc.robot.commands.ChangeIntakeMode;
+import frc.robot.commands.DriveArcade;
+import frc.robot.commands.FollowTrajectory;
+import frc.robot.commands.ShootLowGoal;
 import frc.robot.lib.RobotType;
+import frc.robot.lib.controllers.FightStick;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+
+import static frc.robot.lib.controllers.FightStick.fightStickA;
+import static frc.robot.lib.controllers.FightStick.fightStickX;
+
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
 import frc.robot.subsystems.*;
@@ -36,24 +48,18 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-
   private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
-
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
+  //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final FollowTrajectory followTrajectory = new FollowTrajectory(drivetrain);
-
-  //Declaring Color Wheel Subsystem screws up driving, Declaring Dashboard sendables kills robot code (robot wont run) need to fix these issues
-  //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  //private final DashboardSendables dashboardSendables = new DashboardSendables();
 
   // Define all OI devices here
-  XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
-
+  public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
+  public static FightStick fightStick = new FightStick();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -94,25 +100,21 @@ public class RobotContainer {
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
     //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
-    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05))
-    // ..xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
-
-    //Mechanism Test Code with Xbox controller
-    xboxY.whenPressed(new ShootLowGoal(shooterSubsystem));
-    xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxX.whenPressed(new AutoDriveFeedForwardDistance(drivetrain, 1.0));
-
-    //Example Autonomous Command
-    xboxB.whenPressed(followTrajectory.ExampleAutonomousCommand());
-
+    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //Intake Controlls
     //xboxLB.whenHeld(new IntakeTest(-0.8));
     //xboxB.whenHeld(new IntakeTest(0.8));
+    xboxX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
+    //Fight Stick Code
+    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
-    //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    //xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
