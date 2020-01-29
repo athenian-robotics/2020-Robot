@@ -19,8 +19,6 @@ import frc.robot.lib.RobotType;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
-
 
     public static final class DriveConstants {
 
@@ -32,8 +30,6 @@ public final class Constants {
         public static final int rightMotor1Port = 2;
         public static final int rightMotor2Port = 3;
 
-
-
         public static final int encoderLeftA = 1;
         public static final int encoderLeftB = 2;
         public static final int encoderRightA = 5;
@@ -44,9 +40,7 @@ public final class Constants {
 
         public static double minDrivePower = 0.32;
     }
-
     public static final class AutonomousConstants{
-
         public static final double ksVolts = 0.8; //1.31;
         public static final double kvVoltSecondsPerMeter = 0.3; //1.98
         public static final double kaVoltSecondsSquaredPerMeter = 0.04; //0.156
@@ -59,15 +53,12 @@ public final class Constants {
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
     }
-
     public static final class OIConstants {
         public static final int xboxControllerPort = 0;
         public static final int fightStickPort = 1;
     }
-
     public static final class MechanismConstants {
         public static final int intakeMotorPort = 4;
         public static final int shooterMotorPort = 5;
     }
-
 }
