@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ChangeIntakeMode;
 import frc.robot.commands.DriveArcade;
+import frc.robot.commands.FollowTrajectory;
 import frc.robot.commands.ShootLowGoal;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
@@ -50,10 +51,7 @@ public class RobotContainer {
   private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
-//  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
-  //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
-  //private final DashboardSendables dashboardSendables = new DashboardSendables();
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
