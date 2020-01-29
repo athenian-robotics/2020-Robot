@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import frc.robot.lib.RobotType;
 
 /**
@@ -44,13 +45,29 @@ public final class Constants {
         public static double minDrivePower = 0.32;
     }
 
+    public static final class AutonomousConstants{
+
+        public static final double ksVolts = 0.8; //1.31;
+        public static final double kvVoltSecondsPerMeter = 0.3; //1.98
+        public static final double kaVoltSecondsSquaredPerMeter = 0.04; //0.156
+        public static final double kPDriveVel = 0.538;
+        public static final double kTrackwidthMeters = 0.65;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+                new DifferentialDriveKinematics(kTrackwidthMeters);
+        public static final double kMaxSpeedMetersPerSecond = 1;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1;
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+    }
+
     public static final class OIConstants {
         public static final int xboxControllerPort = 0;
         public static final int fightStickPort = 1;
     }
 
     public static final class MechanismConstants {
-        public static final int shooterMotorPort = 4;
+        public static final int intakeMotorPort = 4;
+        public static final int shooterMotorPort = 5;
     }
 
 }
