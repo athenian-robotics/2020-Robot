@@ -27,6 +27,7 @@ import static frc.robot.lib.controllers.FightStick.fightStickX;
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -46,10 +47,7 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-//hello world, wait this isn't python
-  //machining over prog anyday
-
-  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
 //  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
@@ -57,6 +55,7 @@ public class RobotContainer {
   //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   //private final DashboardSendables dashboardSendables = new DashboardSendables();
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
+  //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
@@ -73,7 +72,6 @@ public class RobotContainer {
 
     //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
     //  We do not need to register subsystems, this is done automatically
-    //eat a horse...
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
@@ -86,8 +84,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-
-  // suck my hex shaft
   private void buttonSetup() {
     xboxA = new JoystickButton(xboxController, 1);
     xboxB = new JoystickButton(xboxController, 2);
@@ -99,9 +95,6 @@ public class RobotContainer {
     xboxStart = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
-
-
-
   }
 
   private void configureButtonBindings() {
@@ -112,6 +105,7 @@ public class RobotContainer {
     //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
     //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
+    //Intake Controlls
     //xboxLB.whenHeld(new IntakeTest(-0.8));
     //xboxB.whenHeld(new IntakeTest(0.8));
     xboxX.whenPressed(new ShootLowGoal(shooterSubsystem));
@@ -121,6 +115,8 @@ public class RobotContainer {
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
+    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
@@ -165,7 +161,8 @@ public class RobotContainer {
 
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
-//      return new FollowTrajectory(autodrive);
-      return null;
+      //Autonomous Command that doesnt work
+      return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
+      //return null;
   }
 }
