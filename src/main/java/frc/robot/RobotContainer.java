@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ChangeIntakeMode;
-import frc.robot.commands.DriveArcade;
-import frc.robot.commands.FollowTrajectory;
-import frc.robot.commands.ShootLowGoal;
+import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -54,6 +51,7 @@ public class RobotContainer {
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Define all OI devices here
@@ -114,6 +112,7 @@ public class RobotContainer {
 
     xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxB.whenHeld(new RunWinchLeft(climberSubsystem));
     //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**

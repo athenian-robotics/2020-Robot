@@ -60,5 +60,9 @@ public final class Constants {
     public static final class MechanismConstants {
         public static final int intakeMotorPort = 4;
         public static final int shooterMotorPort = 5;
+        public static final int climberWinchLeftPort = 6;
+        public static final int climberWinchRightPort = 7;
+        public static final int climberTelescopeLeftPort = 8;
+        public static final int climberTelescopeRightPort = 9;
     }
 }
