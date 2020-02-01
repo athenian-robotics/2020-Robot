@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ChangeIntakeMode;
-import frc.robot.commands.DriveArcade;
-import frc.robot.commands.FollowTrajectory;
-import frc.robot.commands.ShootLowGoal;
+import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -81,6 +78,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
   private void buttonSetup() {
     xboxA = new JoystickButton(xboxController, 1);
     xboxB = new JoystickButton(xboxController, 2);
@@ -103,18 +101,18 @@ public class RobotContainer {
     //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //Intake Controlls
-    //xboxLB.whenHeld(new IntakeTest(-0.8));
-    //xboxB.whenHeld(new IntakeTest(0.8));
-    xboxX.whenPressed(new ShootLowGoal(shooterSubsystem));
-    xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxB.whenPressed(new GateCommand());
+    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxY.whenPressed(new RunColorWheel());
+
+    //Autonomous Control
+    //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
+    //xboxA.whenPressed(new PathWeaver());
 
     //Fight Stick Code
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-
-    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
-    //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping
