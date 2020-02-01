@@ -60,9 +60,6 @@ public final class Constants {
     public static final class MechanismConstants {
         public static final int intakeMotorPort = 4;
         public static final int shooterMotorPort = 5;
-    }
-
-    public static final class PneumaticsConstants {
-
+        public static final int BallLiftMotorPort = 6;
     }
 }
