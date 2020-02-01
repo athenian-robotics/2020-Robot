@@ -12,11 +12,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isRunning = false;
     private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
-    private final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
+    private final DoubleSolenoid solenoidlift = new DoubleSolenoid(2,3);
+    //private final DoubleSolenoid solenoid2 = new DoubleSolenoid(2,3);
 
 
-    public void FlatShooterSubsystem() {
-
+    public ShooterSubsystem() {
+        shooterMotor.setInverted(true);
         //final motor_placeholder shooterMotor;
         //final pneumatic_placeholder shooterPiston;
 
@@ -26,16 +27,16 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotor.set(1);
         System.out.println("Low goal shooter now shooting!");
         isRunning = true;
-        solenoid.set(DoubleSolenoid.Value.kReverse);
+        solenoidlift.set(DoubleSolenoid.Value.kForward);
+        //solenoid2.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void stopShooter() {
-        //closePistonGate();
-        //turnOffMotor();
         shooterMotor.set(0);
         System.out.println("Low goal shooter now not shooting!");
         isRunning = false;
-        solenoid.set((DoubleSolenoid.Value.kForward));
+        solenoidlift.set((DoubleSolenoid.Value.kReverse));
+        //solenoid2.set(DoubleSolenoid.Value.kForward);
     }
 
     public void toggleShooter() {
