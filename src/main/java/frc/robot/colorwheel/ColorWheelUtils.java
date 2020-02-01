@@ -151,7 +151,7 @@ public class ColorWheelUtils {
     /**
      * @param tilesToMove take in the number of tiles we need to move
      */
-    private void moveTiles(int tilesToMove) {
+    public void moveTiles(int tilesToMove) {
         //Grab the current color
         WheelColors currentColor1 = currentColor();
         //Wait 0.05 seconds to assure a difference
