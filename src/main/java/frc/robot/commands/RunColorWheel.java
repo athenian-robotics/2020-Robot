@@ -5,37 +5,42 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class GateCommand extends CommandBase {
+import static frc.robot.Constants.MechanismConstants.colorWheelPort;
+import static frc.robot.Constants.MechanismConstants.intakeMotorPort;
 
-    private boolean isEnabled = true;
-    private final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
+public class RunColorWheel extends CommandBase {
 
-    public GateCommand(){
+    private WPI_TalonSRX colorWheelSpiner = new WPI_TalonSRX(colorWheelPort);
+    private final DoubleSolenoid solenoid = new DoubleSolenoid(6,7);
+
+    boolean isEnabled = false;
+    public RunColorWheel(){
 
     }
 
     @Override
     public void initialize() {
-        solenoid.set(DoubleSolenoid.Value.kForward);
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         if(!isEnabled){
-            System.out.println("Forward");
+            colorWheelSpiner.set(1);
             solenoid.set(DoubleSolenoid.Value.kReverse);
             isEnabled = true;
         } else {
-            System.out.println("Backward");
-            isEnabled = false;
+            colorWheelSpiner.set(0);
             solenoid.set(DoubleSolenoid.Value.kForward);
+            isEnabled = false;
         }
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+
     }
 
     // Returns true when the command should end.
