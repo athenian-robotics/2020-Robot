@@ -108,6 +108,9 @@ public class RobotContainer {
     //xboxX.whenPressed(new ShootLowGoal(shooterSubsystem));
     //xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
+    //Autonomous Control
+    xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
+
     //Fight Stick Code
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
