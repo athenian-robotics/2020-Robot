@@ -7,7 +7,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class GateCommand extends CommandBase {
 
-    private boolean isEnabled = true;
+    private boolean isEnabled = false;
     private final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
 
     public GateCommand(){
@@ -22,15 +22,9 @@ public class GateCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if(!isEnabled){
-            System.out.println("Forward");
-            solenoid.set(DoubleSolenoid.Value.kReverse);
-            isEnabled = true;
-        } else {
-            System.out.println("Backward");
-            isEnabled = false;
-            solenoid.set(DoubleSolenoid.Value.kForward);
-        }
+        System.out.println(isEnabled ? "Backward" : "Forward");
+        solenoid.set(isEnabled ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+        isEnabled = !isEnabled;
     }
 
     // Called once the command ends or is interrupted.
