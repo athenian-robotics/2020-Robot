@@ -18,16 +18,13 @@ import frc.robot.commands.FollowTrajectory;
 import frc.robot.commands.ShootLowGoal;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.*;
+
+import static frc.robot.lib.controllers.FightStick.fightStickA;
+import static frc.robot.lib.controllers.FightStick.fightStickX;
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
-import frc.robot.subsystems.*;
-
-import static frc.robot.lib.controllers.FightStick.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -55,6 +52,7 @@ public class RobotContainer {
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+    private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
 
   // Define all OI devices here
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -67,7 +65,8 @@ public class RobotContainer {
     buttonSetup();
     configureButtonBindings();
 
-    //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
+
+      //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
     //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
