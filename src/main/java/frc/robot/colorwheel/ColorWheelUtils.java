@@ -13,6 +13,10 @@ public class ColorWheelUtils {
     //Init basic variables
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+    private boolean isRed = false;
+    private boolean isBlue = false;
+    private boolean isGreen = false;
+    private boolean isYellow = false;
 
 
     //Create class constructor
@@ -38,33 +42,42 @@ public class ColorWheelUtils {
         double checkColorRed = detectedColor.red * 255;
         double checkColorGreen = detectedColor.green * 255;
         double checkColorBlue = detectedColor.blue * 255;
+        isGreen = false;
+        isBlue = false;
+        isYellow = false;
+        isRed = false;
 
         if ((checkColorRed >= checkColorGreen + 30) && (checkColorRed >= checkColorBlue + 30)) {
             updateString("RED");
             currentColor = RED;
-            return currentColor;
+            isRed = true;
+            SmartDashboard.putBoolean("RED", isRed);
         }
         //If BLUE is within range 30 of GREEN, return BLUE
         else if ((checkColorBlue >= checkColorGreen) && (checkColorBlue - 60 <= checkColorGreen)
                 || (checkColorBlue <= checkColorGreen) && (checkColorBlue + 60 >= checkColorGreen)) {
             updateString("BLUE");
             currentColor = BLUE;
-            return currentColor;
+            isBlue = true;
+            SmartDashboard.putBoolean("BLUE", isBlue);
         }
         //If RED is within range 30 of GREEN, return YELLOW
         else if ((checkColorRed >= checkColorGreen) && (checkColorRed - 20 <= checkColorGreen)
                 || (checkColorRed <= checkColorGreen) && (checkColorRed + 20 >= checkColorGreen)) {
             updateString("YELLOW");
             currentColor = YELLOW;
-            return currentColor;
+            isYellow = true;
+            SmartDashboard.putBoolean("YELLOW", isYellow);
         }
         //If GREEN values are larger than red or blue, return GREEN
         else {
             updateString("GREEN");
             currentColor = GREEN;
-            return currentColor;
+            isGreen = true;
+            SmartDashboard.putBoolean("GREEN", isGreen);
         }
         //If NO COLOR is known, give a null value
+        return currentColor;
     }
 
 
