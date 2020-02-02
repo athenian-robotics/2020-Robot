@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
@@ -42,8 +41,6 @@ public class TurnToBall extends CommandBase {
         double validTarget = list[0];
         this.validTarget = validTarget;
 
-        SmartDashboard.putNumber("turntoball tx", angleToTurn);
-
         if (this.validTarget == 1) {
             setpoint = drivetrain.getGyroAngle() + angleToTurn + tolerance;
             pid.setSetpoint(setpoint);
@@ -56,7 +53,6 @@ public class TurnToBall extends CommandBase {
         if (this.validTarget == 1) {
             double power = pid.calculate(drivetrain.getGyroAngle());
             drivetrain.tankDrive(power, -power);
-            SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
         }
     }
 
