@@ -1,10 +1,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import static edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber;
 
 // See http://docs.limelightvision.io/en/latest/networktables_api.html
 
@@ -12,33 +13,65 @@ public class LimeLightSubsystem extends SubsystemBase {
 
     final NetworkTable limelight;
 
+    double tv;
+    double ta;
+    double ts;
+    double tx;
+    double ty;
+    NetworkTableEntry camTran;
+    double[] helpme = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
+    //I'm really not sure if the names match with the values, we should check this later
+    double targetX;
+    double targetY;
+    double targetZ;
+    double targetPitch;
+    double targetYaw;
+    double targetRoll;
+
     public LimeLightSubsystem(String tableName) {
-        limelight = NetworkTableInstance.getDefault().getTable(tableName);
+        this.limelight = NetworkTableInstance.getDefault().getTable(tableName);
     }
 
     public void periodic() {
-        final double tv = limelight.getEntry("tv").getDouble(-1.1);
-        final double ta = limelight.getEntry("ta").getDouble(-1.1);
-        final double ts = limelight.getEntry("ts").getDouble(-1.1);
+        this.tv = limelight.getEntry("tv").getDouble(-1.1);
+        this.ta = limelight.getEntry("ta").getDouble(-1.1);
+        this.ts = limelight.getEntry("ts").getDouble(-1.1);
+        this.tx = limelight.getEntry("tx").getDouble(-1.1);
+        this.ty = limelight.getEntry("ty").getDouble(-1.1);
         NetworkTableEntry camTran = limelight.getEntry("camtran");
         double[] helpme = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        double[] pnpvalues = camTran.getDoubleArray(helpme);
 
         //I'm really not sure if the names match with the values, we should check this later
-        double targetX = camTran.getDoubleArray(helpme)[0];
-        double targetY = camTran.getDoubleArray(helpme)[1];
-        double targetZ = camTran.getDoubleArray(helpme)[2];
-        double targetPitch = camTran.getDoubleArray(helpme)[3];
-        double targetYaw = camTran.getDoubleArray(helpme)[4];
-        double targetRoll = camTran.getDoubleArray(helpme)[5];
+        if (pnpvalues[0] != 0) {
+            this.targetX = pnpvalues[0];
+            this.targetY = pnpvalues[1];
+            this.targetZ = pnpvalues[2];
+            this.targetPitch = pnpvalues[3];
+            this.targetYaw = pnpvalues[4];
+            this.targetRoll = pnpvalues[5];
+        }
 
-        SmartDashboard.putNumber("Valid Target", tv);
-        SmartDashboard.putNumber("Target Area", ta);
-        SmartDashboard.putNumber("Image Rotation", ts);
-        SmartDashboard.putNumber("Target X", targetX);
-        SmartDashboard.putNumber("Target Y", targetY);
-        SmartDashboard.putNumber("Target Z", targetZ);
-        SmartDashboard.putNumber("Target Pitch", targetPitch);
-        SmartDashboard.putNumber("Target Yaw", targetYaw);
-        SmartDashboard.putNumber("Target Roll", targetRoll);
+        putNumber("Valid Target", this.tv);
+        putNumber("Target Area", this.ta);
+        putNumber("Image Rotation", this.ts);
+        putNumber("Horizontal Crosshair Offset", this.tx);
+        putNumber("Vertical Crosshair Offset", this.ty);
+        putNumber("Target X", this.targetX);
+        putNumber("Target Y", this.targetY);
+        putNumber("Target Z", this.targetZ);
+        putNumber("Target Pitch", this.targetPitch);
+        putNumber("Target Yaw", this.targetYaw);
+        putNumber("Target Roll", this.targetRoll);
+    }
+
+    public double[] grabValues() {
+        double[] list = {this.tv, this.ta, this.ts, this.tx, this.ty, this.targetX, this.targetY, this.targetZ, this.targetPitch, this.targetYaw, this.targetRoll};
+        return list;
+    }
+
+    public NetworkTable grabNetworkTable() {
+        return this.limelight;
     }
 }

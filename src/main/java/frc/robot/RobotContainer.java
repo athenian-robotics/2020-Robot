@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
+
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -22,7 +23,6 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
-import frc.robot.subsystems.*;
 
 import static frc.robot.lib.controllers.FightStick.*;
 
