@@ -68,13 +68,7 @@ public class TurnToBall extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if ((pid.getPositionError() < 1) && (pid.getPositionError() > -1)) {
-            return true;
-        } else if (this.validTarget == 1) {
-            return false;
-        } else {
-            return false;
-        }
+        return ((pid.getPositionError() < 1) && (pid.getPositionError() > -1));
     }
 }
 
