@@ -13,7 +13,7 @@ public class TurnToBall extends CommandBase {
     double tolerance;
     double setpoint;
     double validTarget;
-    double Kp = 0.004;
+    double Kp = 0.01;
     double Ki = 0.0;
     double Kd = 0.001;
 
@@ -68,10 +68,10 @@ public class TurnToBall extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if ((pid.getPositionError() < 5) && (pid.getPositionError() > -5)) {
+        if ((pid.getPositionError() < 1) && (pid.getPositionError() > -1)) {
             return true;
         } else if (this.validTarget == 1) {
-            return true;
+            return false;
         } else {
             return false;
         }
