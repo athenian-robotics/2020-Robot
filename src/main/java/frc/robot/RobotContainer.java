@@ -14,15 +14,17 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
+
+import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-import java.awt.*;
-
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
+
+import static frc.robot.lib.controllers.FightStick.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -42,20 +44,18 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-
   private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
-  //private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem(this);
   private final LimeLightSubsystem limeLightSubsystem = new LimeLightSubsystem("limelight");
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
   // Define all OI devices here
-  XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
-
+  public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
+  public static FightStick fightStick = new FightStick();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -78,6 +78,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
   private void buttonSetup() {
     xboxA = new JoystickButton(xboxController, 1);
     xboxB = new JoystickButton(xboxController, 2);
@@ -95,19 +96,23 @@ public class RobotContainer {
     //MODE BUTTONS
 //    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
     xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
-    xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
-    xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
-    xboxX.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
+    //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
+    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //Intake Controlls
-    //xboxLB.whenHeld(new IntakeTest(-0.8));
-    //xboxB.whenHeld(new IntakeTest(0.8));
+    xboxB.whenPressed(new GateCommand());
+    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxY.whenPressed(new RunColorWheel());
 
+    //Autonomous Control
+    //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
+    //xboxA.whenPressed(new PathWeaver());
 
-    //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    //xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
-    //xboxX.whenHeld(new RunIntake(intakeSubsystem));
+    //Fight Stick Code
+    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping
@@ -116,6 +121,7 @@ public class RobotContainer {
     //xboxA.whenPressed(new ButtonDriveTest(drivetrain, 0.0, 0.0));
     //xboxX.whenPressed(new ButtonDriveTest(drivetrain, 0.4, 0.4));
     //xboxB.whenPressed(new ButtonDriveTest(drivetrain, -0.4, -0.4));
+
 
     /**
      * GearBoxTest xbox controller Mapping
@@ -150,7 +156,8 @@ public class RobotContainer {
 
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
-//      return new FollowTrajectory(autodrive);
-      return null;
+      //Autonomous Command that doesnt work
+      return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
+      //return null;
   }
 }

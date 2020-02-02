@@ -7,8 +7,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+
 
 /**
  * An example command that uses an example subsystem.
@@ -16,6 +18,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootLowGoal extends CommandBase {
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private final ShooterSubsystem shooter;
+
 
     /**
      * Creates a new ExampleCommand.
