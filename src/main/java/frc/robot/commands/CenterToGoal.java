@@ -8,7 +8,7 @@ import frc.robot.subsystems.LimeLightSubsystem;
 public class CenterToGoal extends SequentialCommandGroup {
 
     public CenterToGoal(LimeLightSubsystem limelight, DrivetrainSubsystem drivetrain) {
-        limelight.grabNetworkTable().getEntry("pipeline").setNumber(1);
+        limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
         double[] list = limelight.grabValues();
         double angleHalfToGoal = Math.atan((list[6] / 2) / list[5]);
 
