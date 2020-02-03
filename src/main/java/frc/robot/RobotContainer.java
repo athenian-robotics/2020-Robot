@@ -10,21 +10,18 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
-
 import frc.robot.lib.controllers.FightStick;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.*;
+
+import static frc.robot.lib.controllers.FightStick.*;
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
-
-import static frc.robot.lib.controllers.FightStick.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -44,7 +41,7 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -52,7 +49,7 @@ public class RobotContainer {
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-
+  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
   // Define all OI devices here
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
   public static FightStick fightStick = new FightStick();
@@ -101,10 +98,11 @@ public class RobotContainer {
     //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //Intake Controlls
-    xboxB.whenPressed(new GateCommand());
+//    xboxB.whenPressed(new GateCommand());
     xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
-    xboxY.whenPressed(new RunColorWheel());
+    xboxY.whenPressed(new RunColorWheel(colorWheelSubsystem));
+
 
     //Autonomous Control
     //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
@@ -113,6 +111,27 @@ public class RobotContainer {
     //Fight Stick Code
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    fightStickY.whenPressed(new DumperCommand(shooterSubsystem));
+    fightStickB.whenPressed(new GateCommand());
+
+    fightStickOption.whenHeld(new FunctionalCommand(
+            intakeSubsystem::invert,
+            () -> {
+            },
+            interrupted -> intakeSubsystem.invert(),
+            () -> false,
+            intakeSubsystem));
+
+    fightStickShare.whenHeld(new FunctionalCommand(
+            shooterSubsystem::invert,
+            () -> {
+            },
+            interrupted -> shooterSubsystem.invert(),
+            () -> false,
+            intakeSubsystem));
+
+    fightStickLB.whenHeld(new RunColorWheel(colorWheelSubsystem));
+    fightStickLT.whenHeld(new ToggleWheelSpinnerLift(colorWheelSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping

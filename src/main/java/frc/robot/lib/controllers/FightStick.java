@@ -15,8 +15,8 @@ public class FightStick {
     public static FightStickDigitalButton fightStickOption = new FightStickDigitalButton(fightStickJoystick, 8, FightStickInput.input.option);
     public static FightStickDigitalButton fightStickL3 = new FightStickDigitalButton(fightStickJoystick, 9, FightStickInput.input.L3);
     public static FightStickDigitalButton fightStickR3 = new FightStickDigitalButton(fightStickJoystick, 10, FightStickInput.input.R3);
-    public static FightStickAxisButton fightStickLT = new FightStickAxisButton(fightStickJoystick, 2, FightStickInput.input.lightKick);
-    public static FightStickAxisButton fightStickRT = new FightStickAxisButton(fightStickJoystick, 3, FightStickInput.input.R2);
+    public static FightStickDigitalButton fightStickLT = new FightStickDigitalButton(fightStickJoystick, 2, FightStickInput.input.lightKick);
+    public static FightStickDigitalButton fightStickRT = new FightStickDigitalButton(fightStickJoystick, 3, FightStickInput.input.R2);
 
     public static FightStickPOVDirection POVUp = new FightStickPOVDirection(FightStickInput.input.POVtop);
     public static FightStickPOVDirection POVDown = new FightStickPOVDirection(FightStickInput.input.POVbot);

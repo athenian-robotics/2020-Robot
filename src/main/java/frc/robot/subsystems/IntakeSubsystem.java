@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -14,7 +12,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public boolean isRunning = false;
 
     public IntakeSubsystem() {
-        //intakeMotor.setInverted(true);
+        intakeMotor.setInverted(true);
 //        this.speed = speed;
     }
 
@@ -22,6 +20,10 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.set(1);
         System.out.println("start intake");
         isRunning = true;
+    }
+
+    public void invert() {
+        intakeMotor.setInverted(!intakeMotor.getInverted());
     }
 
     public void stopIntake() {
