@@ -10,18 +10,9 @@ public class CountUpDownGenerator implements Closeable {
 
     private final AtomicInteger currValue = new AtomicInteger();
     private final AtomicBoolean finished = new AtomicBoolean(false);
-
-    private final int start;
-    private final int stop;
-    private final int freqMillis;
-
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public CountUpDownGenerator(int start, int stop, int freqMillis) {
-        this.start = start;
-        this.stop = stop;
-        this.freqMillis = freqMillis;
-
         this.executor.submit(
                 new Runnable() {
                     @Override
