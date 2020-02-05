@@ -90,28 +90,26 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    //MODE BUTTONS
-//    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
-    xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-    //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
-    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
-    //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
+    //XBOX CONTROLS
+    //Change drive mode
+    //xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
+    //xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
 
-    //Intake Controlls
-//    xboxB.whenPressed(new GateCommand());
+    xboxB.whenPressed(new GateCommand());
     xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
     xboxY.whenPressed(new RunColorWheel(colorWheelSubsystem));
 
-
-    //Autonomous Control
+    //Autonomous Controls
     //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
     //xboxA.whenPressed(new PathWeaver());
+    //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
+    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
-    //Fight Stick Code
+    //FIGHT STICK CONTROLS
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    fightStickY.whenPressed(new DumperCommand(shooterSubsystem));
     fightStickB.whenPressed(new GateCommand());
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
@@ -155,7 +153,7 @@ public class RobotContainer {
     /**
      * Test Buttons if you need to STOP, FORWARD OR REVERSE
      *
-     * Comment out as needed, and change ROBT TYPE!
+     * Comment out as needed, and change ROBOT_TYPE!
      */
   }
 

@@ -52,6 +52,14 @@ public class ShooterSubsystem extends SubsystemBase {
         }
     }
 
+    public void toggleDumper() {
+        if (isRunning) {
+            dumperUp();
+        } else {
+            dumperDown();
+        }
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run

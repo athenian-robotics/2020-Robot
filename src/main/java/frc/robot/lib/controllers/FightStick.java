@@ -18,9 +18,11 @@ public class FightStick {
     public static FightStickDigitalButton fightStickLT = new FightStickDigitalButton(fightStickJoystick, 2, FightStickInput.input.lightKick);
     public static FightStickDigitalButton fightStickRT = new FightStickDigitalButton(fightStickJoystick, 3, FightStickInput.input.R2);
 
+    public static FightStickPOVDirection POVCenter = new FightStickPOVDirection(FightStickInput.input.POVcenter);
     public static FightStickPOVDirection POVUp = new FightStickPOVDirection(FightStickInput.input.POVtop);
     public static FightStickPOVDirection POVDown = new FightStickPOVDirection(FightStickInput.input.POVbot);
-    public static FightStickPOVDirection POVcenter = new FightStickPOVDirection(FightStickInput.input.POVcenter);
+    public static FightStickPOVDirection POVRight = new FightStickPOVDirection(FightStickInput.input.POVright);
+    public static FightStickPOVDirection POVLeft = new FightStickPOVDirection(FightStickInput.input.POVleft);
 
 
 }

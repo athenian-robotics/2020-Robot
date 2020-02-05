@@ -36,6 +36,7 @@ public class ShootLowGoal extends CommandBase {
     public void initialize() {
         shooter.toggleShooter();
         System.out.println("Toggling shooter");
+        shooter.toggleDumper();
     }
 
 
