@@ -114,6 +114,7 @@ public class RobotContainer {
     fightStickY.whenPressed(new DumperCommand(shooterSubsystem));
     fightStickB.whenPressed(new GateCommand());
 
+    // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
     fightStickOption.whenHeld(new FunctionalCommand(
             intakeSubsystem::invert,
             () -> {
@@ -122,6 +123,7 @@ public class RobotContainer {
             () -> false,
             intakeSubsystem));
 
+    // When held, this command changes the intake to backward, but doesn't change the speed/status
     fightStickShare.whenHeld(new FunctionalCommand(
             shooterSubsystem::invert,
             () -> {
