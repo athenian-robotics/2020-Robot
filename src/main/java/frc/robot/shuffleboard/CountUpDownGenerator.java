@@ -12,7 +12,7 @@ public class CountUpDownGenerator implements Closeable {
     private final AtomicBoolean finished = new AtomicBoolean(false);
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public CountUpDownGenerator(int start, int stop, int freqMillis) {
+    public CountUpDownGenerator(int start, int stop, int pauseMillis) {
         this.executor.submit(
                 new Runnable() {
                     @Override
@@ -22,26 +22,36 @@ public class CountUpDownGenerator implements Closeable {
                                 currValue.set(i);
                                 if (finished.get())
                                     break;
-                                pause(freqMillis);
+                                pause(pauseMillis);
                             }
 
                             for (int i = stop; i > start; i--) {
                                 currValue.set(i);
                                 if (finished.get())
                                     break;
-                                pause(freqMillis);
+                                pause(pauseMillis);
                             }
                         }
                     }
                 });
     }
 
-    private static void pause(int millis) {
+    private static void pause(int pauseMillis) {
         try {
-            Thread.sleep(millis);
+            Thread.sleep(pauseMillis);
         } catch (InterruptedException e) {
             // Ignore
         }
+    }
+
+    public int getValue() {
+        return currValue.intValue();
+    }
+
+    @Override
+    public void close() {
+        executor.shutdownNow();
+        finished.set(true);
     }
 
     public static void main(String[] args) {
@@ -53,15 +63,5 @@ public class CountUpDownGenerator implements Closeable {
         }
 
         generator.close();
-    }
-
-    public int getValue() {
-        return currValue.intValue();
-    }
-
-    @Override
-    public void close() {
-        executor.shutdownNow();
-        finished.set(true);
     }
 }
