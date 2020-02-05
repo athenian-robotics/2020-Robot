@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public class CountUpDownGenerator implements Closeable {
 
@@ -55,13 +56,35 @@ public class CountUpDownGenerator implements Closeable {
     }
 
     public static void main(String[] args) {
-        final CountUpDownGenerator generator = new CountUpDownGenerator(0, 10, 500);
-
-        for (int i = 0; i < 25; i++) {
-            System.out.println(generator.getValue());
-            pause(500);
+        System.out.println("Waiting 500ms");
+        try (CountUpDownGenerator generator = new CountUpDownGenerator(0, 10, 500)) {
+            IntStream.range(0, 25).forEach(i -> {
+                System.out.println(generator.getValue());
+                pause(500);
+            });
         }
 
-        generator.close();
+        System.out.println("No waiting");
+        try (CountUpDownGenerator generator = new CountUpDownGenerator(0, 10, 500)) {
+            IntStream.range(0, 25).forEach(i -> {
+                System.out.println(generator.getValue());
+            });
+        }
+
+        System.out.println("Waiting 250ms");
+        try (CountUpDownGenerator generator = new CountUpDownGenerator(0, 10, 500)) {
+            IntStream.range(0, 25).forEach(i -> {
+                System.out.println(generator.getValue());
+                pause(250);
+            });
+        }
+
+        System.out.println("Waiting 1000ms");
+        try (CountUpDownGenerator generator = new CountUpDownGenerator(0, 10, 500)) {
+            IntStream.range(0, 25).forEach(i -> {
+                System.out.println(generator.getValue());
+                pause(1000);
+            });
+        }
     }
 }
