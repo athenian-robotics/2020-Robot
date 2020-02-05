@@ -1,4 +1,4 @@
-package frc.robot.shuffleboard;
+package frc.robot.lib;
 
 import java.io.Closeable;
 import java.util.concurrent.ExecutorService;
@@ -36,14 +36,6 @@ public class CountUpDownGenerator implements Closeable {
                 });
     }
 
-    private static void pause(int pauseMillis) {
-        try {
-            Thread.sleep(pauseMillis);
-        } catch (InterruptedException e) {
-            // Ignore
-        }
-    }
-
     public int getValue() {
         return currValue.intValue();
     }
@@ -52,6 +44,14 @@ public class CountUpDownGenerator implements Closeable {
     public void close() {
         executor.shutdownNow();
         finished.set(true);
+    }
+
+    private static void pause(int pauseMillis) {
+        try {
+            Thread.sleep(pauseMillis);
+        } catch (InterruptedException e) {
+            // Ignore
+        }
     }
 
     public static void main(String[] args) {
