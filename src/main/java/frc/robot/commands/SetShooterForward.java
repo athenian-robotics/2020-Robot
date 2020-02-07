@@ -3,14 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-import static frc.robot.Constants.DriveConstants.speedScale;
 
-
-public class SlowTurnSpeed extends CommandBase {
+public class SetShooterForward extends CommandBase {
 
     @Override
     public void initialize() {
-        DrivetrainSubsystem.maxDriverSpeed = DrivetrainSubsystem.maxDriverSpeed > 0 ? speedScale/2.0: -speedScale/2.0;
+        DrivetrainSubsystem.maxDriverSpeed = -Math.abs(DrivetrainSubsystem.maxDriverSpeed);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

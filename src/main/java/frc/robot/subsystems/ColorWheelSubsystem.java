@@ -10,7 +10,7 @@ import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
 public class ColorWheelSubsystem extends SubsystemBase {
 
     private final WPI_TalonSRX wheelSpinner = new WPI_TalonSRX(shooterMotorPort);
-    private final DoubleSolenoid spinnerLift = new DoubleSolenoid(2, 3);
+    private final DoubleSolenoid spinnerLift = new DoubleSolenoid(6, 7);
     private final DoubleSolenoid colorSensorLift = new DoubleSolenoid(4, 5);
     public boolean isRunning = false;
 

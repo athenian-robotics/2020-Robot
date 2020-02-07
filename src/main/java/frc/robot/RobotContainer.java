@@ -94,10 +94,21 @@ public class RobotContainer {
     //Xbox Controls
     xboxY.whenPressed(new FastTurnSpeed());
     xboxX.whenPressed(new SlowTurnSpeed());
+    xboxRS.whenPressed(new RunIntake(intakeSubsystem));
+    xboxLS.whenHeld(new FunctionalCommand(
+            intakeSubsystem::invert,
+            () -> {
+            },
+            interrupted -> intakeSubsystem.invert(),
+            () -> false,
+            intakeSubsystem));
+    xboxRB.whenPressed(new SetIntakeForward());
+    xboxLB.whenPressed(new SetShooterForward());
+
 
     //FIGHT STICK CONTROLS
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
-    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+
     fightStickB.whenPressed(new GateCommand());
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
