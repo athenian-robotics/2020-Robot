@@ -109,9 +109,12 @@ public class RobotContainer {
 
 
     //FIGHT STICK CONTROLS
-    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
 
-    fightStickB.whenPressed(new GateCommand());
+    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    fightStickB.whenPressed(new GateCommand(shooterSubsystem));
+    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
+
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
     fightStickOption.whenHeld(new FunctionalCommand(
@@ -130,9 +133,6 @@ public class RobotContainer {
             interrupted -> shooterSubsystem.invert(),
             () -> false,
             intakeSubsystem));
-
-    fightStickLB.whenHeld(new RunColorWheel(colorWheelSubsystem));
-    fightStickLT.whenHeld(new ToggleWheelSpinnerLift(colorWheelSubsystem));
 
     //xboxB.whenPressed(new GateCommand());
     //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));

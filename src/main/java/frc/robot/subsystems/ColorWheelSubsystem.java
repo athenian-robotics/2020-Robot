@@ -11,52 +11,69 @@ public class ColorWheelSubsystem extends SubsystemBase {
 
     private final WPI_TalonSRX wheelSpinner = new WPI_TalonSRX(shooterMotorPort);
     private final DoubleSolenoid spinnerLift = new DoubleSolenoid(6, 7);
-    private final DoubleSolenoid colorSensorLift = new DoubleSolenoid(4, 5);
-    public boolean isRunning = false;
+
+    private final DoubleSolenoid sensorLift = new DoubleSolenoid(4, 5);
+    private boolean isSpinning = false;
+    private boolean sensorIsUp = false;
+    private boolean spinnerIsUp = false;
 
 
     public ColorWheelSubsystem() {
-        //final pneumatic_placeholder shooterPiston;
 
     }
 
-    public void toggleSpinnerLift() {
-        DoubleSolenoid.Value currentStatus = spinnerLift.get();
-        if (currentStatus.equals(DoubleSolenoid.Value.kForward)) {
-            spinnerLift.set(DoubleSolenoid.Value.kReverse);
-        } else {
-            spinnerLift.set(DoubleSolenoid.Value.kForward);
-        }
+    public void spinnerLiftUp() {
+        spinnerLift.set(DoubleSolenoid.Value.kReverse);
+        spinnerIsUp = true;
     }
 
-    public void toggleColorSensor() {
-        DoubleSolenoid.Value currentStatus = colorSensorLift.get();
-        if (currentStatus.equals(DoubleSolenoid.Value.kForward)) {
-            colorSensorLift.set(DoubleSolenoid.Value.kReverse);
-        } else {
-            colorSensorLift.set(DoubleSolenoid.Value.kForward);
-        }
-
+    public void spinnerLiftDown() {
+        spinnerLift.set(DoubleSolenoid.Value.kForward);
+        spinnerIsUp = false;
     }
 
+    public void sensorLiftUp() {
+        sensorLift.set(DoubleSolenoid.Value.kReverse);
+        sensorIsUp = true;
+    }
+
+    public void sensorLiftDown() {
+        sensorLift.set(DoubleSolenoid.Value.kForward);
+        sensorIsUp = false;
+    }
 
     public void spin(double power) {
         wheelSpinner.set(power);
-        isRunning = true;
-//        solenoidlift.set(DoubleSolenoid.Value.kForward);
+        isSpinning = true;
     }
 
     public void stop() {
         wheelSpinner.set(0);
-        isRunning = false;
+        isSpinning = false;
     }
 
+    public void toggleSpinnerLift() {
+        if (spinnerIsUp) {
+            spinnerLiftDown();
+        } else {
+            spinnerLiftUp();
+        }
+    }
+
+    public void toggleColorSensor() {
+        if (sensorIsUp) {
+            sensorLiftDown();
+        } else {
+            sensorLiftUp();
+        }
+
+    }
 
     public void toggleSpinner() {
-        if (isRunning) {
-            spin(1);
-        } else {
+        if (isSpinning) {
             stop();
+        } else {
+            spin(1);
         }
     }
 

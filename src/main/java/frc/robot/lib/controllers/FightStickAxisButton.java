@@ -13,6 +13,7 @@ public class FightStickAxisButton extends Trigger implements FightStickButton {
   public FightStickAxisButton(Joystick fightStick, int axis, FightStickInput.input button) {
     this.axis = axis;
     this.button = button;
+    this.fightStick = fightStick;
   }
 
   @Override
