@@ -115,9 +115,6 @@ public class RobotContainer {
             () -> false,
             intakeSubsystem));
 
-    fightStickLB.whenHeld(new RunColorWheel(colorWheelSubsystem));
-    fightStickRT.whenActive(new ToggleWheelSpinnerLift(colorWheelSubsystem));
-
     //xboxB.whenPressed(new GateCommand());
     //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     //xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
