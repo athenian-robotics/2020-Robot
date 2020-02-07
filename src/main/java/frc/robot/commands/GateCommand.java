@@ -4,33 +4,29 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class GateCommand extends CommandBase {
 
-    private boolean isEnabled = false;
-    private final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
+    private ShooterSubsystem shooter;
 
-    public GateCommand(){
-
+    public GateCommand(ShooterSubsystem shooter){
+        this.shooter = shooter;
+        addRequirements(shooter);
     }
 
     @Override
     public void initialize() {
-        solenoid.set(DoubleSolenoid.Value.kForward);
+        shooter.toggleGate();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-    public void execute() {
-        System.out.println(isEnabled ? "Backward" : "Forward");
-        solenoid.set(isEnabled ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
-        isEnabled = !isEnabled;
-    }
+    public void execute() { }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-    }
+    public void end(boolean interrupted) { }
 
     // Returns true when the command should end.
     @Override

@@ -3,32 +3,35 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorWheelSubsystem;
 
+import static frc.robot.lib.controllers.FightStick.*;
+
+
 public class RunColorWheel extends CommandBase {
 
-    boolean isEnabled = false;
     ColorWheelSubsystem colorWheel;
 
     public RunColorWheel(ColorWheelSubsystem colorWheel) {
-        addRequirements(colorWheel);
         this.colorWheel = colorWheel;
+        addRequirements(colorWheel);
     }
 
     @Override
     public void initialize() {
-        colorWheel.spin(1);
-        colorWheel.toggleColorSensor();
+        //colorWheel.sensorLiftUp();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        POVUp.whenActive(new WheelSpinnerLiftUp(colorWheel));
+        POVDown.whenActive(new WheelSpinnerLiftDown(colorWheel));
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
         colorWheel.spin(0);
-        colorWheel.toggleColorSensor();
+        //colorWheel.sensorLiftDown();
     }
 
     // Returns true when the command should end.

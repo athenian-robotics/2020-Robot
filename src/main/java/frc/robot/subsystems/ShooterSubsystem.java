@@ -9,10 +9,12 @@ import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    public boolean isRunning = false;
+    private boolean isRunning = false;
+    private boolean isOpen = false;
+    private boolean isUp = false;
     private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
-    private final DoubleSolenoid solenoidlift = new DoubleSolenoid(2,3);
-    //private final DoubleSolenoid solenoid2 = new DoubleSolenoid(2,3);
+    private final DoubleSolenoid dumperSolenoid = new DoubleSolenoid(2,3);
+    private final DoubleSolenoid gateSolenoid = new DoubleSolenoid(0,1);
 
 
     public ShooterSubsystem() {
@@ -37,11 +39,31 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void dumperUp() {
-        solenoidlift.set(DoubleSolenoid.Value.kForward);
+        dumperSolenoid.set(DoubleSolenoid.Value.kForward);
+        isUp = true;
     }
 
     public void dumperDown() {
-        solenoidlift.set((DoubleSolenoid.Value.kReverse));
+        dumperSolenoid.set((DoubleSolenoid.Value.kReverse));
+        isUp = false;
+    }
+
+    public void gateUp() {
+        gateSolenoid.set(DoubleSolenoid.Value.kForward);
+        isOpen = true;
+    }
+
+    public void gateDown() {
+        gateSolenoid.set(DoubleSolenoid.Value.kReverse);
+        isOpen = false;
+    }
+
+    public void toggleGate() {
+        if (isOpen) {
+            gateDown();
+        } else {
+            gateUp();
+        }
     }
 
     public void toggleShooter() {
@@ -53,10 +75,10 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void toggleDumper() {
-        if (isRunning) {
-            dumperUp();
-        } else {
+        if (isUp) {
             dumperDown();
+        } else {
+            dumperUp();
         }
     }
 
