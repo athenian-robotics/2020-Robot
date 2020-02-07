@@ -90,22 +90,6 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    //XBOX CONTROLS
-    //Change drive mode
-    //xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
-    //xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
-
-    xboxB.whenPressed(new GateCommand());
-    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
-    xboxY.whenPressed(new RunColorWheel(colorWheelSubsystem));
-
-    //Autonomous Controls
-    //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
-    //xboxA.whenPressed(new PathWeaver());
-    //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
-    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
-    //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     //FIGHT STICK CONTROLS
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
@@ -132,6 +116,24 @@ public class RobotContainer {
 
     fightStickLB.whenHeld(new RunColorWheel(colorWheelSubsystem));
     fightStickLT.whenHeld(new ToggleWheelSpinnerLift(colorWheelSubsystem));
+
+    //xboxB.whenPressed(new GateCommand());
+    //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    //xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    //xboxY.whenPressed(new RunColorWheel(colorWheelSubsystem));
+
+    //XBOX CONTROLS
+    //Change drive mode
+    //xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
+    //xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+
+
+    //Autonomous Controls
+    //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
+    //xboxA.whenPressed(new PathWeaver());
+    //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
+    //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
+    //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
 
     /**
      * ButtonDriveTest xbox controller Mapping
