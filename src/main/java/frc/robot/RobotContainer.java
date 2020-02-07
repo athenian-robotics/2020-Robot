@@ -36,8 +36,8 @@ public class RobotContainer {
   public static JoystickButton xboxY;
   public static JoystickButton xboxLB;
   public static JoystickButton xboxRB;
-  public static JoystickButton xboxBack;
-  public static JoystickButton xboxStart;
+  public static JoystickButton xboxSquares;
+  public static JoystickButton xboxBurger;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
@@ -83,19 +83,38 @@ public class RobotContainer {
     xboxY = new JoystickButton(xboxController, 4);
     xboxLB = new JoystickButton(xboxController, 5);
     xboxRB = new JoystickButton(xboxController, 6);
-    xboxBack = new JoystickButton(xboxController, 7);
-    xboxStart = new JoystickButton(xboxController, 8);
+    xboxSquares = new JoystickButton(xboxController, 7);
+    xboxBurger = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
   }
 
   private void configureButtonBindings() {
 
+    //Xbox Controls
+    xboxY.whenPressed(new FastTurnSpeed());
+    xboxX.whenPressed(new SlowTurnSpeed());
+    xboxRS.whenPressed(new RunIntake(intakeSubsystem));
+    xboxLS.whenHeld(new FunctionalCommand(
+            intakeSubsystem::invert,
+            () -> {
+            },
+            interrupted -> intakeSubsystem.invert(),
+            () -> false,
+            intakeSubsystem));
+    xboxRB.whenPressed(new SetIntakeForward());
+    xboxLB.whenPressed(new SetShooterForward());
+    xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
+
+
+
     //FIGHT STICK CONTROLS
+
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
     fightStickB.whenPressed(new GateCommand(shooterSubsystem));
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
+
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
     fightStickOption.whenHeld(new FunctionalCommand(
