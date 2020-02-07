@@ -91,6 +91,10 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
+    //Xbox Controls
+    xboxY.whenPressed(new FastTurnSpeed());
+    xboxX.whenPressed(new SlowTurnSpeed());
+
     //FIGHT STICK CONTROLS
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
