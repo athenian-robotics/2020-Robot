@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -20,6 +19,7 @@ import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.*;
 
 import static frc.robot.lib.controllers.FightStick.*;
+
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
@@ -38,9 +38,9 @@ public class RobotContainer {
   public static JoystickButton xboxLB;
   public static JoystickButton xboxRB;
   public static JoystickButton xboxSquares;
-  public static JoystickButton xboxBurger;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
+  public static JoystickButton xboxBurger;
 
   private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
@@ -50,7 +50,8 @@ public class RobotContainer {
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
+    private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
+
   // Define all OI devices here
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
   public static FightStick fightStick = new FightStick();
@@ -62,7 +63,8 @@ public class RobotContainer {
     buttonSetup();
     configureButtonBindings();
 
-    //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
+
+      //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
     //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
@@ -84,14 +86,14 @@ public class RobotContainer {
     xboxY = new JoystickButton(xboxController, 4);
     xboxLB = new JoystickButton(xboxController, 5);
     xboxRB = new JoystickButton(xboxController, 6);
-    xboxSquares = new JoystickButton(xboxController, 7);
-    xboxBurger = new JoystickButton(xboxController, 8);
+      xboxSquares = new JoystickButton(xboxController, 7);
+      xboxBurger = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
   }
 
   private void configureButtonBindings() {
-
+    
     //Xbox Controls
     xboxY.whenPressed(new FastTurnSpeed());
     xboxX.whenPressed(new SlowTurnSpeed());

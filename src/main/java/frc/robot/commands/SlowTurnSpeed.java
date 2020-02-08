@@ -10,7 +10,7 @@ public class SlowTurnSpeed extends CommandBase {
 
     @Override
     public void initialize() {
-        DrivetrainSubsystem.maxDriverSpeed = DrivetrainSubsystem.maxDriverSpeed > 0 ? speedScale/2.0: -speedScale/2.0;
+        DrivetrainSubsystem.maxDriverSpeed = DrivetrainSubsystem.maxDriverSpeed > 0 ? speedScale / 2.0 : -speedScale / 2.0;
     }
 
     // Called every time the scheduler runs while the command is scheduled.

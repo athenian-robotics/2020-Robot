@@ -13,7 +13,10 @@ public class ColorWheelUtils {
     //Init basic variables
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-
+    private boolean isYellow;
+    private boolean isGreen;
+    private boolean isBlue;
+    private boolean isRed;
 
     //Create class constructor
     public ColorWheelUtils() {
@@ -21,10 +24,16 @@ public class ColorWheelUtils {
     }
 
     //A method that puts Strings onto SmartDashboard for organization purposes
-    public void updateString(String currentColor) {
+    private void updateString(String currentColor) {
         SmartDashboard.putString("Current Color", currentColor);
     }
 
+    private void resetIsColorBooleans() {
+        isRed = false;
+        isBlue = false;
+        isGreen = false;
+        isYellow = false;
+    }
 
     /**
      * =-=-=-=-=-=-=-=-=-=
@@ -39,43 +48,51 @@ public class ColorWheelUtils {
         double checkColorGreen = detectedColor.green * 255;
         double checkColorBlue = detectedColor.blue * 255;
 
+        //Range for RED
         if ((checkColorRed >= checkColorGreen + 30) && (checkColorRed >= checkColorBlue + 30)) {
             updateString("RED");
             currentColor = RED;
-            return currentColor;
+            isRed = true;
         }
-        //If BLUE is within range 30 of GREEN, return BLUE
+        //Range for BLUE
         else if ((checkColorBlue >= checkColorGreen) && (checkColorBlue - 60 <= checkColorGreen)
                 || (checkColorBlue <= checkColorGreen) && (checkColorBlue + 60 >= checkColorGreen)) {
             updateString("BLUE");
             currentColor = BLUE;
-            return currentColor;
+            isBlue = true;
         }
-        //If RED is within range 30 of GREEN, return YELLOW
-        else if ((checkColorRed >= checkColorGreen) && (checkColorRed - 20 <= checkColorGreen)
-                || (checkColorRed <= checkColorGreen) && (checkColorRed + 20 >= checkColorGreen)) {
+        //Range for YELLOW
+        else if ((checkColorRed >= 90) && (checkColorRed <= checkColorGreen) && (checkColorRed + 20 >= checkColorGreen)) {
             updateString("YELLOW");
             currentColor = YELLOW;
-            return currentColor;
+            isYellow = true;
         }
-        //If GREEN values are larger than red or blue, return GREEN
+        //Assume GREEN
         else {
             updateString("GREEN");
             currentColor = GREEN;
-            return currentColor;
+            isGreen = true;
         }
-        //If NO COLOR is known, give a null value
+        //Update the color value,
+        updateColorsOnDashboard();
+        resetIsColorBooleans();
+        return currentColor;
+    }
+
+    private void updateColorsOnDashboard() {
+        //Update boolean boxes for each color for visual representation
+        SmartDashboard.putBoolean("RED", isRed);
+        SmartDashboard.putBoolean("BLUE", isBlue);
+        SmartDashboard.putBoolean("YELLOW", isYellow);
+        SmartDashboard.putBoolean("GREEN", isGreen);
     }
 
 
-    public boolean isCurrentColorKnown() {
-        WheelColors currentColor = currentColor();
-        //If no color is known, return false
-        return currentColor != null;
-    }
-
-
-    public WheelColors getLeftColor(WheelColors currentColor) {
+    /**
+     * @param currentColor Pass in current color so we know what to go off of
+     * @return Return the left color, and assume null
+     */
+    private WheelColors getLeftColor(WheelColors currentColor) {
         //Take the current color, and return ONE color to the left
         switch (currentColor) {
             case RED:
@@ -91,8 +108,11 @@ public class ColorWheelUtils {
         }
     }
 
-
-    public WheelColors getRightColor(WheelColors currentColor) {
+    /**
+     * @param currentColor Pass in current color so we know what to go off of
+     * @return Return the right color, and assume null
+     */
+    private WheelColors getRightColor(WheelColors currentColor) {
         //Take the current color and return 1 color to the right
         switch (currentColor) {
             case RED:
@@ -109,33 +129,43 @@ public class ColorWheelUtils {
     }
 
 
-    //TODO Test this
-    public int getTilesPassed() {
+    private int getTilesMoved() {
+        //Init local tilesPassed
         int tilesPassed = 0;
-        WheelColors oldColor = currentColor();
         //Grab the current color
-        //Wait .3 seconds before grabbing the detected color again
-        Timer.delay(0.3);
+        WheelColors oldColor = currentColor();
+        //Wait 0.05 seconds to assure a difference in old and new color
+        Timer.delay(0.05);
+        //Grab the current color after waiting
         WheelColors newColor = currentColor();
 
+        //If there is a difference, add 1 to the tiles moved value
         if (newColor != oldColor) {
             tilesPassed++;
-            System.out.println(tilesPassed);
         }
+        //Return and print the value repeatedly
+        System.out.println(tilesPassed);
         return tilesPassed;
     }
 
-
-    //TODO Test this
+    /**
+     * @param tilesToMove take in the number of tiles we need to move
+     */
     public void moveTiles(int tilesToMove) {
+        //Grab the current color
         WheelColors currentColor1 = currentColor();
+        //Wait 0.05 seconds to assure a difference
         Timer.delay(0.2);
+        //Grab the current color after waiting
         WheelColors currentColor2 = currentColor();
 
+        //While we haven't reached the goal tiles to move, check for a difference
         for (int i = 0; i < tilesToMove; i++) {
             if (currentColor1 != currentColor2) {
                 tilesToMove--;
             }
+            //If we haven't hit the goal, keep motors on
+            //Otherwise, turn them off
             if (tilesToMove != 0) {
                 //TURN MOTORS ON
             } else {
@@ -144,18 +174,23 @@ public class ColorWheelUtils {
         }
     }
 
-
-    //TODO Test this piece of shit!
-    public void nearestColorTiles(WheelColors colorWanted) {
+    /**
+     * @param colorWanted pass in the color wanted as a point of reference
+     */
+    public void distanceToColor(WheelColors colorWanted) {
+        //Init local tilesToGo
         int tilesToGo;
+        //Grab the current color
         WheelColors currentColor = currentColor();
+        //If the color wanted is the left color of the current one, return -1 (left 1)
         if (currentColor == getLeftColor(colorWanted)) {
             tilesToGo = -1;
         } else {
+            //Otherwise, return # of tiles to go until we are there
             tilesToGo = (32 + colorWanted.i - currentColor.i) % 4;
         }
-
-        Timer.delay(0.2);
+        //Print the values so we can see them and do something with them.
+        Timer.delay(0.05);
         System.out.println(tilesToGo);
     }
 }

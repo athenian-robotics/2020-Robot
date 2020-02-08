@@ -9,12 +9,12 @@ import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
 
 public class ShooterSubsystem extends SubsystemBase {
 
+    private final DoubleSolenoid dumperSolenoid = new DoubleSolenoid(2, 3);
+    private final DoubleSolenoid gateSolenoid = new DoubleSolenoid(0, 1);
     private boolean isRunning = false;
+    private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
     private boolean isOpen = false;
     private boolean isUp = false;
-    private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
-    private final DoubleSolenoid dumperSolenoid = new DoubleSolenoid(2,3);
-    private final DoubleSolenoid gateSolenoid = new DoubleSolenoid(0,1);
 
 
     public ShooterSubsystem() {

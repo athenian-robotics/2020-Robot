@@ -11,9 +11,11 @@ public class WheelSpinnerLiftUp extends CommandBase {
     }
 
     public void initialize() {
-            colorWheel.spinnerLiftUp();
-        }
+        colorWheel.spinnerLiftUp();
+    }
 
-    public boolean isFinished() { return true; }
+    public boolean isFinished() {
+        return true;
+    }
 
 }

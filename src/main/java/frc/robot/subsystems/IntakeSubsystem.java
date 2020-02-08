@@ -7,7 +7,9 @@ import static frc.robot.Constants.MechanismConstants.intakeMotorPort;
 
 public class IntakeSubsystem extends SubsystemBase {
 
+
     //    private final double speed;
+
     private WPI_TalonSRX intakeMotor = new WPI_TalonSRX(intakeMotorPort);
     public boolean isRunning = false;
     private boolean isForward;
@@ -42,4 +44,6 @@ public class IntakeSubsystem extends SubsystemBase {
             startIntake();
         }
     }
+
+
 }

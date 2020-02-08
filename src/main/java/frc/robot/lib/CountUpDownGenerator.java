@@ -37,16 +37,6 @@ public class CountUpDownGenerator implements Closeable {
                 });
     }
 
-    public int getValue() {
-        return currValue.intValue();
-    }
-
-    @Override
-    public void close() {
-        executor.shutdownNow();
-        finished.set(true);
-    }
-
     private static void pause(int pauseMillis) {
         try {
             Thread.sleep(pauseMillis);
@@ -86,5 +76,15 @@ public class CountUpDownGenerator implements Closeable {
                 pause(1000);
             });
         }
+    }
+
+    public int getValue() {
+        return currValue.intValue();
+    }
+
+    @Override
+    public void close() {
+        executor.shutdownNow();
+        finished.set(true);
     }
 }

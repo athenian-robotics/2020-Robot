@@ -10,7 +10,7 @@ public class FastTurnSpeed extends CommandBase {
 
     @Override
     public void initialize() {
-        DrivetrainSubsystem.maxDriverSpeed = DrivetrainSubsystem.maxDriverSpeed > 0 ? speedScale: -speedScale;
+        DrivetrainSubsystem.maxDriverSpeed = DrivetrainSubsystem.maxDriverSpeed > 0 ? speedScale : -speedScale;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
