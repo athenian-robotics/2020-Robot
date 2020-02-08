@@ -51,5 +51,4 @@ public class ColorWheelSubsystem extends SubsystemBase {
         colorWheelUtils.distanceToColor(RED);
     }
 
-
 }
