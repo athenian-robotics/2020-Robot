@@ -1,55 +1,100 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.ColorSensorV3;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.colorwheel.ColorWheelUtils;
 
-import static frc.robot.colorwheel.WheelColors.RED;
+import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
+
+public class ShooterSubsystem extends SubsystemBase {
+
+    private boolean isRunning = false;
+    private boolean isOpen = false;
+    private boolean isUp = false;
+    private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
+    private final DoubleSolenoid dumperSolenoid = new DoubleSolenoid(2,3);
+    private final DoubleSolenoid gateSolenoid = new DoubleSolenoid(0,1);
 
 
-public class ColorWheelSubsystem extends SubsystemBase {
 
-    //Declare ports and variables
-    private final I2C.Port i2cPort = I2C.Port.kOnboard;
-    private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
-    private final ColorWheelUtils colorWheelUtils = new ColorWheelUtils();
+    public ShooterSubsystem() {
+        shooterMotor.setInverted(true);
+        //final motor_placeholder shooterMotor;
+        //final pneumatic_placeholder shooterPiston;
 
-    //Create class constructor
-    public ColorWheelSubsystem() {
-        //Set initial value for class attribute robotContainer
     }
 
-    private static void updateColor(double red, double green, double blue) {
-        SmartDashboard.putNumber("R Value", red * 255);
-        SmartDashboard.putNumber("G Value", green * 255);
-        SmartDashboard.putNumber("B Value", blue * 255);
+    public void startShooter() {
+        shooterMotor.set(1);
+        System.out.println("Low goal shooter now shooting!");
+        isRunning = true;
+
+//        solenoidlift.set(DoubleSolenoid.Value.kForward);
+
     }
 
-    private static void updateProximity(double proximity) {
-        SmartDashboard.putNumber("Proximity", proximity);
+    public void stopShooter() {
+        shooterMotor.set(0);
+        System.out.println("Low goal shooter now not shooting!");
+        isRunning = false;
+
+//        solenoidlift.set((DoubleSolenoid.Value.kReverse));
     }
 
-    private static void updateIR(double IR) {
-        SmartDashboard.putNumber("Infrared", IR);
+    public void dumperUp() {
+        dumperSolenoid.set(DoubleSolenoid.Value.kForward);
+        isUp = true;
     }
 
+    public void dumperDown() {
+        dumperSolenoid.set((DoubleSolenoid.Value.kReverse));
+        isUp = false;
+    }
+
+    public void gateUp() {
+        gateSolenoid.set(DoubleSolenoid.Value.kForward);
+        isOpen = true;
+    }
+
+    public void gateDown() {
+        gateSolenoid.set(DoubleSolenoid.Value.kReverse);
+        isOpen = false;
+    }
+
+    public void toggleGate() {
+        if (isOpen) {
+            gateDown();
+        } else {
+            gateUp();
+        }
+
+    }
+
+    public void toggleShooter() {
+        if (isRunning) {
+            stopShooter();
+        } else {
+            startShooter();
+        }
+    }
+
+    public void toggleDumper() {
+        if (isUp) {
+            dumperDown();
+        } else {
+            dumperUp();
+        }
+    }
+
+    @Override
     public void periodic() {
-
-        //Gather wpilib Color data from color sensor
-        Color detectedColor = colorSensor.getColor();
-
-        //Update Color-sensor values onto SmartDashboard
-        ColorWheelSubsystem.updateColor(detectedColor.red, detectedColor.green, detectedColor.blue);
-        ColorWheelSubsystem.updateProximity(colorSensor.getProximity());
-        ColorWheelSubsystem.updateIR(colorSensor.getIR());
-
-        //Color Wheel Utils demo commands
-        colorWheelUtils.currentColor();
-        colorWheelUtils.distanceToColor(RED);
+        // This method will be called once per scheduler run
     }
 
+
+    public void invert() {
+    }
 
 }

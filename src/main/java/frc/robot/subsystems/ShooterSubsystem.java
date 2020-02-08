@@ -2,19 +2,26 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
 
 public class ShooterSubsystem extends SubsystemBase {
-    public boolean isRunning = false;
 
+    private boolean isRunning = false;
+    private boolean isOpen = false;
+    private boolean isUp = false;
     private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
-    //private final DoubleSolenoid solenoid = new DoubleSolenoid(0,1);
+    private final DoubleSolenoid dumperSolenoid = new DoubleSolenoid(2,3);
+    private final DoubleSolenoid gateSolenoid = new DoubleSolenoid(0,1);
 
 
-    public void FlatShooterSubsystem() {
 
+    public ShooterSubsystem() {
+        shooterMotor.setInverted(true);
         //final motor_placeholder shooterMotor;
         //final pneumatic_placeholder shooterPiston;
 
@@ -24,16 +31,45 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotor.set(1);
         System.out.println("Low goal shooter now shooting!");
         isRunning = true;
-        //solenoid.set(DoubleSolenoid.Value.kReverse);
+
+//        solenoidlift.set(DoubleSolenoid.Value.kForward);
+
     }
 
     public void stopShooter() {
-        //closePistonGate();
-        //turnOffMotor();
         shooterMotor.set(0);
         System.out.println("Low goal shooter now not shooting!");
         isRunning = false;
-        //solenoid.set((DoubleSolenoid.Value.kForward));
+//        solenoidlift.set((DoubleSolenoid.Value.kReverse));
+    }
+
+    public void dumperUp() {
+        dumperSolenoid.set(DoubleSolenoid.Value.kForward);
+        isUp = true;
+    }
+
+    public void dumperDown() {
+        dumperSolenoid.set((DoubleSolenoid.Value.kReverse));
+        isUp = false;
+    }
+
+    public void gateUp() {
+        gateSolenoid.set(DoubleSolenoid.Value.kForward);
+        isOpen = true;
+    }
+
+    public void gateDown() {
+        gateSolenoid.set(DoubleSolenoid.Value.kReverse);
+        isOpen = false;
+    }
+
+    public void toggleGate() {
+        if (isOpen) {
+            gateDown();
+        } else {
+            gateUp();
+        }
+
     }
 
     public void toggleShooter() {
@@ -44,10 +80,21 @@ public class ShooterSubsystem extends SubsystemBase {
         }
     }
 
+    public void toggleDumper() {
+        if (isUp) {
+            dumperDown();
+        } else {
+            dumperUp();
+        }
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
     }
 
+
+    public void invert() {
+    }
 
 }
