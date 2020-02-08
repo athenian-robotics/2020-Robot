@@ -12,6 +12,7 @@ public class CenterToGoal extends SequentialCommandGroup {
         double[] list = limelight.grabValues();
         double angleHalfToGoal = Math.atan((list[6] / 2) / list[5]);
 
-        addCommands(new AutoTurnAngle(drivetrain, -angleHalfToGoal), new AutoDriveForwardDistance(drivetrain, Math.sin((angleHalfToGoal * list[6]) / 36)), new AutoTurnAngle(drivetrain, angleHalfToGoal));
+        addCommands(new AutoTurnAngle(drivetrain, angleHalfToGoal), new AutoDriveForwardDistance(drivetrain, (Math.sin(angleHalfToGoal) * list[6]) / 36)), new AutoTurnAngle(drivetrain, -angleHalfToGoal))
+        ;
     }
 }
