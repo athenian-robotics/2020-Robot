@@ -43,7 +43,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
             case JANKBOT:
                 leftMotors = new SpeedControllerGroup(new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port));
                 rightMotors = new SpeedControllerGroup(new WPI_VictorSPX(rightMotor1Port), new WPI_VictorSPX(rightMotor2Port));
-
                 break;
             case KITBOT:
                 leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(leftMotor1Port), new WPI_TalonSRX(leftMotor2Port));
@@ -56,6 +55,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
             case OFFICIAL:
                 leftMotors = new SpeedControllerGroup(new CANSparkMax(leftMotor1Port, kBrushless), new CANSparkMax(leftMotor2Port, kBrushless));
                 rightMotors = new SpeedControllerGroup(new CANSparkMax(rightMotor1Port, kBrushless), new CANSparkMax(rightMotor2Port, kBrushless));
+                break;
             default:
                 throw new IllegalStateException("We will never get here");
         }
@@ -85,7 +85,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        drive.arcadeDrive(xSpeed * maxDriverSpeed, -zRotation * maxDriverSpeed);
+        //account for changes in turning when the forward direction changes
+        drive.arcadeDrive(xSpeed*maxDriverSpeed, maxDriverSpeed < 0 ? zRotation*maxDriverSpeed : -zRotation*maxDriverSpeed);
+
     }
 
     public double getLeftEncoderDistance() {
