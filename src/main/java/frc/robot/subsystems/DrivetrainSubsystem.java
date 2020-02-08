@@ -29,6 +29,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     private final DifferentialDriveOdometry m_odometry;
+    public static double maxDriverSpeed = speedScale;
+
     SpeedControllerGroup leftMotors;
     SpeedControllerGroup rightMotors;
 
@@ -84,7 +86,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        drive.arcadeDrive(xSpeed, -zRotation);
+        drive.arcadeDrive(xSpeed*maxDriverSpeed, -zRotation*maxDriverSpeed);
     }
 
     public double getLeftEncoderDistance() {
