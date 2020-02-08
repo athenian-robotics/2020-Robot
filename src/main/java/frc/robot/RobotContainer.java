@@ -10,18 +10,16 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ChangeIntakeMode;
-import frc.robot.commands.DriveArcade;
-import frc.robot.commands.FollowTrajectory;
-import frc.robot.commands.ShootLowGoal;
+import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.*;
 
-import static frc.robot.lib.controllers.FightStick.fightStickA;
-import static frc.robot.lib.controllers.FightStick.fightStickX;
+import static frc.robot.lib.controllers.FightStick.*;
+
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
@@ -39,12 +37,11 @@ public class RobotContainer {
   public static JoystickButton xboxY;
   public static JoystickButton xboxLB;
   public static JoystickButton xboxRB;
-  public static JoystickButton xboxBack;
-  public static JoystickButton xboxStart;
+    private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
+    public static JoystickButton xboxSquares;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
-
-  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
+    public static JoystickButton xboxBurger;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -80,6 +77,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
   private void buttonSetup() {
     xboxA = new JoystickButton(xboxController, 1);
     xboxB = new JoystickButton(xboxController, 2);
@@ -87,33 +85,72 @@ public class RobotContainer {
     xboxY = new JoystickButton(xboxController, 4);
     xboxLB = new JoystickButton(xboxController, 5);
     xboxRB = new JoystickButton(xboxController, 6);
-    xboxBack = new JoystickButton(xboxController, 7);
-    xboxStart = new JoystickButton(xboxController, 8);
+      xboxSquares = new JoystickButton(xboxController, 7);
+      xboxBurger = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
   }
 
   private void configureButtonBindings() {
-    //MODE BUTTONS
-//    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
-    xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+
+      //Xbox Controls
+      xboxY.whenPressed(new FastTurnSpeed());
+      xboxX.whenPressed(new SlowTurnSpeed());
+      xboxRS.whenPressed(new RunIntake(intakeSubsystem));
+      xboxLS.whenHeld(new FunctionalCommand(
+              intakeSubsystem::invert,
+              () -> {
+              },
+              interrupted -> intakeSubsystem.invert(),
+              () -> false,
+              intakeSubsystem));
+      xboxRB.whenPressed(new SetIntakeForward());
+      xboxLB.whenPressed(new SetShooterForward());
+      xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
+
+
+      //FIGHT STICK CONTROLS
+
+      fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+      fightStickB.whenPressed(new GateCommand(shooterSubsystem));
+      fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+      fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
+
+      // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
+      fightStickOption.whenHeld(new FunctionalCommand(
+              intakeSubsystem::invert,
+              () -> {
+              },
+              interrupted -> intakeSubsystem.invert(),
+              () -> false,
+              intakeSubsystem));
+
+      // When held, this command changes the intake to backward, but doesn't change the speed/status
+      fightStickShare.whenHeld(new FunctionalCommand(
+              shooterSubsystem::invert,
+              () -> {
+              },
+              interrupted -> shooterSubsystem.invert(),
+              () -> false,
+              intakeSubsystem));
+
+      //xboxB.whenPressed(new GateCommand());
+      //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+      //xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+      //xboxY.whenPressed(new RunColorWheel(colorWheelSubsystem));
+
+      //XBOX CONTROLS
+      //Change drive mode
+      //xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
+      //xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+
+
+      //Autonomous Controls
+      //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
+      //xboxA.whenPressed(new PathWeaver());
     //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
     //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
     //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
-
-    //Intake Controlls
-    //xboxLB.whenHeld(new IntakeTest(-0.8));
-    //xboxB.whenHeld(new IntakeTest(0.8));
-    xboxX.whenPressed(new ShootLowGoal(shooterSubsystem));
-    xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-
-    //Fight Stick Code
-    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
-    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-
-    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
-    //xboxX.whenHeld(new RunIntake(intakeSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping
@@ -135,7 +172,7 @@ public class RobotContainer {
     /**
      * Test Buttons if you need to STOP, FORWARD OR REVERSE
      *
-     * Comment out as needed, and change ROBT TYPE!
+     * Comment out as needed, and change ROBOT_TYPE!
      */
   }
 

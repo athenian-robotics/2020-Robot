@@ -12,16 +12,21 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private WPI_TalonSRX intakeMotor = new WPI_TalonSRX(intakeMotorPort);
     public boolean isRunning = false;
+    private boolean isForward;
 
     public IntakeSubsystem() {
-        intakeMotor.setInverted(true);
-//        this.speed = speed;
+        intakeMotor.setInverted(isForward);
+//      this.speed = speed;
     }
 
     public void startIntake() {
         intakeMotor.set(1);
         System.out.println("start intake");
         isRunning = true;
+    }
+
+    public void invert() {
+        intakeMotor.setInverted(!intakeMotor.getInverted());
     }
 
     public void stopIntake() {

@@ -22,6 +22,10 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
+    // This will generate the test data
+    // private CountUpDownGenerator generator = new CountUpDownGenerator(0, 10, 500);
+
+
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -47,6 +51,9 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+
+        // This will publish the test data
+        // SmartDashboard.putNumber("Test Data: ", generator.getValue());
     }
 
     /**

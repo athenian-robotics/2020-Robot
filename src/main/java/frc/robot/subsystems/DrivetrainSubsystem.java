@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -14,11 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
 
-
-
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.DriveConstants.*;
-import static frc.robot.lib.RobotType.JANKBOT;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
@@ -29,6 +28,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     private final DifferentialDriveOdometry m_odometry;
+    public static double maxDriverSpeed = speedScale;
+
     SpeedControllerGroup leftMotors;
     SpeedControllerGroup rightMotors;
 
@@ -84,7 +85,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        drive.arcadeDrive(xSpeed, -zRotation);
+        drive.arcadeDrive(xSpeed * maxDriverSpeed, -zRotation * maxDriverSpeed);
     }
 
     public double getLeftEncoderDistance() {
