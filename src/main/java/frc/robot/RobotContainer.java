@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
-
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
+import static frc.robot.lib.controllers.FightStick.fightStickA;
+import static frc.robot.lib.controllers.FightStick.fightStickX;
+
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
-
-import static frc.robot.lib.controllers.FightStick.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -102,7 +102,8 @@ public class RobotContainer {
 
     //Intake Controlls
     xboxB.whenPressed(new GateCommand());
-    xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    xboxX.whenPressed(new CenterToGoal(limeLightSubsystem, drivetrain));
     xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
     xboxY.whenPressed(new RunColorWheel());
 
