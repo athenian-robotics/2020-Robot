@@ -23,8 +23,10 @@ public class RunColorWheel extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        POVUp.whenActive(new WheelSpinnerLiftUp(colorWheel));
-        POVDown.whenActive(new WheelSpinnerLiftDown(colorWheel));
+        if (POVUp.get()) { colorWheel.spinnerLiftUp(); }
+        if (POVDown.get()) { colorWheel.spinnerLiftDown(); }
+        if (POVRight.get()) { colorWheel.spin(1); }
+        if (POVLeft.get()) { colorWheel.spin(-1); }
     }
 
     // Called once the command ends or is interrupted.
