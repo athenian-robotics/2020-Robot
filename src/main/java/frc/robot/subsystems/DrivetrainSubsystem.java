@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -14,11 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
 
-
-
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.DriveConstants.*;
-import static frc.robot.lib.RobotType.JANKBOT;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
@@ -44,7 +43,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
             case JANKBOT:
                 leftMotors = new SpeedControllerGroup(new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port));
                 rightMotors = new SpeedControllerGroup(new WPI_VictorSPX(rightMotor1Port), new WPI_VictorSPX(rightMotor2Port));
-
                 break;
             case KITBOT:
                 leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(leftMotor1Port), new WPI_TalonSRX(leftMotor2Port));
@@ -57,6 +55,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
             case OFFICIAL:
                 leftMotors = new SpeedControllerGroup(new CANSparkMax(leftMotor1Port, kBrushless), new CANSparkMax(leftMotor2Port, kBrushless));
                 rightMotors = new SpeedControllerGroup(new CANSparkMax(rightMotor1Port, kBrushless), new CANSparkMax(rightMotor2Port, kBrushless));
+                break;
             default:
                 throw new IllegalStateException("We will never get here");
         }
@@ -86,7 +85,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        drive.arcadeDrive(xSpeed*maxDriverSpeed, -zRotation*maxDriverSpeed);
+        //drive.arcadeDrive(xSpeed*maxDriverSpeed, -zRotation*maxDriverSpeed);
+      
+        //account for changes in turning when the forward direction changes, if it doesn't work use the one above
+        drive.arcadeDrive(xSpeed*maxDriverSpeed, maxDriverSpeed < 0 ? zRotation*maxDriverSpeed : -zRotation*maxDriverSpeed);
     }
 
     public double getLeftEncoderDistance() {

@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import frc.robot.lib.RobotType;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -35,6 +34,7 @@ public final class Constants {
         public static final int encoderRightA = 5;
         public static final int encoderRightB = 6;
         public static final double speedScale = 0.8;
+
         public static final double EncoderDistancePerPulse = 1.0/2048.0;
         public static final double minDrivePower = 0.32;
     }

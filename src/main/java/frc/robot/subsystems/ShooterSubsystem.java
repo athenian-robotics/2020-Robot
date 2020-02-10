@@ -16,7 +16,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final DoubleSolenoid dumperSolenoid = new DoubleSolenoid(2,3);
     private final DoubleSolenoid gateSolenoid = new DoubleSolenoid(0,1);
 
-
     public ShooterSubsystem() {
         shooterMotor.setInverted(true);
         //final motor_placeholder shooterMotor;

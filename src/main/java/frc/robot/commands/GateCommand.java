@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -10,7 +8,7 @@ public class GateCommand extends CommandBase {
 
     private ShooterSubsystem shooter;
 
-    public GateCommand(ShooterSubsystem shooter){
+    public GateCommand(ShooterSubsystem shooter) {
         this.shooter = shooter;
         addRequirements(shooter);
     }

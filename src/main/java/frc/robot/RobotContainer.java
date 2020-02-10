@@ -40,6 +40,7 @@ public class RobotContainer {
   public static JoystickButton xboxBurger;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
+  public static JoystickButton xboxBurger;
 
   private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
@@ -50,6 +51,7 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
+
   // Define all OI devices here
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
   public static FightStick fightStick = new FightStick();
@@ -61,7 +63,8 @@ public class RobotContainer {
     buttonSetup();
     configureButtonBindings();
 
-    //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
+
+      //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
     //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
@@ -105,6 +108,9 @@ public class RobotContainer {
     xboxRB.whenPressed(new SetIntakeForward());
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
+    xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1.0)); //4.572
+    xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.0));
+
 
 
 
@@ -114,7 +120,6 @@ public class RobotContainer {
     fightStickB.whenPressed(new GateCommand(shooterSubsystem));
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
-
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
     fightStickOption.whenHeld(new FunctionalCommand(
