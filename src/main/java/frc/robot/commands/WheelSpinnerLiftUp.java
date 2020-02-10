@@ -14,11 +14,7 @@ public class WheelSpinnerLiftUp extends CommandBase {
         colorWheel.spinnerLiftUp();
     }
 
-    public boolean isFinished() { return true; }
-        colorWheel.spinnerLiftUp();
-    }
-
-    public boolean isFinished() {
-        return true;
+    public boolean isFinished() { 
+        return true; 
     }
 }
