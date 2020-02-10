@@ -20,7 +20,6 @@ import frc.robot.subsystems.*;
 
 import static frc.robot.lib.controllers.FightStick.*;
 
-
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
 
@@ -38,11 +37,11 @@ public class RobotContainer {
   public static JoystickButton xboxLB;
   public static JoystickButton xboxRB;
   public static JoystickButton xboxSquares;
+  public static JoystickButton xboxBurger;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
-  public static JoystickButton xboxBurger;
 
-  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -50,7 +49,7 @@ public class RobotContainer {
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-    private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
+  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
 
   // Define all OI devices here
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -86,14 +85,14 @@ public class RobotContainer {
     xboxY = new JoystickButton(xboxController, 4);
     xboxLB = new JoystickButton(xboxController, 5);
     xboxRB = new JoystickButton(xboxController, 6);
-      xboxSquares = new JoystickButton(xboxController, 7);
-      xboxBurger = new JoystickButton(xboxController, 8);
+    xboxSquares = new JoystickButton(xboxController, 7);
+    xboxBurger = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
   }
 
   private void configureButtonBindings() {
-    
+
     //Xbox Controls
     xboxY.whenPressed(new FastTurnSpeed());
     xboxX.whenPressed(new SlowTurnSpeed());

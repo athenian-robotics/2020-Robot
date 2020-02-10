@@ -3,8 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorWheelSubsystem;
 
-import static frc.robot.lib.controllers.FightStick.POVDown;
-import static frc.robot.lib.controllers.FightStick.POVUp;
+import static frc.robot.lib.controllers.FightStick.*;
 
 
 public class RunColorWheel extends CommandBase {
@@ -24,12 +23,10 @@ public class RunColorWheel extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (POVUp.get()) {
-            colorWheel.spinnerLiftUp();
-        }
-        if (POVDown.get()) {
-            colorWheel.spinnerLiftDown();
-        }
+        if (POVUp.get()) { colorWheel.spinnerLiftUp(); }
+        if (POVDown.get()) { colorWheel.spinnerLiftDown(); }
+        if (POVRight.get()) { colorWheel.spin(1); }
+        if (POVLeft.get()) { colorWheel.spin(-1); }
     }
 
     // Called once the command ends or is interrupted.

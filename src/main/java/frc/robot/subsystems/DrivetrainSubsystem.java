@@ -85,9 +85,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        //account for changes in turning when the forward direction changes
+        //drive.arcadeDrive(xSpeed*maxDriverSpeed, -zRotation*maxDriverSpeed);
+      
+        //account for changes in turning when the forward direction changes, if it doesn't work use the one above
         drive.arcadeDrive(xSpeed*maxDriverSpeed, maxDriverSpeed < 0 ? zRotation*maxDriverSpeed : -zRotation*maxDriverSpeed);
-
     }
 
     public double getLeftEncoderDistance() {
