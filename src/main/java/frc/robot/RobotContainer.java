@@ -40,7 +40,6 @@ public class RobotContainer {
   public static JoystickButton xboxBurger;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
-  public static JoystickButton xboxBurger;
 
   private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
 
