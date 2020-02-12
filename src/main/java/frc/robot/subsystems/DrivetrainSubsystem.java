@@ -24,7 +24,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-    private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0);
+    private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0, 512);
     private final DifferentialDriveOdometry m_odometry;
     public static double maxDriverSpeed = speedScale;
 
@@ -212,4 +212,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public double getTurnRate() {
         return gyro.getRate() * (false ? -1.0 : 1.0);
     }
+
+    public double getUltrasonicDistance() { return ultrasonic.get(); }
 }
