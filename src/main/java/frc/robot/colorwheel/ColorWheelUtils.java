@@ -87,7 +87,6 @@ public class ColorWheelUtils {
         SmartDashboard.putBoolean("GREEN", isGreen);
     }
 
-
     /**
      * @param currentColor Pass in current color so we know what to go off of
      * @return Return the left color, and assume null
@@ -127,7 +126,6 @@ public class ColorWheelUtils {
                 return null;
         }
     }
-
 
     private int getTilesMoved() {
         //Init local tilesPassed
