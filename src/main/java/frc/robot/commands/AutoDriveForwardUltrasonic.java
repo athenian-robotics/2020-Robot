@@ -6,13 +6,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoDriveForwardUltrasonic extends CommandBase {
-    DrivetrainSubsystem drivetrain;
-    Timer driveTimer = new Timer();
+    private DrivetrainSubsystem drivetrain;
+    private Timer driveTimer = new Timer();
     private double distancefromwall;
-    PIDController pid = new PIDController(0.05, 0.0, 0.01); // 0.39, 0.0, 0.01
-    private double setpoint;
+    private PIDController pid = new PIDController(0.05, 0.0, 0.01); // 0.39, 0.0, 0.01
     private long startTime;
-    private long currentTime = startTime;
+    //private long currentTime = startTime;
     private double trapezoidTime = 3000;
 
     public AutoDriveForwardUltrasonic(DrivetrainSubsystem drivetrain, double distancefromwall) {
@@ -26,7 +25,7 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
         startTime = System.currentTimeMillis();
         driveTimer.reset();
         driveTimer.start();
-        this.setpoint = distancefromwall;
+        double setpoint = distancefromwall;
         System.out.println("Setting setpoint to " + setpoint);
         pid.setSetpoint(setpoint);
     }
