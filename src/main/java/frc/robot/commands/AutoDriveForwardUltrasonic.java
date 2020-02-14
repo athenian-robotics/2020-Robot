@@ -26,13 +26,13 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
         driveTimer.reset();
         driveTimer.start();
         double setpoint = distancefromwall;
-        System.out.println("Setting setpoint to " + setpoint);
+        //System.out.println("Setting setpoint to " + setpoint);
         pid.setSetpoint(setpoint);
     }
 
     public void execute() {
         long elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println("Time: " + elapsedTime);
+        //System.out.println("Time: " + elapsedTime);
         double power;
         if(elapsedTime <= trapezoidTime){
             power = Math.min(Math.abs(pid.calculate(drivetrain.getUltrasonicDistance())*(elapsedTime/trapezoidTime)), 0.2);

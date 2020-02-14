@@ -44,6 +44,7 @@ public class AutoTurnAngle extends CommandBase {
     public void initialize() {
         setpoint = drivetrain.getGyroAngle() + angleToTurn + tolerance;
         pid.setSetpoint(setpoint);
+        System.out.println("Turn To Angle");
     }
 
     public void execute() {
