@@ -41,7 +41,7 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
