@@ -9,11 +9,13 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class TurnThenUltraSonicStop extends SequentialCommandGroup {
 
     DrivetrainSubsystem drivetrain;
-    private int count;
+
     /**
      * Turns then moves forward till a wall.
      *
      * @param drivetrain The drive subsystem this command will run on
+     * @param angleToTurn Desired angle to turn
+     * @param distanceToStop Desired distance from the wall to stop
      */
     public TurnThenUltraSonicStop(DrivetrainSubsystem drivetrain, double angleToTurn, double distanceToStop) {
         this.drivetrain = drivetrain;
