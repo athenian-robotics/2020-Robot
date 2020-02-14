@@ -32,17 +32,12 @@ public class FollowTrajectory extends CommandBase {
         drivetrain.resetOdometry(new Pose2d());
     }
 
-    public void execute() {
-
-    }
-
     public boolean isFinished() {
         drivetrain.tankDriveVolts(0,0);
         return false;
     }
 
     public void end(boolean interrupted) {
-
         System.out.println("Reached setpoint");
     }
     public Command ExampleAutonomousCommand() {
