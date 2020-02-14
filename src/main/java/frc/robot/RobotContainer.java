@@ -41,7 +41,7 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-  private static final RobotType ROBOT_TYPE = RobotType.KITBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -108,7 +108,7 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1.0)); //4.572
-    xboxA.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 15.0));
+    xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 15));
 
     //FIGHT STICK CONTROLS
 

@@ -19,6 +19,7 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
         this.metersToDrive = metersToDrive;
         pid.setTolerance(0.5);
         addRequirements(drivetrain);
+        System.out.println("In Constructor");
     }
 
     public void initialize() {
@@ -26,14 +27,14 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
         driveTimer.reset();
         driveTimer.start();
         this.setpoint = drivetrain.getRightEncoderDistance() + metersToDrive;
-        System.out.println("Current right encoder distance: " + drivetrain.getRightEncoderDistance());
-        System.out.println("Setting setpoint to " + setpoint);
+        //System.out.println("Current right encoder distance: " + drivetrain.getRightEncoderDistance());
+        //System.out.println("Setting setpoint to " + setpoint);
         pid.setSetpoint(setpoint);
     }
 
     public void execute() {
         long elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println("Time: " + elapsedTime);
+        //System.out.println("Time: " + elapsedTime);
         double power;
         if(elapsedTime <= trapezoidTime){
             power = Math.min(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/trapezoidTime),0.4);
@@ -41,7 +42,7 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
         else{
             power = Math.min(pid.calculate(drivetrain.getRightEncoderDistance()), 0.4);
         }
-        System.out.println(power);
+        //System.out.println(power);
         drivetrain.tankDrive(power, power);
     }
 
@@ -51,7 +52,7 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
 
     public void end(boolean interrupted) {
         drivetrain.tankDrive(0, 0);
-        System.out.println("Reached setpoint");
+        //System.out.println("Reached setpoint");
     }
 
 }
