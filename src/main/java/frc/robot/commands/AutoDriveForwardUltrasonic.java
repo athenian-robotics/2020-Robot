@@ -8,11 +8,12 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class AutoDriveForwardUltrasonic extends CommandBase {
     DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
-    double distancefromwall;
-    PIDController pid = new PIDController(0.2, 0.0, 0.01); // 0.39, 0.0, 0.01
-    double setpoint;
-    long startTime;
-    double trapezoidTime = 3000;
+    private double distancefromwall;
+    PIDController pid = new PIDController(0.05, 0.0, 0.01); // 0.39, 0.0, 0.01
+    private double setpoint;
+    private long startTime;
+    private long currentTime = startTime;
+    private double trapezoidTime = 3000;
 
     public AutoDriveForwardUltrasonic(DrivetrainSubsystem drivetrain, double distancefromwall) {
         this.drivetrain = drivetrain;
@@ -43,6 +44,18 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
         System.out.println("Power: " + power);
         drivetrain.tankDrive(power, power);
     }
+
+    /*public boolean counter(){
+        double count = 0 ;
+        double previousCount;
+
+        if(drivetrain.getAverageEncoderDistance()<=distancefromwall){
+            previousCount = currentTime;
+            count += currentTime - previousCount;
+        }
+
+        return count >= 250;
+    }*/
 
     public boolean isFinished() {
         return drivetrain.getUltrasonicDistance() <= distancefromwall;
