@@ -59,7 +59,6 @@ public class AutoTurnAngle extends CommandBase {
     }
 
     public boolean isFinished() {
-
         if(drivetrain.getGyroAngle() <= setpoint + tolerance && drivetrain.getGyroAngle() >= setpoint - tolerance){
             return true;
         };
