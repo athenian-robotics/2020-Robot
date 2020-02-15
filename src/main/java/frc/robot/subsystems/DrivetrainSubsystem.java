@@ -13,10 +13,9 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
-import edu.wpi.first.wpilibj.controller.PIDController;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.DriveConstants.*;
@@ -38,7 +37,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SpeedControllerGroup rightMotors;
 
     //Variables for moving average calculation
-    Deque<Double> queue = new ArrayDeque<>();;
+    Queue<Double> queue = new LinkedList<>();
+    ;
     double queueSize = 5;
     double sum = 0;
     double count = 1;
@@ -153,10 +153,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
             count++;
         }
         else{
-            sum = sum - queue.pop();
+            sum -= queue.remove();
             sum += getUltrasonicDistance();
-            queue.add(getUltrasonicDistance());
-            movingAverageUltrasonic = sum/queueSize;
+            queue.offer(getUltrasonicDistance());
+            movingAverageUltrasonic = sum / queueSize;
         }
     }
 
