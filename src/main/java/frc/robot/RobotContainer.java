@@ -108,7 +108,8 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxB.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 25));
-    xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 25));
+    //xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 25));
+    xboxA.whenPressed(new AutoDriveForwardOdometry(drivetrain,3));
 
     //FIGHT STICK CONTROLS
 
