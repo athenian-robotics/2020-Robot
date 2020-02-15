@@ -56,10 +56,8 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
         //System.out.println("Right: "+drivetrain.RightEncoderCorrection(encoderSetPoint));
         //System.out.println("Left: "+drivetrain.LeftEncoderCorrection(encoderSetPoint));
 
-        //drivetrain.tankDrive(power + drivetrain.LeftEncoderCorrection(encoderSetPoint),
-        //        power + drivetrain.RightEncoderCorrection(encoderSetPoint));
-
-        drivetrain.tankDrive(power,power);
+        drivetrain.tankDrive(power + drivetrain.LeftEncoderCorrection(encoderSetPoint),
+                power + drivetrain.RightEncoderCorrection(encoderSetPoint));
     }
 
     public boolean isFinished() {
