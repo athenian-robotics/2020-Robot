@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.DriveConstants.*;
 
@@ -31,11 +34,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SpeedControllerGroup leftMotors;
     SpeedControllerGroup rightMotors;
 
+    //Variables for moving average calculation
+    Deque<Double> queue = new ArrayDeque<>();;
+    double queueSize = 5;
+    double sum = 0;
+    double count = 1;
+    double movingAverageUltrasonic = 0;
+
     public DrivetrainSubsystem(RobotType robotType) {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-
 
         switch (robotType) {
             case JANKBOT:
@@ -123,11 +132,25 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("PoseY", getPose().getTranslation().getY());
         SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Ultrasonic Distance", ultrasonic.get());
+        SmartDashboard.putNumber("AverageUltraSonic", movingAverageUltrasonic);
 
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
                 rightEncoder.getDistance());
 
+        //Moving Average of ultrasonic values
+        if(count <= queueSize){
+            queue.add(getUltrasonicDistance());
+            sum += getUltrasonicDistance();
+            movingAverageUltrasonic = sum/count;
+            count++;
+        }
+        else{
+            sum = sum - queue.pop();
+            sum += getUltrasonicDistance();
+            queue.add(getUltrasonicDistance());
+            movingAverageUltrasonic = sum/queueSize;
+        }
     }
 
     /**
@@ -215,4 +238,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public double getUltrasonicDistance() { return ultrasonic.get(); }
+
+    public double getAverageUltrasonicDistance() { return movingAverageUltrasonic; }
+
 }
