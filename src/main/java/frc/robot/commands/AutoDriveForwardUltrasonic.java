@@ -12,7 +12,7 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
     private PIDController pid = new PIDController(0.05, 0.0, 0.01); // 0.39, 0.0, 0.01
     private long startTime;
     //private long currentTime = startTime;
-    private double trapezoidTime = 3000;
+    private double trapezoidTime = 1000;
 
     public AutoDriveForwardUltrasonic(DrivetrainSubsystem drivetrain, double distancefromwall) {
         this.drivetrain = drivetrain;
@@ -35,10 +35,10 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
         //System.out.println("Time: " + elapsedTime);
         double power;
         if(elapsedTime <= trapezoidTime){
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getUltrasonicDistance())*(elapsedTime/trapezoidTime)), 0.2);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getUltrasonicDistance())*(elapsedTime/trapezoidTime)), 0.4);
         }
         else{
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getUltrasonicDistance())), 0.2);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getUltrasonicDistance())), 0.4);
         }
         System.out.println("Power: " + power);
         drivetrain.tankDrive(power, power);
