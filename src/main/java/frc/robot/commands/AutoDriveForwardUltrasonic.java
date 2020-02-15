@@ -12,7 +12,7 @@ import java.util.Deque;
 public class AutoDriveForwardUltrasonic extends CommandBase {
 
     private DrivetrainSubsystem drivetrain;
-    private Timer driveTimer = new Timer();
+
 
     //Ultrasonic PID
     private PIDController pid = new PIDController(0.05, 0.0, 0.01); // 0.39, 0.0, 0.01
@@ -20,9 +20,7 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
     private double tolerance = 1;
     private double trapezoidTime = 1000;
     private double distancefromwall;
-
-    //Encoder PID
-    private PIDController encoderPID = new PIDController(0.001, 0.0, 0.001); // 0.39, 0.0, 0.01
+    private double encoderSetPoint;
 
     public AutoDriveForwardUltrasonic(DrivetrainSubsystem drivetrain, double distancefromwall) {
         this.drivetrain = drivetrain;
@@ -34,16 +32,13 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
     public void initialize() {
         //Custom Trapizoid Initilizations
         startTime = System.currentTimeMillis();
-        driveTimer.reset();
-        driveTimer.start();
 
         //Setpoint for Ultranoic PID
         double setpoint = distancefromwall;
         pid.setSetpoint(setpoint);
 
         //Setpoint for Encoder PID
-        double encoderSetpoint = 0;
-        pid.setSetpoint(encoderSetpoint);
+        encoderSetPoint = drivetrain.getRightEncoderDistance()-drivetrain.getLeftEncoderDistance();
 
     }
 
@@ -58,11 +53,13 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
         else{
             power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance())), 0.4);
         }
+        //System.out.println("Right: "+drivetrain.RightEncoderCorrection(encoderSetPoint));
+        //System.out.println("Left: "+drivetrain.LeftEncoderCorrection(encoderSetPoint));
 
-        //Encoder PID calculations (to keep the robot straight)
-        encoderPID.calculate(drivetrain.getRightEncoderDistance()-drivetrain.getLeftEncoderDistance());
+        //drivetrain.tankDrive(power + drivetrain.LeftEncoderCorrection(encoderSetPoint),
+        //        power + drivetrain.RightEncoderCorrection(encoderSetPoint));
 
-        drivetrain.tankDrive(power, power);
+        drivetrain.tankDrive(power,power);
     }
 
     public boolean isFinished() {
