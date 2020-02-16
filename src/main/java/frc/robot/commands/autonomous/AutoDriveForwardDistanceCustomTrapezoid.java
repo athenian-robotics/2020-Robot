@@ -3,6 +3,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
@@ -12,7 +13,6 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
     PIDController pid = new PIDController(0.6, 0.0, 0.01); // 0.39, 0.0, 0.01
     private long startTime;
     private double encoderSetPoint;
-    private double maxspeed;
 
     public AutoDriveForwardDistanceCustomTrapezoid(DrivetrainSubsystem drivetrain, double metersToDrive) {
         this.drivetrain = drivetrain;
@@ -23,7 +23,6 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
     }
 
     public void initialize() {
-        maxspeed = 0.3;
         startTime = System.currentTimeMillis();
         driveTimer.reset();
         driveTimer.start();
@@ -41,13 +40,13 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
         double trapezoidTime = 2000;
         if(elapsedTime <= trapezoidTime){
             power = pid.calculate(drivetrain.getRightEncoderDistance()) >= 0 ?
-             Math.min(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/ trapezoidTime),maxspeed) :
-                    Math.max(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/ trapezoidTime),-maxspeed);
+             Math.min(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/ trapezoidTime), Constants.DriveConstants.maxDriveSpeed) :
+                    Math.max(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/ trapezoidTime),-Constants.DriveConstants.maxDriveSpeed);
         }
         else{
             power = pid.calculate(drivetrain.getRightEncoderDistance()) >= 0 ?
-                    Math.min(pid.calculate(drivetrain.getRightEncoderDistance()),maxspeed) :
-                    Math.max(pid.calculate(drivetrain.getRightEncoderDistance()),-maxspeed);
+                    Math.min(pid.calculate(drivetrain.getRightEncoderDistance()),Constants.DriveConstants.maxDriveSpeed) :
+                    Math.max(pid.calculate(drivetrain.getRightEncoderDistance()),-Constants.DriveConstants.maxDriveSpeed);
         }
         //System.out.println(power);
         drivetrain.tankDrive(power+drivetrain.leftEncoderCorrection(encoderSetPoint), power+drivetrain.rightEncoderCorrection(encoderSetPoint));
