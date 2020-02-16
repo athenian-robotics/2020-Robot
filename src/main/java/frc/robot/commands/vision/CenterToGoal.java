@@ -9,8 +9,10 @@ import frc.robot.subsystems.LimeLightSubsystem;
 
 public class CenterToGoal extends SequentialCommandGroup {
 
-    public CenterToGoal(LimeLightSubsystem limelight, DrivetrainSubsystem drivetrain) {
+    LimeLightSubsystem limelight;
 
+    public CenterToGoal(LimeLightSubsystem limelight, DrivetrainSubsystem drivetrain) {
+        this.limelight = limelight;
         addRequirements(limelight, drivetrain);
 
         limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
@@ -21,6 +23,7 @@ public class CenterToGoal extends SequentialCommandGroup {
     }
 
     public void initialize() {
+        this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
         super.initialize();
     }
 }

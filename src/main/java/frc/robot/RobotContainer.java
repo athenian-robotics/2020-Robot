@@ -18,7 +18,6 @@ import frc.robot.commands.color_wheel.RunColorWheel;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
 import frc.robot.commands.drive.SlowTurnSpeed;
-import frc.robot.commands.vision.TurnToBall;
 import frc.robot.commands.intake.ChangeIntakeMode;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.intake.SetIntakeForward;
@@ -26,14 +25,12 @@ import frc.robot.commands.miscellaneous.Abort;
 import frc.robot.commands.outtake.GateCommand;
 import frc.robot.commands.outtake.SetShooterForward;
 import frc.robot.commands.outtake.ShootLowGoal;
+import frc.robot.commands.vision.TurnToBall;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.*;
 
 import static frc.robot.lib.controllers.FightStick.*;
-
-import static frc.robot.lib.controllers.FightStick.fightStickA;
-import static frc.robot.lib.controllers.FightStick.fightStickX;
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
