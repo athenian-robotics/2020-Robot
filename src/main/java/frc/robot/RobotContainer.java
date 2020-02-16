@@ -27,7 +27,7 @@ import frc.robot.commands.miscellaneous.Abort;
 import frc.robot.commands.outtake.GateCommand;
 import frc.robot.commands.outtake.SetShooterForward;
 import frc.robot.commands.outtake.ShootLowGoal;
-import frc.robot.commands.vision.CenterToGoal;
+import frc.robot.commands.vision.TurnToBall;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.*;
@@ -120,9 +120,9 @@ public class RobotContainer {
             () -> false,
             intakeSubsystem));
     xboxRB.whenPressed(new SetIntakeForward());
-      xboxLB.whenPressed(new SetShooterForward());
-      xboxBurger.whenPressed(new CenterToGoal(limeLightSubsystem, drivetrain));
-      xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
+    xboxLB.whenPressed(new SetShooterForward());
+    xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
+    xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
     xboxB.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 25));
     //xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 25));
     xboxA.whenPressed(new AutoDriveForwardOdometry(drivetrain,3));
