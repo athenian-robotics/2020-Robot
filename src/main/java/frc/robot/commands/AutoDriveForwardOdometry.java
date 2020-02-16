@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoDriveForwardOdometry extends CommandBase {
@@ -10,7 +12,7 @@ public class AutoDriveForwardOdometry extends CommandBase {
 
 
     //Odometry PID
-    private PIDController pid = new PIDController(0.5, 0.0, 0.01); // 0.39, 0.0, 0.01
+    private PIDController pid = new PIDController(0.35, 0.0, 0.1); // 0.39, 0.0, 0.01
     private long startTime;
     private double tolerance = 1;
     private double trapezoidTime = 1000;
@@ -43,13 +45,16 @@ public class AutoDriveForwardOdometry extends CommandBase {
         double power;
         //PID calculations
         if(elapsedTime <= trapezoidTime){
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())*(elapsedTime/trapezoidTime)), 0.4);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())*(elapsedTime/trapezoidTime)), 0.5);
         }
         else{
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())), 0.4);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())), 0.5);
         }
         //System.out.println("Right: "+drivetrain.RightEncoderCorrection(encoderSetPoint));
         //System.out.println("Left: "+drivetrain.LeftEncoderCorrection(encoderSetPoint));
+        System.out.println("power: " + power);
+        SmartDashboard.putNumber("Odometry Power", power);
+        //if(power < Constants.DriveConstants.minDrivePower){
 
         drivetrain.tankDrive(power + drivetrain.LeftEncoderCorrection(encoderSetPoint),
                 power + drivetrain.RightEncoderCorrection(encoderSetPoint));
