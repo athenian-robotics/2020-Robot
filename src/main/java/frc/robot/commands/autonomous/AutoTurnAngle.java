@@ -45,9 +45,9 @@ public class AutoTurnAngle extends CommandBase {
 
     public void execute() {
         double power = pid.calculate(drivetrain.getGyroAngle());
-        if(power < Constants.DriveConstants.minDrivePower){
+        /*if(power < Constants.DriveConstants.minDrivePower){
             power = Constants.DriveConstants.minDrivePower;
-        }
+        }*/
         drivetrain.tankDrive(power, -power);
         SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
 
