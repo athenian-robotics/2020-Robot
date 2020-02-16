@@ -1,12 +1,7 @@
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -59,6 +54,7 @@ public class AutoTurnAngle extends CommandBase {
     }
 
     public boolean isFinished() {
+
         if(drivetrain.getGyroAngle() <= setpoint + tolerance && drivetrain.getGyroAngle() >= setpoint - tolerance){
             return true;
         };

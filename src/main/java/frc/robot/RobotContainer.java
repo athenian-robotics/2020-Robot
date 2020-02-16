@@ -20,6 +20,9 @@ import frc.robot.subsystems.*;
 
 import static frc.robot.lib.controllers.FightStick.*;
 
+import static frc.robot.lib.controllers.FightStick.fightStickA;
+import static frc.robot.lib.controllers.FightStick.fightStickX;
+
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
 
@@ -92,6 +95,7 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+
 
     //Xbox Controls
     xboxY.whenPressed(new FastTurnSpeed());
