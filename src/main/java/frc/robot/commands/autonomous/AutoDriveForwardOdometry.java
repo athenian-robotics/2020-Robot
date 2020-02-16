@@ -44,10 +44,10 @@ public class AutoDriveForwardOdometry extends CommandBase {
         double power;
         //PID calculations
         if(elapsedTime <= trapezoidTime){
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())*(elapsedTime/trapezoidTime)), 0.5);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())*(elapsedTime/trapezoidTime)), 0.3);
         }
         else{
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())), 0.5);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())), 0.3);
         }
         //System.out.println("Right: "+drivetrain.RightEncoderCorrection(encoderSetPoint));
         //System.out.println("Left: "+drivetrain.LeftEncoderCorrection(encoderSetPoint));

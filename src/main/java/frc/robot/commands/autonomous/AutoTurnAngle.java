@@ -16,6 +16,9 @@ public class AutoTurnAngle extends CommandBase {
     double Kp = 0.009; // 0.004
     double Ki = 0.0;
     double Kd = 0.001; //0.001
+
+    private long startTime;
+
     //Attempt at changing valued from Shuffleboard
     /*private ShuffleboardTab tabPID = Shuffleboard.getTab("PID");
     private NetworkTableEntry maxKp = tabPID.add("Max Kp", 0.001).getEntry();
@@ -29,7 +32,7 @@ public class AutoTurnAngle extends CommandBase {
     PIDController pid = new PIDController(Kp, Ki, Kd);
 
     public AutoTurnAngle(DrivetrainSubsystem drivetrain, double angleToTurn) {
-        this.tolerance = 1.0; //0.5
+        this.tolerance = 0.5; //0.5
         this.drivetrain = drivetrain;
         this.angleToTurn = angleToTurn;
         pid.setTolerance(tolerance);
@@ -40,15 +43,28 @@ public class AutoTurnAngle extends CommandBase {
     public void initialize() {
         setpoint = drivetrain.getGyroAngle() + angleToTurn;
         pid.setSetpoint(setpoint);
-        System.out.println("Turn To Angle");
+        startTime = System.currentTimeMillis();
     }
 
     public void execute() {
-        double power = pid.calculate(drivetrain.getGyroAngle());
-        if(power < Constants.DriveConstants.minDrivePower){
-            power = Constants.DriveConstants.minDrivePower;
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        double trapezoidTime = 1000;
+        double power;
+
+        if(elapsedTime <= trapezoidTime){
+            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
+                    Math.min(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),Constants.DriveConstants.maxDriveSpeed); //:
+                    //Math.max(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),-Constants.DriveConstants.maxDriveSpeed);
         }
-        drivetrain.tankDrive(power, -power);
+        else{
+            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
+                    Math.min(pid.calculate(drivetrain.getGyroAngle()),Constants.DriveConstants.maxDriveSpeed); //:
+                    //Math.max(pid.calculate(drivetrain.getGyroAngle()),-Constants.DriveConstants.maxDriveSpeed);
+        }
+        /*if(power < Constants.DriveConstants.minDrivePower){
+            power = Constants.DriveConstants.minDrivePower;
+        }*/
+        drivetrain.tankDriveTurn(power, -power);
         SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
 
     }

@@ -43,10 +43,10 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
         double power;
         //PID calculations
         if(elapsedTime <= trapezoidTime){
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance())*(elapsedTime/trapezoidTime)), 0.4);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance())*(elapsedTime/trapezoidTime)), 0.15);
         }
         else{
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance())), 0.4);
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance())), 0.15);
         }
         //System.out.println("Right: "+drivetrain.RightEncoderCorrection(encoderSetPoint));
         //System.out.println("Left: "+drivetrain.LeftEncoderCorrection(encoderSetPoint));

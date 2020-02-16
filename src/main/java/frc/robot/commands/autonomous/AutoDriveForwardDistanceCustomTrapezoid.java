@@ -3,16 +3,16 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
     DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
-    double metersToDrive;
+    private double metersToDrive;
     PIDController pid = new PIDController(0.6, 0.0, 0.01); // 0.39, 0.0, 0.01
-    double setpoint;
-    long startTime;
-    double trapezoidTime = 1000;
+    private long startTime;
+    private double encoderSetPoint;
 
     public AutoDriveForwardDistanceCustomTrapezoid(DrivetrainSubsystem drivetrain, double metersToDrive) {
         this.drivetrain = drivetrain;
@@ -26,7 +26,8 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
         startTime = System.currentTimeMillis();
         driveTimer.reset();
         driveTimer.start();
-        this.setpoint = drivetrain.getRightEncoderDistance() + metersToDrive;
+        double setpoint = drivetrain.getRightEncoderDistance() + metersToDrive;
+        encoderSetPoint = drivetrain.getRightEncoderDistance()-drivetrain.getLeftEncoderDistance();
         //System.out.println("Current right encoder distance: " + drivetrain.getRightEncoderDistance());
         //System.out.println("Setting setpoint to " + setpoint);
         pid.setSetpoint(setpoint);
@@ -36,14 +37,19 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
         long elapsedTime = System.currentTimeMillis() - startTime;
         //System.out.println("Time: " + elapsedTime);
         double power;
+        double trapezoidTime = 2000;
         if(elapsedTime <= trapezoidTime){
-            power = Math.min(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/trapezoidTime),0.4);
+            power = pid.calculate(drivetrain.getRightEncoderDistance()) >= 0 ?
+             Math.min(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/ trapezoidTime), Constants.DriveConstants.maxDriveSpeed) :
+                    Math.max(pid.calculate(drivetrain.getRightEncoderDistance())*(elapsedTime/ trapezoidTime),-Constants.DriveConstants.maxDriveSpeed);
         }
         else{
-            power = Math.min(pid.calculate(drivetrain.getRightEncoderDistance()), 0.4);
+            power = pid.calculate(drivetrain.getRightEncoderDistance()) >= 0 ?
+                    Math.min(pid.calculate(drivetrain.getRightEncoderDistance()),Constants.DriveConstants.maxDriveSpeed) :
+                    Math.max(pid.calculate(drivetrain.getRightEncoderDistance()),-Constants.DriveConstants.maxDriveSpeed);
         }
         //System.out.println(power);
-        drivetrain.tankDrive(power, power);
+        drivetrain.tankDrive(power+drivetrain.leftEncoderCorrection(encoderSetPoint), power+drivetrain.rightEncoderCorrection(encoderSetPoint));
     }
 
     public boolean isFinished() {
