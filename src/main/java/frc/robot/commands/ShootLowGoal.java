@@ -7,9 +7,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
+
 
 /**
  * An example command that uses an example subsystem.
@@ -35,6 +35,7 @@ public class ShootLowGoal extends CommandBase {
     public void initialize() {
         shooter.toggleShooter();
         System.out.println("Toggling shooter");
+        shooter.toggleDumper();
     }
 
 

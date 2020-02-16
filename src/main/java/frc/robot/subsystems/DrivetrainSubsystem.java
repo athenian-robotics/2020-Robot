@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
 
-
+import java.util.LinkedList;
+import java.util.Queue;
 
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.DriveConstants.*;
-import static frc.robot.lib.RobotType.JANKBOT;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
@@ -28,21 +28,35 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
     private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0, 512);
     private final DifferentialDriveOdometry m_odometry;
+    public static double maxDriverSpeed = speedScale;
+
+
     SpeedControllerGroup leftMotors;
     SpeedControllerGroup rightMotors;
+
+    //Variables for moving average calculation
+    Queue<Double> queue = new LinkedList<>();
+    ;
+    double queueSize = 5;
+    double sum = 0;
+    double count = 1;
+    double movingAverageUltrasonic = 0;
+
+    //Encoder PID
+    PIDController encoderPID;
 
     public DrivetrainSubsystem(RobotType robotType) {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-
+        encoderPID = new PIDController(2, 0.0, 0.5);
 
         switch (robotType) {
             case JANKBOT:
                 leftMotors = new SpeedControllerGroup(new WPI_VictorSPX(leftMotor1Port), new WPI_VictorSPX(leftMotor2Port));
                 rightMotors = new SpeedControllerGroup(new WPI_VictorSPX(rightMotor1Port), new WPI_VictorSPX(rightMotor2Port));
-
                 break;
             case KITBOT:
                 leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(leftMotor1Port), new WPI_TalonSRX(leftMotor2Port));
@@ -55,6 +69,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
             case OFFICIAL:
                 leftMotors = new SpeedControllerGroup(new CANSparkMax(leftMotor1Port, kBrushless), new CANSparkMax(leftMotor2Port, kBrushless));
                 rightMotors = new SpeedControllerGroup(new CANSparkMax(rightMotor1Port, kBrushless), new CANSparkMax(rightMotor2Port, kBrushless));
+                break;
             default:
                 throw new IllegalStateException("We will never get here");
         }
@@ -84,7 +99,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
-        drive.arcadeDrive(xSpeed, -zRotation);
+        //drive.arcadeDrive(xSpeed*maxDriverSpeed, -zRotation*maxDriverSpeed);
+      
+        //account for changes in turning when the forward direction changes, if it doesn't work use the one above
+        drive.arcadeDrive(xSpeed*maxDriverSpeed, maxDriverSpeed < 0 ? zRotation*maxDriverSpeed : -zRotation*maxDriverSpeed);
     }
 
     public double getLeftEncoderDistance() {
@@ -108,6 +126,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return gyro.getAngle();
     }
 
+    public double getOdometryPosX() {
+        return m_odometry.getPoseMeters().getTranslation().getX();
+    }
+
+    public double getOdometryPosY() {
+        return m_odometry.getPoseMeters().getTranslation().getY();
+    }
+
+    public double getOdometryRotZ() {
+        return m_odometry.getPoseMeters().getTranslation().getX();
+    }
 
     @Override
     public void periodic() {
@@ -120,12 +149,26 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("PoseX", getPose().getTranslation().getX());
         SmartDashboard.putNumber("PoseY", getPose().getTranslation().getY());
         SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
-
+        SmartDashboard.putNumber("Ultrasonic Distance", ultrasonic.get());
+        SmartDashboard.putNumber("AverageUltraSonic", movingAverageUltrasonic);
 
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
                 rightEncoder.getDistance());
 
+        //Moving Average of ultrasonic values
+        if(count <= queueSize){
+            queue.add(getUltrasonicDistance());
+            sum += getUltrasonicDistance();
+            movingAverageUltrasonic = sum/count;
+            count++;
+        }
+        else{
+            sum -= queue.remove();
+            sum += getUltrasonicDistance();
+            queue.offer(getUltrasonicDistance());
+            movingAverageUltrasonic = sum / queueSize;
+        }
     }
 
     /**
@@ -211,4 +254,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public double getTurnRate() {
         return gyro.getRate() * (false ? -1.0 : 1.0);
     }
+
+    public double getUltrasonicDistance() { return ultrasonic.get(); }
+
+    public double getAverageUltrasonicDistance() { return movingAverageUltrasonic; }
+
+    public double RightEncoderCorrection(double encoderSetPoint){
+        encoderPID.setSetpoint(encoderSetPoint);
+        return encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+
+    }
+
+    public double LeftEncoderCorrection(double encoderSetPoint){
+        encoderPID.setSetpoint(encoderSetPoint);
+        return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+    }
+
 }
