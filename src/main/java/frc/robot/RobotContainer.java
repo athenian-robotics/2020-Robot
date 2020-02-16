@@ -13,10 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.autonomous.AutoDriveForwardOdometry;
-import frc.robot.commands.autonomous.AutoDriveForwardUltrasonic;
-import frc.robot.commands.autonomous.FollowTrajectory;
-import frc.robot.commands.autonomous.TestAutonomousRoutine;
+import frc.robot.commands.autonomous.*;
 import frc.robot.commands.color_wheel.RunColorWheel;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
@@ -127,8 +124,8 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
-    xboxB.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 25));
-    xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 25, 3, 3));
+    xboxB.whenPressed(new AutoTurnAngle(drivetrain, 90));
+    xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
 
 
     //FIGHT STICK CONTROLS

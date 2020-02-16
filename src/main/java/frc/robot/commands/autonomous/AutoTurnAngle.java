@@ -48,7 +48,7 @@ public class AutoTurnAngle extends CommandBase {
         /*if(power < Constants.DriveConstants.minDrivePower){
             power = Constants.DriveConstants.minDrivePower;
         }*/
-        drivetrain.tankDrive(power, -power);
+        drivetrain.tankDriveTurn(power, -power);
         SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
 
     }

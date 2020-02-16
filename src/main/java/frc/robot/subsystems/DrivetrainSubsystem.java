@@ -89,13 +89,22 @@ public class DrivetrainSubsystem extends SubsystemBase {
         double leftPower = ((speedScale - minDrivePower) * Math.abs(leftSpeed) + minDrivePower) * leftSign;
         double rightPower = ((speedScale - minDrivePower) * Math.abs(rightSpeed) + minDrivePower) * rightSign;
 
-//        double leftPower = leftSpeed;
-//        double rightPower = rightSpeed;
         drive.tankDrive(leftPower, rightPower);
 
-        SmartDashboard.putNumber("Left Power:", leftPower);
-        SmartDashboard.putNumber("Right Power:", rightPower);
+        //SmartDashboard.putNumber("Left Power:", leftPower);
+        //SmartDashboard.putNumber("Right Power:", rightPower);
 //        System.out.println(leftPower + " " + rightPower);
+    }
+
+    //tank drive for turning autonomous commands
+    public void tankDriveTurn(double leftSpeed, double rightSpeed) {
+        int leftSign = leftSpeed >= 0 ? 1 : -1;
+        int rightSign = rightSpeed >= 0 ? 1 : -1;
+
+        double leftPower = ((speedScale - mineDrivePowerTurn) * Math.abs(leftSpeed) + mineDrivePowerTurn) * leftSign;
+        double rightPower = ((speedScale - mineDrivePowerTurn) * Math.abs(rightSpeed) + mineDrivePowerTurn) * rightSign;
+
+        drive.tankDrive(leftPower, rightPower);
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
