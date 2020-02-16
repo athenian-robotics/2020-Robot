@@ -107,6 +107,7 @@ public class RobotContainer {
     xboxRB.whenPressed(new SetIntakeForward());
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
+    xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
     xboxB.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 25));
     //xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 25));
     xboxA.whenPressed(new AutoDriveForwardOdometry(drivetrain,3));
