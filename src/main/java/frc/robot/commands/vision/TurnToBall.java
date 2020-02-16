@@ -12,9 +12,9 @@ public class TurnToBall extends CommandBase {
     double tolerance;
     double setpoint;
     double validTarget;
-    double Kp = 0.01;
+    double Kp = 0.0001; //0.015
     double Ki = 0.0;
-    double Kd = 0.001;
+    double Kd = 0.00001; //0.001
 
     PIDController pid = new PIDController(Kp, Ki, Kd);
 
@@ -35,6 +35,7 @@ public class TurnToBall extends CommandBase {
     @Override
     public void initialize() {
         this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(1);
+        System.out.println("lmao help me");
         double[] list = this.limelight.grabValues();
         double angleToTurn = list[3];
 
@@ -59,13 +60,13 @@ public class TurnToBall extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
+        //this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return ((pid.getPositionError() < 1) && (pid.getPositionError() > -1));
+        return pid.atSetpoint(); //((pid.getPositionError() < 1) && (pid.getPositionError() > -1));
     }
 }
 
