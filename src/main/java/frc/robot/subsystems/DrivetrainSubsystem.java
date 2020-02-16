@@ -38,7 +38,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     //Variables for moving average calculation
     Queue<Double> queue = new LinkedList<>();
-    ;
+
     double queueSize = 5;
     double sum = 0;
     double count = 1;
@@ -259,13 +259,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public double getAverageUltrasonicDistance() { return movingAverageUltrasonic; }
 
-    public double RightEncoderCorrection(double encoderSetPoint){
+    public double rightEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
         return encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
 
     }
 
-    public double LeftEncoderCorrection(double encoderSetPoint){
+    public double leftEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
         return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
     }
