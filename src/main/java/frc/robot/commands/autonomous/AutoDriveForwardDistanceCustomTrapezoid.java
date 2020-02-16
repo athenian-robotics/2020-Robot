@@ -23,7 +23,7 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
     }
 
     public void initialize() {
-        maxspeed = 0.3;
+
         startTime = System.currentTimeMillis();
         driveTimer.reset();
         driveTimer.start();

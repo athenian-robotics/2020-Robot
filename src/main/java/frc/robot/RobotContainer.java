@@ -17,7 +17,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.autonomous.AutoDriveForwardOdometry;
 import frc.robot.commands.autonomous.AutoDriveForwardUltrasonic;
 import frc.robot.commands.autonomous.FollowTrajectory;
-import frc.robot.commands.autonomous.TestAutonomousRoutine;
+import frc.robot.commands.autonomous.*;
 
 import frc.robot.commands.color_wheel.RunColorWheel;
 import frc.robot.commands.drive.DriveArcade;
