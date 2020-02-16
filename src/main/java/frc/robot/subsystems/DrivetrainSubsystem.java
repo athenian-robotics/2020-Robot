@@ -126,6 +126,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return gyro.getAngle();
     }
 
+    public double getOdometryPosX() {
+        return m_odometry.getPoseMeters().getTranslation().getX();
+    }
+
+    public double getOdometryPosY() {
+        return m_odometry.getPoseMeters().getTranslation().getY();
+    }
+
+    public double getOdometryRotZ() {
+        return m_odometry.getPoseMeters().getTranslation().getX();
+    }
 
     @Override
     public void periodic() {
