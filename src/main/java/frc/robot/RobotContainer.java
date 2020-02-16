@@ -10,15 +10,15 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.*;
+
+import static frc.robot.lib.controllers.FightStick.*;
 
 import static frc.robot.lib.controllers.FightStick.fightStickA;
 import static frc.robot.lib.controllers.FightStick.fightStickX;
@@ -39,8 +39,8 @@ public class RobotContainer {
   public static JoystickButton xboxY;
   public static JoystickButton xboxLB;
   public static JoystickButton xboxRB;
-  public static JoystickButton xboxBack;
-  public static JoystickButton xboxStart;
+  public static JoystickButton xboxSquares;
+  public static JoystickButton xboxBurger;
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
@@ -52,6 +52,7 @@ public class RobotContainer {
   //private final AutonomousDrivetrainSubsystem autodrive = new AutonomousDrivetrainSubsystem();
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
 
   // Define all OI devices here
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -64,7 +65,8 @@ public class RobotContainer {
     buttonSetup();
     configureButtonBindings();
 
-    //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
+
+      //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
     //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
@@ -86,34 +88,76 @@ public class RobotContainer {
     xboxY = new JoystickButton(xboxController, 4);
     xboxLB = new JoystickButton(xboxController, 5);
     xboxRB = new JoystickButton(xboxController, 6);
-    xboxBack = new JoystickButton(xboxController, 7);
-    xboxStart = new JoystickButton(xboxController, 8);
+    xboxSquares = new JoystickButton(xboxController, 7);
+    xboxBurger = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
     xboxRS = new JoystickButton(xboxController, 10);
   }
 
   private void configureButtonBindings() {
-    //MODE BUTTONS
-//    xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
-    xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+
+
+    //Xbox Controls
+    xboxY.whenPressed(new FastTurnSpeed());
+    xboxX.whenPressed(new SlowTurnSpeed());
+    xboxRS.whenPressed(new RunIntake(intakeSubsystem));
+    xboxLS.whenHeld(new FunctionalCommand(
+            intakeSubsystem::invert,
+            () -> {
+            },
+            interrupted -> intakeSubsystem.invert(),
+            () -> false,
+            intakeSubsystem));
+    xboxRB.whenPressed(new SetIntakeForward());
+    xboxLB.whenPressed(new SetShooterForward());
+    xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
+    xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
+    xboxB.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 25));
+    //xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 25));
+    xboxA.whenPressed(new AutoDriveForwardOdometry(drivetrain,3));
+
+    //FIGHT STICK CONTROLS
+
+    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    fightStickB.whenPressed(new GateCommand(shooterSubsystem));
+    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
+    fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
+
+    // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
+    fightStickOption.whenHeld(new FunctionalCommand(
+            intakeSubsystem::invert,
+            () -> {
+            },
+            interrupted -> intakeSubsystem.invert(),
+            () -> false,
+            intakeSubsystem));
+
+    // When held, this command changes the intake to backward, but doesn't change the speed/status
+    fightStickShare.whenHeld(new FunctionalCommand(
+            shooterSubsystem::invert,
+            () -> {
+            },
+            interrupted -> shooterSubsystem.invert(),
+            () -> false,
+            intakeSubsystem));
+
+    //xboxB.whenPressed(new GateCommand());
+    //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    //xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    //xboxY.whenPressed(new RunColorWheel(colorWheelSubsystem));
+
+    //XBOX CONTROLS
+    //Change drive mode
+    //xboxLB.whenPressed(new DriveTank(drivetrain, xboxController));
+    //xboxRB.whenPressed(new DriveArcade(drivetrain, xboxController));
+
+
+    //Autonomous Controls
+    //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
+    //xboxA.whenPressed(new PathWeaver());
     //xboxA.whenPressed(new AutoDriveForwardDistance(drivetrain, 1.05));
     //xboxB.whenPressed(new AutoDriveForwardDistanceTrapezoid(drivetrain, 1.05));
     //xboxY.whenPressed(new AutoTurnAngle(drivetrain, 90));
-
-    //Intake Controlls
-    xboxB.whenPressed(new GateCommand());
-    //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxX.whenPressed(new CenterToGoal(limeLightSubsystem, drivetrain));
-    xboxLB.whenPressed(new ShootLowGoal(shooterSubsystem));
-    xboxY.whenPressed(new RunColorWheel());
-
-    //Autonomous Control
-    //xboxA.whenPressed(new FollowTrajectory(drivetrain).ExampleAutonomousCommand());
-    //xboxA.whenPressed(new PathWeaver());
-
-    //Fight Stick Code
-    fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
-    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
 
     /**
      * ButtonDriveTest xbox controller Mapping
@@ -135,7 +179,7 @@ public class RobotContainer {
     /**
      * Test Buttons if you need to STOP, FORWARD OR REVERSE
      *
-     * Comment out as needed, and change ROBT TYPE!
+     * Comment out as needed, and change ROBOT_TYPE!
      */
   }
 
