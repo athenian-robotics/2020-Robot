@@ -131,7 +131,7 @@ public class RobotContainer {
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
 
     xboxB.whenPressed(new AutoTurnAngle(drivetrain, 90));
-    xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
+    xboxA.whenPressed(new TestAutonomousRoutine2(drivetrain));
 
 
     //FIGHT STICK CONTROLS

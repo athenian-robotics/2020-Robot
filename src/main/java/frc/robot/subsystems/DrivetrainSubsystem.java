@@ -271,7 +271,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public double rightEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
         return encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
-
     }
 
     public double leftEncoderCorrection(double encoderSetPoint){

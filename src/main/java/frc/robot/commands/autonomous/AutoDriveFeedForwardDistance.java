@@ -12,7 +12,10 @@ public class AutoDriveFeedForwardDistance extends CommandBase {
     Timer driveTimer = new Timer();
     double metersToDrive;
     PIDController pid = new PIDController(0.39, 0.0, 0.01); // 0.39, 0.0, 0.01
-    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.AutonomousConstants.ksVolts, Constants.AutonomousConstants.kvVoltSecondsPerMeter, Constants.AutonomousConstants.kaVoltSecondsSquaredPerMeter);
+    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
+            Constants.AutonomousConstants.ksVolts,
+            Constants.AutonomousConstants.kvVoltSecondsPerMeter,
+            Constants.AutonomousConstants.kaVoltSecondsSquaredPerMeter);
     double setpoint;
 
     public AutoDriveFeedForwardDistance(DrivetrainSubsystem drivetrain, double metersToDrive) {

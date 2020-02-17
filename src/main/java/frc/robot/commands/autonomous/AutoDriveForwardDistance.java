@@ -8,9 +8,11 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class AutoDriveForwardDistance extends CommandBase {
     DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
-    double metersToDrive;
     PIDController pid = new PIDController(0.55, 0.0, 0.01); // 0.39, 0.0, 0.01
-    double setpoint;
+    private double metersToDrive;
+    private double setpoint;
+    private double encoderSetPoint;
+    private long startTime;
 
     public AutoDriveForwardDistance(DrivetrainSubsystem drivetrain, double metersToDrive) {
         this.drivetrain = drivetrain;
@@ -22,16 +24,17 @@ public class AutoDriveForwardDistance extends CommandBase {
     public void initialize() {
         driveTimer.reset();
         driveTimer.start();
+        startTime = System.currentTimeMillis();
+
         this.setpoint = drivetrain.getRightEncoderDistance() + metersToDrive;
-        System.out.println("Current right encoder distance: " + drivetrain.getRightEncoderDistance());
-        System.out.println("Setting setpoint to " + setpoint);
         pid.setSetpoint(setpoint);
+        encoderSetPoint = drivetrain.getRightEncoderDistance()-drivetrain.getLeftEncoderDistance();
     }
 
     public void execute() {
-        double power = pid.calculate(drivetrain.getRightEncoderDistance());
-        System.out.println(power);
-        drivetrain.tankDrive(power, power);
+        double power = drivetrain.calculateTrapezoid(pid, startTime, 0.4);
+        drivetrain.tankDrive(power + drivetrain.leftEncoderCorrection(encoderSetPoint),
+                power + drivetrain.rightEncoderCorrection(encoderSetPoint));
     }
 
     public boolean isFinished() {
