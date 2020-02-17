@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -75,6 +76,8 @@ public class RobotContainer {
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
   public static FightStick fightStick = new FightStick();
 
+  public static Spark statusLEDs = new Spark(9);
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -130,7 +133,7 @@ public class RobotContainer {
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
 
-    xboxB.whenPressed(new AutoTurnAngle(drivetrain, 90));
+    xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
     xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
 
 
