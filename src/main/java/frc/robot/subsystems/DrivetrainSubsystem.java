@@ -279,4 +279,19 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
     }
 
+    public double calculateTrapezoid(PIDController pid, long startTime, double maxSpeed){
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        double trapezoidTime = 2000;
+        if(elapsedTime <= trapezoidTime){
+            return pid.calculate(getRightEncoderDistance()) >= 0 ?
+                    Math.min(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), maxSpeed) :
+                    Math.max(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), -maxSpeed);
+        }
+        else{
+            return pid.calculate(getRightEncoderDistance()) >= 0 ?
+                    Math.min(pid.calculate(getRightEncoderDistance()), maxSpeed) :
+                    Math.max(pid.calculate(getRightEncoderDistance()), -maxSpeed);
+        }
+    }
+
 }

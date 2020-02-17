@@ -37,9 +37,11 @@ public final class Constants {
 
         public static final double EncoderDistancePerPulse = 1.0/2048.0;
         public static final double minDrivePower = 0.43;
+
         public static final double mineDrivePowerTurn = 0.5;
 
         public static final double maxDriveSpeed = 0.3;
+
     }
 
     public static final class AutonomousConstants{

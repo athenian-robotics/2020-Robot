@@ -47,6 +47,7 @@ public class AutoTurnAngle extends CommandBase {
     }
 
     public void execute() {
+
         long elapsedTime = System.currentTimeMillis() - startTime;
         double trapezoidTime = 1000;
         double power;
@@ -65,6 +66,7 @@ public class AutoTurnAngle extends CommandBase {
             power = Constants.DriveConstants.minDrivePower;
         }*/
         drivetrain.tankDriveTurn(power, -power);
+
         SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
 
     }

@@ -23,6 +23,7 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
     }
 
     public void initialize() {
+
         startTime = System.currentTimeMillis();
         driveTimer.reset();
         driveTimer.start();
@@ -47,6 +48,7 @@ public class AutoDriveForwardDistanceCustomTrapezoid extends CommandBase {
             power = pid.calculate(drivetrain.getRightEncoderDistance()) >= 0 ?
                     Math.min(pid.calculate(drivetrain.getRightEncoderDistance()),Constants.DriveConstants.maxDriveSpeed) :
                     Math.max(pid.calculate(drivetrain.getRightEncoderDistance()),-Constants.DriveConstants.maxDriveSpeed);
+
         }
         //System.out.println(power);
         drivetrain.tankDrive(power+drivetrain.leftEncoderCorrection(encoderSetPoint), power+drivetrain.rightEncoderCorrection(encoderSetPoint));
