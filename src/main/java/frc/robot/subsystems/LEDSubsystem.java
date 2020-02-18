@@ -7,11 +7,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.commands.miscellaneous.LEDCommand;
+import frc.robot.RobotContainer.*;
 
 
 public class LEDSubsystem extends SubsystemBase {
 
     private Spark statusLeds = RobotContainer.statusLEDs;
+
     LEDCommand LEDs;
 
 
@@ -75,9 +77,9 @@ public class LEDSubsystem extends SubsystemBase {
 
     public LEDSubsystem() {
         //set Led strip to be black
-        statusLeds.setSpeed(LedColors.RAINBOW.getColorValue());
-
-        setDefaultCommand(LEDs);
+        statusLeds.setSpeed(LedColors.BLACK.getColorValue());
+        //LEDs = new LEDCommand(RobotContainer.ledSubsystem);
+        //setDefaultCommand(LEDs);
     }
 
     /*public void setDefaultCommand(LEDCommand LEDs) {

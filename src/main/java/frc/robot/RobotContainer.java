@@ -24,6 +24,7 @@ import frc.robot.commands.color_wheel.RunColorWheel;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
 import frc.robot.commands.drive.SlowTurnSpeed;
+import frc.robot.commands.miscellaneous.LEDCommand;
 import frc.robot.commands.vision.TurnToBall;
 import frc.robot.commands.intake.ChangeIntakeMode;
 import frc.robot.commands.intake.RunIntake;
@@ -76,7 +77,9 @@ public class RobotContainer {
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
   public static FightStick fightStick = new FightStick();
 
-  public static Spark statusLEDs = new Spark(9);
+  //LEDs
+  LEDSubsystem ledSubsystem= new LEDSubsystem();
+  public static Spark statusLEDs = new Spark(0);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -134,8 +137,8 @@ public class RobotContainer {
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
 
     xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
-    xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
-
+    //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
+    xboxA.whenPressed(new LEDCommand(ledSubsystem));
 
     //FIGHT STICK CONTROLS
 
@@ -143,6 +146,7 @@ public class RobotContainer {
     fightStickB.whenPressed(new GateCommand(shooterSubsystem));
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
+
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
     fightStickOption.whenHeld(new FunctionalCommand(

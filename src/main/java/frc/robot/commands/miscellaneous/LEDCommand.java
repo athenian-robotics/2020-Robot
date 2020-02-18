@@ -10,19 +10,18 @@ import frc.robot.subsystems.LEDSubsystem;
 
 public class LEDCommand extends CommandBase {
 
-    //private DigitalInput inHabRange = RobotMap.inHabRange;
-    //private DigitalInput inStationRange = RobotMap.inStationRange;
-    private LEDSubsystem statusLEDs;
+    private LEDSubsystem ledSubsystem;
     //private static final SmartDashboard sIsBlueTeam = new SmartDashboard(LEDCommand.class, "isBlueTeam", false);
 
 
-    public LEDCommand() {
-        addRequirements(statusLEDs);
-        //statusLEDs = RobotContainer.statusLEDs;
+    public LEDCommand(LEDSubsystem ledSubsystem) {
+        addRequirements(ledSubsystem);
+        this.ledSubsystem = ledSubsystem;//statusLEDs = RobotContainer.statusLEDs;
     }
 
     @Override
     public void execute() {
+        ledSubsystem.setColor(LEDSubsystem.LedColors.RED_STROBE);
         /*if (RobotMap.ledError) {
             statusLEDs.setColor(LEDSubsystem.LedColors.RED_STROBE);
         } else if(RobotMap.isInOverride){
@@ -43,7 +42,7 @@ public class LEDCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        statusLEDs.setColor(LEDSubsystem.LedColors.RAINBOW);
+        ledSubsystem.setColor(LEDSubsystem.LedColors.RAINBOW);
     }
 
     @Override
