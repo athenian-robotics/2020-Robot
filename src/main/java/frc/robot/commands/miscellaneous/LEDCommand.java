@@ -24,7 +24,7 @@ public class LEDCommand extends CommandBase {
     @Override
     public void execute() {
         ledSubsystem.setColor(LEDSubsystem.LedColors.ORANGE);
-        if(DrivetrainSubsystem.movingAverageUltrasonic < 7){
+        if(DrivetrainSubsystem.movingAverageUltrasonic < 8){
             ledSubsystem.setColor(LEDSubsystem.LedColors.RED_STROBE);
         }
         /*if (RobotMap.ledError) {
