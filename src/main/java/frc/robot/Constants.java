@@ -20,10 +20,10 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 
     public static final class DriveConstants {
-
         /**
          * Change these to 0, 1, 2, 3 if they aren't there
          */
+
         public static final int leftMotor1Port = 0;
         public static final int leftMotor2Port = 1;
         public static final int rightMotor1Port = 2;
@@ -57,13 +57,16 @@ public final class Constants {
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
     }
+
     public static final class OIConstants {
         public static final int xboxControllerPort = 0;
         public static final int fightStickPort = 1;
     }
+
     public static final class MechanismConstants {
         public static final int intakeMotorPort = 4;
         public static final int shooterMotorPort = 5;
         public static final int colorWheelPort = 6;
     }
+
 }

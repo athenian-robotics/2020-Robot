@@ -1,13 +1,12 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
-import frc.robot.commands.miscellaneous.LEDCommand;
-import frc.robot.RobotContainer.*;
 
 
 public class LEDSubsystem extends SubsystemBase {
@@ -73,8 +72,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
 
     public LEDSubsystem() {
-        //set Led strip to be black
-        statusLeds.setSpeed(LedColors.BLACK.getColorValue());
+
     }
 
     public void setColor(LedColors color) {

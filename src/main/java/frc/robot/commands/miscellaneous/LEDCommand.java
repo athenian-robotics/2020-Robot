@@ -1,29 +1,30 @@
 package frc.robot.commands.miscellaneous;
 
-
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.ShuffleboardData;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class LEDCommand extends CommandBase {
 
-
     private LEDSubsystem ledSubsystem;
-    //private static final SmartDashboard sIsBlueTeam = new SmartDashboard(LEDCommand.class, "isBlueTeam", false);
+    private ShuffleboardData shuffle;
 
-
-    public LEDCommand(LEDSubsystem ledSubsystem) {
+    public LEDCommand(LEDSubsystem ledSubsystem, ShuffleboardData shuffle) {
         addRequirements(ledSubsystem);
-        this.ledSubsystem = ledSubsystem;//statusLEDs = RobotContainer.statusLEDs;
+        this.ledSubsystem = ledSubsystem;
+        this.shuffle = shuffle;
+        //statusLEDs = RobotContainer.statusLEDs;
     }
 
     @Override
     public void execute() {
-        ledSubsystem.setColor(LEDSubsystem.LedColors.ORANGE);
+        if (shuffle.getTeamColor()) {
+            ledSubsystem.setColor(LEDSubsystem.LedColors.BLUE);
+        } else {
+            ledSubsystem.setColor(LEDSubsystem.LedColors.DARK_RED);
+        }
+
         if(DrivetrainSubsystem.movingAverageUltrasonic < 7){
             ledSubsystem.setColor(LEDSubsystem.LedColors.RED_STROBE);
         }
@@ -43,6 +44,7 @@ public class LEDCommand extends CommandBase {
             else
                 statusLEds.setColor(LEDSubsystem.LedColors.DARK_RED);
         }*/
+
     }
 
     @Override

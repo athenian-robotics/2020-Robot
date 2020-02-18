@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 
-import frc.robot.commands.autonomous.AutoDriveForwardOdometry;
-import frc.robot.commands.autonomous.AutoDriveForwardUltrasonic;
 import frc.robot.commands.autonomous.FollowTrajectory;
 import frc.robot.commands.autonomous.*;
 
@@ -78,8 +76,10 @@ public class RobotContainer {
   public static FightStick fightStick = new FightStick();
 
   //LEDs
-  public final LEDSubsystem ledSubsystem= new LEDSubsystem();
+  public final LEDSubsystem ledSubsystem = new LEDSubsystem();
   public static Spark statusLEDs = new Spark(0);
+
+  public static ShuffleboardData shuffleData = new ShuffleboardData();
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -93,7 +93,7 @@ public class RobotContainer {
     //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
-    ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem));
+    ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, shuffleData));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
     //TODO: Implement arcade drive
   }
@@ -139,7 +139,7 @@ public class RobotContainer {
 
     xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
     //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
-    xboxA.whenPressed(new LEDCommand(ledSubsystem));
+    xboxA.whenPressed(new LEDCommand(ledSubsystem, shuffleData));
 
     //FIGHT STICK CONTROLS
 
