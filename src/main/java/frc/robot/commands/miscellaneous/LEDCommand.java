@@ -6,9 +6,11 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class LEDCommand extends CommandBase {
+
 
     private LEDSubsystem ledSubsystem;
     //private static final SmartDashboard sIsBlueTeam = new SmartDashboard(LEDCommand.class, "isBlueTeam", false);
@@ -21,7 +23,10 @@ public class LEDCommand extends CommandBase {
 
     @Override
     public void execute() {
-        ledSubsystem.setColor(LEDSubsystem.LedColors.RED_STROBE);
+        ledSubsystem.setColor(LEDSubsystem.LedColors.ORANGE);
+        if(DrivetrainSubsystem.movingAverageUltrasonic < 7){
+            ledSubsystem.setColor(LEDSubsystem.LedColors.RED_STROBE);
+        }
         /*if (RobotMap.ledError) {
             statusLEDs.setColor(LEDSubsystem.LedColors.RED_STROBE);
         } else if(RobotMap.isInOverride){

@@ -14,9 +14,6 @@ public class LEDSubsystem extends SubsystemBase {
 
     private Spark statusLeds = RobotContainer.statusLEDs;
 
-    LEDCommand LEDs;
-
-
     public enum LedColors {
         BLACK,
         WHITE,
@@ -78,13 +75,7 @@ public class LEDSubsystem extends SubsystemBase {
     public LEDSubsystem() {
         //set Led strip to be black
         statusLeds.setSpeed(LedColors.BLACK.getColorValue());
-        //LEDs = new LEDCommand(RobotContainer.ledSubsystem);
-        //setDefaultCommand(LEDs);
     }
-
-    /*public void setDefaultCommand(LEDCommand LEDs) {
-        CommandScheduler.getInstance().setDefaultCommand(this, LEDs);
-    }*/
 
     public void setColor(LedColors color) {
         statusLeds.setSpeed(color.getColorValue());
