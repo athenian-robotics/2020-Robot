@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -23,6 +24,7 @@ import frc.robot.commands.color_wheel.RunColorWheel;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
 import frc.robot.commands.drive.SlowTurnSpeed;
+import frc.robot.commands.miscellaneous.LEDCommand;
 import frc.robot.commands.vision.TurnToBall;
 import frc.robot.commands.intake.ChangeIntakeMode;
 import frc.robot.commands.intake.RunIntake;
@@ -75,6 +77,10 @@ public class RobotContainer {
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
   public static FightStick fightStick = new FightStick();
 
+  //LEDs
+  public final LEDSubsystem ledSubsystem= new LEDSubsystem();
+  public static Spark statusLEDs = new Spark(0);
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -87,6 +93,7 @@ public class RobotContainer {
     //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
+    ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem));
     //TODO: Figure out how to change command of drivetrain, create a button for switching
     //TODO: Implement arcade drive
   }
@@ -130,9 +137,9 @@ public class RobotContainer {
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
 
-    xboxB.whenPressed(new AutoTurnAngle(drivetrain, 90));
-    xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
-
+    xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
+    //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
+    xboxA.whenPressed(new LEDCommand(ledSubsystem));
 
     //FIGHT STICK CONTROLS
 
@@ -140,6 +147,7 @@ public class RobotContainer {
     fightStickB.whenPressed(new GateCommand(shooterSubsystem));
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
+
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
     fightStickOption.whenHeld(new FunctionalCommand(

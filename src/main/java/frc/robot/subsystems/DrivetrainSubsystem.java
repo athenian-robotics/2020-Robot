@@ -39,10 +39,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     //Variables for moving average calculation
     Queue<Double> queue = new LinkedList<>();
 
-    double queueSize = 5;
-    double sum = 0;
-    double count = 1;
-    double movingAverageUltrasonic = 0;
+    private double queueSize = 5;
+    private double sum = 0;
+    private double count = 1;
+    public static double movingAverageUltrasonic = 0;
 
     //Encoder PID
     PIDController encoderPID;
