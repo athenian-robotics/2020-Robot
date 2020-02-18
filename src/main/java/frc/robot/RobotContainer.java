@@ -78,7 +78,7 @@ public class RobotContainer {
   public static FightStick fightStick = new FightStick();
 
   //LEDs
-  LEDSubsystem ledSubsystem= new LEDSubsystem();
+  LEDSubsystem ledSubsystem = new LEDSubsystem();
   public static Spark statusLEDs = new Spark(0);
 
   /**
@@ -93,6 +93,8 @@ public class RobotContainer {
     //  We do not need to register subsystems, this is done automatically
 
     drivetrain.setDefaultCommand(new DriveArcade(drivetrain, xboxController));
+    ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem));
+
     //TODO: Figure out how to change command of drivetrain, create a button for switching
     //TODO: Implement arcade drive
   }
