@@ -24,10 +24,10 @@ public final class Constants {
         /**
          * Change these to 0, 1, 2, 3 if they aren't there
          */
-        public static final int leftMotor1Port = 0;
-        public static final int leftMotor2Port = 1;
-        public static final int rightMotor1Port = 2;
-        public static final int rightMotor2Port = 3;
+        public static final int leftMotor1Port = 9;
+        public static final int leftMotor2Port = 10;
+        public static final int rightMotor1Port = 11;
+        public static final int rightMotor2Port = 12; //12 -- not working
 
         public static final int encoderLeftA = 1;
         public static final int encoderLeftB = 2;
@@ -35,7 +35,7 @@ public final class Constants {
         public static final int encoderRightB = 6;
         public static final double speedScale = 0.8;
 
-        public static final double EncoderDistancePerPulse = 1.0/2048.0;
+        public static final double EncoderDistancePerPulse = 1.0 / 2048.0;
         public static final double minDrivePower = 0.6;
     }
     public static final class AutonomousConstants{
@@ -51,13 +51,15 @@ public final class Constants {
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
     }
+
     public static final class OIConstants {
         public static final int xboxControllerPort = 0;
         public static final int fightStickPort = 1;
     }
+
     public static final class MechanismConstants {
-        public static final int intakeMotorPort = 4;
-        public static final int shooterMotorPort = 5;
-        public static final int colorWheelPort = 6;
+        public static final int intakeMotorPort = 8;
+        public static final int shooterMotorPort = 7; // not working
+        public static final int colorWheelPort = 6; // yet to be flashed
     }
 }
