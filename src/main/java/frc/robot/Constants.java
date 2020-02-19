@@ -27,7 +27,7 @@ public final class Constants {
         public static final int leftMotor1Port = 9;
         public static final int leftMotor2Port = 10;
         public static final int rightMotor1Port = 11;
-        public static final int rightMotor2Port = 12; //12 -- not working
+        public static final int rightMotor2Port = 12;
 
         public static final int encoderLeftA = 1;
         public static final int encoderLeftB = 2;
