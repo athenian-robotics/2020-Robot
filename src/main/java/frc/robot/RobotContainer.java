@@ -79,6 +79,7 @@ public class RobotContainer {
   public final LEDSubsystem ledSubsystem = new LEDSubsystem();
   public static Spark statusLEDs = new Spark(0);
 
+  // Shuffleboard sendables
   public static ShuffleboardData shuffleData = new ShuffleboardData();
 
   /**
@@ -122,8 +123,8 @@ public class RobotContainer {
 
 
     //Xbox Controls
-    xboxY.whenPressed(new FastTurnSpeed());
-    xboxX.whenPressed(new SlowTurnSpeed());
+    xboxY.whenPressed(new FastTurnSpeed(drivetrain, shuffleData));
+    xboxX.whenPressed(new SlowTurnSpeed(drivetrain, shuffleData));
     xboxRS.whenPressed(new RunIntake(intakeSubsystem));
     xboxLS.whenHeld(new FunctionalCommand(
             intakeSubsystem::invert,

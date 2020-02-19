@@ -12,7 +12,24 @@ public class ShuffleboardData {
             .add("Is Blue Team?", true)
             .getEntry();
 
+    private NetworkTableEntry isSlowMode = tab
+            .add("Is in slow mode?", false)
+            .getEntry();
+
     public boolean getTeamColor() {
         return isBlueTeam.getBoolean(true);
     }
+
+    public void setSpeedModeSlow() {
+        isSlowMode.setBoolean(true);
+    }
+
+    public void setSpeedModeFast() {
+        isSlowMode.setBoolean(false);
+    }
+
+    public boolean getSpeedMode() {
+        return isSlowMode.getBoolean(false);
+    }
+
 }
