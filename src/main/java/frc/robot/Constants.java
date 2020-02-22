@@ -38,7 +38,8 @@ public final class Constants {
         public static final double EncoderDistancePerPulse = 1.0 / 2048.0;
         public static final double minDrivePower = 0.6;
     }
-    public static final class AutonomousConstants{
+
+    public static final class AutonomousConstants {
         public static final double ksVolts = 0.8; //1.31;
         public static final double kvVoltSecondsPerMeter = 0.3; //1.98
         public static final double kaVoltSecondsSquaredPerMeter = 0.04; //0.156
@@ -61,5 +62,10 @@ public final class Constants {
         public static final int intakeMotorPort = 8;
         public static final int shooterMotorPort = 7; // not working
         public static final int colorWheelPort = 6; // yet to be flashed
+    }
+
+    public static final class PneumaticsConstants {
+        public static final int gatePort = 0;
+        public static final int dumperPort = 1;
     }
 }
