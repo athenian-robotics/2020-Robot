@@ -17,7 +17,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private boolean isRunning = false;
     private boolean isOpen = false;
     private boolean isUp = false;
-    private CANSparkMax shooterMotor = new CANSparkMax(shooterMotorPort, kBrushless);
+    private final CANSparkMax shooterMotor = new CANSparkMax(shooterMotorPort, kBrushless);
     private final Solenoid dumperSolenoid = new Solenoid(dumperPort);
     private final Solenoid gateSolenoid = new Solenoid(gatePort);
 
