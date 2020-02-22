@@ -12,6 +12,7 @@ public class WheelSpinnerLiftDown extends CommandBase {
 
     public void initialize() {
         colorWheel.spinnerLiftDown();
+        colorWheel.sensorLiftDown();
     }
 
     public boolean isFinished() {

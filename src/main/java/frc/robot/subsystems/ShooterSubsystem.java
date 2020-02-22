@@ -92,5 +92,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void invert() {
+        shooterMotor.setInverted(!shooterMotor.getInverted());
     }
 }

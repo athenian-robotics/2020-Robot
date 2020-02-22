@@ -67,5 +67,7 @@ public final class Constants {
     public static final class PneumaticsConstants {
         public static final int gatePort = 0;
         public static final int dumperPort = 1;
+        public static final int colorSensorPortIn = 3;
+        public static final int colorSensorPortOut = 4;
     }
 }

@@ -17,6 +17,8 @@ import frc.robot.commands.autonomous.AutoDriveForwardOdometry;
 import frc.robot.commands.autonomous.AutoDriveForwardUltrasonic;
 import frc.robot.commands.autonomous.FollowTrajectory;
 import frc.robot.commands.color_wheel.RunColorWheel;
+import frc.robot.commands.color_wheel.WheelSpinnerLiftDown;
+import frc.robot.commands.color_wheel.WheelSpinnerLiftUp;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
 import frc.robot.commands.drive.SlowTurnSpeed;
@@ -27,6 +29,7 @@ import frc.robot.commands.miscellaneous.Abort;
 import frc.robot.commands.outtake.GateCommand;
 import frc.robot.commands.outtake.SetShooterForward;
 import frc.robot.commands.outtake.ShootLowGoal;
+//import frc.robot.commands.outtake.TestGate;
 import frc.robot.commands.vision.TurnToBall;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
@@ -126,8 +129,8 @@ public class RobotContainer {
     //xboxB.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 25));
     //xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 25));
     //xboxA.whenPressed(new AutoDriveForwardOdometry(drivetrain,3));
-    xboxA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    xboxB.whenPressed(new ShootLowGoal(shooterSubsystem));
+    xboxA.whenPressed(new WheelSpinnerLiftDown(colorWheelSubsystem));
+    xboxB.whenPressed(new WheelSpinnerLiftUp(colorWheelSubsystem));
 
     //FIGHT STICK CONTROLS
 
@@ -153,6 +156,13 @@ public class RobotContainer {
             interrupted -> shooterSubsystem.invert(),
             () -> false,
             intakeSubsystem));
+
+    /*xboxA.whenPressed(new FunctionalCommand(
+            shooterSubsystem::gateUp,
+            () -> {},
+            interrupted -> {},
+            () -> true,
+            shooterSubsystem));*/
 
     //xboxB.whenPressed(new GateCommand());
     //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));

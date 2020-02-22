@@ -2,17 +2,21 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
+import static frc.robot.Constants.PneumaticsConstants.colorSensorPortIn;
+import static frc.robot.Constants.PneumaticsConstants.colorSensorPortOut;
 
 public class ColorWheelSubsystem extends SubsystemBase {
 
-    private final WPI_TalonSRX wheelSpinner = new WPI_TalonSRX(shooterMotorPort);
+    public final CANSparkMax wheelSpinner = new CANSparkMax(shooterMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
     private final DoubleSolenoid spinnerLift = new DoubleSolenoid(6, 7);
 
-    private final DoubleSolenoid sensorLift = new DoubleSolenoid(4, 5);
+    private final DoubleSolenoid sensorLift = new DoubleSolenoid(colorSensorPortIn, colorSensorPortOut);
     private boolean isSpinning = false;
     private boolean sensorIsUp = false;
     private boolean spinnerIsUp = false;
@@ -60,14 +64,6 @@ public class ColorWheelSubsystem extends SubsystemBase {
         }
     }
 
-    public void toggleColorSensor() {
-        if (sensorIsUp) {
-            sensorLiftDown();
-        } else {
-            sensorLiftUp();
-        }
-
-    }
 
     public void toggleSpinner() {
         if (isSpinning) {
