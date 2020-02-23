@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -27,7 +28,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final DifferentialDrive drive;
     private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
-    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    //private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    private final AHRS gyro = new AHRS();
     private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0, 512);
     private final DifferentialDriveOdometry m_odometry;
     public static double maxDriverSpeed = speedScale;
