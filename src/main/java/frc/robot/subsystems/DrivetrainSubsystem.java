@@ -39,10 +39,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     //Variables for moving average calculation
     Queue<Double> queue = new LinkedList<>();
 
-    double queueSize = 5;
-    double sum = 0;
-    double count = 1;
-    double movingAverageUltrasonic = 0;
+    private double queueSize = 5;
+    private double sum = 0;
+    private double count = 1;
+    public static double movingAverageUltrasonic = 0;
 
     //Encoder PID
     PIDController encoderPID;
@@ -89,13 +89,22 @@ public class DrivetrainSubsystem extends SubsystemBase {
         double leftPower = ((speedScale - minDrivePower) * Math.abs(leftSpeed) + minDrivePower) * leftSign;
         double rightPower = ((speedScale - minDrivePower) * Math.abs(rightSpeed) + minDrivePower) * rightSign;
 
-//        double leftPower = leftSpeed;
-//        double rightPower = rightSpeed;
         drive.tankDrive(leftPower, rightPower);
 
-        SmartDashboard.putNumber("Left Power:", leftPower);
-        SmartDashboard.putNumber("Right Power:", rightPower);
+        //SmartDashboard.putNumber("Left Power:", leftPower);
+        //SmartDashboard.putNumber("Right Power:", rightPower);
 //        System.out.println(leftPower + " " + rightPower);
+    }
+
+    //tank drive for turning autonomous commands
+    public void tankDriveTurn(double leftSpeed, double rightSpeed) {
+        int leftSign = leftSpeed >= 0 ? 1 : -1;
+        int rightSign = rightSpeed >= 0 ? 1 : -1;
+
+        double leftPower = ((speedScale - mineDrivePowerTurn) * Math.abs(leftSpeed) + mineDrivePowerTurn) * leftSign;
+        double rightPower = ((speedScale - mineDrivePowerTurn) * Math.abs(rightSpeed) + mineDrivePowerTurn) * rightSign;
+
+        drive.tankDrive(leftPower, rightPower);
     }
 
     public void arcadeDrive(double xSpeed, double zRotation) {
@@ -268,6 +277,21 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public double leftEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
         return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+    }
+
+    public double calculateTrapezoid(PIDController pid, long startTime, double maxSpeed){
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        double trapezoidTime = 2000;
+        if(elapsedTime <= trapezoidTime){
+            return pid.calculate(getRightEncoderDistance()) >= 0 ?
+                    Math.min(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), maxSpeed) :
+                    Math.max(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), -maxSpeed);
+        }
+        else{
+            return pid.calculate(getRightEncoderDistance()) >= 0 ?
+                    Math.min(pid.calculate(getRightEncoderDistance()), maxSpeed) :
+                    Math.max(pid.calculate(getRightEncoderDistance()), -maxSpeed);
+        }
     }
 
 }
