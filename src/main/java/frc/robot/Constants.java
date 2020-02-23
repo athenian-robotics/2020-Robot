@@ -67,14 +67,21 @@ public final class Constants {
 
     public static final class MechanismConstants {
         public static final int intakeMotorPort = 8;
-        public static final int shooterMotorPort = 7; // not working
-        public static final int colorWheelPort = 6; // yet to be flashed
+        public static final int shooterMotorPort = 7;
+        public static final int colorWheelMotorPort = 5;
+        public static final int leftTelescopeMotorPort = 3;
+        public static final int rightTelescopeMotorPort = 4;
+        public static final int winchMotorPort = 1; //not wired yet
+        public static final int rightWinchMotorPOrt = 2; //not wired yet
+
     }
 
     public static final class PneumaticsConstants {
         public static final int gatePort = 0;
         public static final int dumperPort = 1;
+        public static final int colorWheelLiftPort = 2;
         public static final int colorSensorPortIn = 3;
         public static final int colorSensorPortOut = 4;
+
     }
 }
