@@ -39,12 +39,11 @@ public class ColorWheelTest extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         wheelMotor.set(0);
-        //colorWheel.sensorLiftDown();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
