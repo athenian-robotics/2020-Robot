@@ -21,6 +21,8 @@ import frc.robot.commands.autonomous.FollowTrajectory;
 import frc.robot.commands.autonomous.*;
 
 import frc.robot.commands.color_wheel.RunColorWheel;
+import frc.robot.commands.color_wheel.WheelSpinnerLiftDown;
+import frc.robot.commands.color_wheel.WheelSpinnerLiftUp;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
 import frc.robot.commands.drive.SlowTurnSpeed;
@@ -33,14 +35,13 @@ import frc.robot.commands.miscellaneous.Abort;
 import frc.robot.commands.outtake.GateCommand;
 import frc.robot.commands.outtake.SetShooterForward;
 import frc.robot.commands.outtake.ShootLowGoal;
+//import frc.robot.commands.outtake.TestGate;
+import frc.robot.commands.vision.TurnToBall;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.*;
 
 import static frc.robot.lib.controllers.FightStick.*;
-
-import static frc.robot.lib.controllers.FightStick.fightStickA;
-import static frc.robot.lib.controllers.FightStick.fightStickX;
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
@@ -63,7 +64,7 @@ public class RobotContainer {
   public static JoystickButton xboxLS;
   public static JoystickButton xboxRS;
 
-  private static final RobotType ROBOT_TYPE = RobotType.JANKBOT;
+  private static final RobotType ROBOT_TYPE = RobotType.OFFICIAL;
 
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem(ROBOT_TYPE);
@@ -141,6 +142,7 @@ public class RobotContainer {
     //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
     xboxA.whenPressed(new LEDCommand(ledSubsystem));
 
+
     //FIGHT STICK CONTROLS
 
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
@@ -166,6 +168,13 @@ public class RobotContainer {
             interrupted -> shooterSubsystem.invert(),
             () -> false,
             intakeSubsystem));
+
+    /*xboxA.whenPressed(new FunctionalCommand(
+            shooterSubsystem::gateUp,
+            () -> {},
+            interrupted -> {},
+            () -> true,
+            shooterSubsystem));*/
 
     //xboxB.whenPressed(new GateCommand());
     //xboxX.whenPressed(new ChangeIntakeMode(intakeSubsystem));
@@ -228,7 +237,7 @@ public class RobotContainer {
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
       //Autonomous Command that doesnt work
-      return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
-      //return null;
+      //return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
+      return null;
   }
 }
