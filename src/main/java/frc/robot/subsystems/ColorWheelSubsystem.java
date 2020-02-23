@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
+import static frc.robot.Constants.MechanismConstants.*;
 import static frc.robot.Constants.PneumaticsConstants.*;
 
 public class ColorWheelSubsystem extends SubsystemBase {
 
-    public final CANSparkMax wheelSpinner = new CANSparkMax(shooterMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
+    public final CANSparkMax wheelSpinner = new CANSparkMax(colorWheelMotorPort, CANSparkMaxLowLevel.MotorType.kBrushless);
     private Solenoid spinnerLift = new Solenoid(colorWheelLiftPort);
     private final DoubleSolenoid sensorLift = new DoubleSolenoid(colorSensorPortIn, colorSensorPortOut);
     private boolean isSpinning = false;
