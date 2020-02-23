@@ -69,10 +69,12 @@ public final class Constants {
         public static final int intakeMotorPort = 8;
         public static final int shooterMotorPort = 7;
         public static final int colorWheelMotorPort = 6;
-        //public static final int leftTelescopeMotorPort = 3;
-        //public static final int rightTelescopeMotorPort = 0; //??????
-        //public static final int winchMotorPort = 1; //not wired yet
-        //public static final int rightWinchMotorPOrt = 2; //not wired yet
+      
+        public static final int leftTelescopeMotorPort = 3;
+        public static final int rightTelescopeMotorPort = 4;
+        public static final int winchMotorPort = 1; //not wired yet
+        public static final int rightWinchMotorPOrt = 2; //not wired yet
+
 
     }
 
