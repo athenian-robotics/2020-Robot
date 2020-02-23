@@ -29,7 +29,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
     //private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-    private final AHRS gyro = new AHRS();
+    private final AHRS gyro = new AHRS(SerialPort.Port.kUSB1);
     private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0, 512);
     private final DifferentialDriveOdometry m_odometry;
     public static double maxDriverSpeed = speedScale;
@@ -156,7 +156,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
         SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
         SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
-        SmartDashboard.putNumber("Gyro0", gyro.getAngle());
+        SmartDashboard.putNumber("Gyro", gyro.getAngle());
         SmartDashboard.putNumber("PoseX", getPose().getTranslation().getX());
         SmartDashboard.putNumber("PoseY", getPose().getTranslation().getY());
         SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
