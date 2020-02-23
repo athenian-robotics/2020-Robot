@@ -129,8 +129,8 @@ public class RobotContainer {
     //xboxB.whenPressed(new AutoDriveForwardUltrasonic(drivetrain, 25));
     //xboxA.whenPressed(new TurnThenUltraSonicStop(drivetrain, 90, 25));
     //xboxA.whenPressed(new AutoDriveForwardOdometry(drivetrain,3));
-    xboxA.whenPressed(new WheelSpinnerLiftDown(colorWheelSubsystem));
-    xboxB.whenPressed(new WheelSpinnerLiftUp(colorWheelSubsystem));
+    //xboxA.whenPressed(new WheelSpinnerLiftDown(colorWheelSubsystem));
+    //xboxB.whenPressed(new WheelSpinnerLiftUp(colorWheelSubsystem));
 
     //FIGHT STICK CONTROLS
 
@@ -225,7 +225,7 @@ public class RobotContainer {
       //return new AutoDriveForwardTimer(drivetrain, 7.0);
 
       //Autonomous Command that doesnt work
-      return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
-      //return null;
+      //return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
+      return null;
   }
 }
