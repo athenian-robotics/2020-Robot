@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 
 import frc.robot.commands.autonomous.AutoDriveForwardOdometry;
@@ -63,7 +64,8 @@ public class RobotContainer {
   public static JoystickButton xboxSquares;
   public static JoystickButton xboxBurger;
   public static JoystickButton xboxLS;
-  public static JoystickButton xboxRS;
+  public static Trigger xboxRS;
+
 
   private static final RobotType ROBOT_TYPE = RobotType.OFFICIAL;
 
@@ -117,17 +119,18 @@ public class RobotContainer {
     xboxSquares = new JoystickButton(xboxController, 7);
     xboxBurger = new JoystickButton(xboxController, 8);
     xboxLS = new JoystickButton(xboxController, 9);
-    xboxRS = new JoystickButton(xboxController, 10);
+    //xboxRS = new JoystickButton(xboxController, 10);
+    xboxRS = new Trigger();
+
   }
 
   private void configureButtonBindings() {
 
-
     //Xbox Controls
     xboxY.whenPressed(new FastTurnSpeed());
     xboxX.whenPressed(new SlowTurnSpeed());
-    xboxRS.whenPressed(new RunIntake(intakeSubsystem));
-    xboxLS.whenHeld(new FunctionalCommand(
+    xboxRS.whileActiveContinuous(new ChangeIntakeMode(intakeSubsystem));
+    xboxLS.whenActive(new FunctionalCommand(
             intakeSubsystem::invert,
             () -> {
             },
