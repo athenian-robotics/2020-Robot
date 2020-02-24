@@ -15,29 +15,25 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 
-import frc.robot.commands.autonomous.AutoDriveForwardOdometry;
-import frc.robot.commands.autonomous.AutoDriveForwardUltrasonic;
-import frc.robot.commands.autonomous.FollowTrajectory;
-import frc.robot.commands.autonomous.*;
-
+import frc.robot.commands.climber.RunLeftTelescope;
+import frc.robot.commands.climber.RunLeftWinch;
+import frc.robot.commands.climber.RunRightTelescope;
+import frc.robot.commands.climber.RunRightWinch;
 import frc.robot.commands.color_wheel.ColorWheelTest;
 import frc.robot.commands.color_wheel.RunColorWheel;
-import frc.robot.commands.color_wheel.WheelSpinnerLiftDown;
-import frc.robot.commands.color_wheel.WheelSpinnerLiftUp;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
 import frc.robot.commands.drive.SlowTurnSpeed;
 import frc.robot.commands.miscellaneous.LEDCommand;
+import frc.robot.commands.outtake.DumperCommand;
 import frc.robot.commands.vision.TurnToBall;
 import frc.robot.commands.intake.ChangeIntakeMode;
 import frc.robot.commands.intake.RunIntake;
-import frc.robot.commands.intake.SetIntakeForward;
+import frc.robot.commands.drive.SetIntakeForward;
 import frc.robot.commands.miscellaneous.Abort;
-import frc.robot.commands.outtake.GateCommand;
-import frc.robot.commands.outtake.SetShooterForward;
+import frc.robot.commands.drive.SetShooterForward;
 import frc.robot.commands.outtake.ShootLowGoal;
 //import frc.robot.commands.outtake.TestGate;
-import frc.robot.commands.vision.TurnToBall;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.*;
@@ -74,6 +70,8 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final ColorWheelSubsystem colorWheelSubsystem = new ColorWheelSubsystem();
+  private final LeftClimberSubsystem leftClimberSubsystem = new LeftClimberSubsystem();
+  private final RightClimberSubsystem rightClimberSubsystem = new RightClimberSubsystem();
 
   // Define all OI devices here
   public static XboxController xboxController = new XboxController(OIConstants.xboxControllerPort);
@@ -146,10 +144,13 @@ public class RobotContainer {
     //FIGHT STICK CONTROLS
 
     fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
-    fightStickB.whenPressed(new GateCommand(shooterSubsystem));
+    fightStickB.whenPressed(new DumperCommand(shooterSubsystem));
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
-
+    fightStickLB.whenHeld(new RunLeftTelescope(leftClimberSubsystem));
+    fightStickRB.whenHeld(new RunRightTelescope(rightClimberSubsystem));
+    fightStickLT.whileActiveContinuous(new RunLeftWinch(leftClimberSubsystem));
+    fightStickRT.whileActiveContinuous(new RunRightWinch(rightClimberSubsystem));
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
     fightStickOption.whenHeld(new FunctionalCommand(
