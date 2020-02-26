@@ -19,7 +19,7 @@ import frc.robot.commands.climber.RunLeftTelescope;
 import frc.robot.commands.climber.RunLeftWinch;
 import frc.robot.commands.climber.RunRightTelescope;
 import frc.robot.commands.climber.RunRightWinch;
-import frc.robot.commands.color_wheel.ColorWheelTest;
+//import frc.robot.commands.climber.WinchTestUp;
 import frc.robot.commands.color_wheel.RunColorWheel;
 import frc.robot.commands.drive.DriveArcade;
 import frc.robot.commands.drive.FastTurnSpeed;
@@ -136,10 +136,10 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
+    //xboxA.whenPressed(new WinchTestUp());
 
     //xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
     //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
-    xboxA.whenPressed(new ColorWheelTest());
 
     //FIGHT STICK CONTROLS
 

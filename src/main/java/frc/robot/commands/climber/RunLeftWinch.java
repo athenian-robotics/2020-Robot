@@ -19,8 +19,13 @@ public class RunLeftWinch extends CommandBase {
     @Override
     public void execute() {
         if (POVCenter.get()) { leftClimber.leftWinchStop(); }
-        if (POVUp.get()) { leftClimber.leftWinchRetract(); }
-        if (POVDown.get()) { leftClimber.leftWinchExtend(); }
+        if (POVUp.get()) { leftClimber.leftWinchRetract();
+            System.out.println("Left Winch Up");
+        }
+        if (POVDown.get()) {
+            leftClimber.leftWinchExtend();
+            System.out.println("Left Winch Down");
+        }
     }
 
 }
