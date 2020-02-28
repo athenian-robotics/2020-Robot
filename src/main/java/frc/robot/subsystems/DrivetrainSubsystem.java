@@ -4,7 +4,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -27,8 +30,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
 
     private final DifferentialDrive drive;
-    private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
-    private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
+    private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, false, Encoder.EncodingType.k2X);
+    private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, true, Encoder.EncodingType.k2X);
     //private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
     private final AHRS gyro = new AHRS(SerialPort.Port.kUSB1);
     private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0, 512);
@@ -91,6 +94,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         double leftPower = ((speedScale - minDrivePower) * Math.abs(leftSpeed) + minDrivePower) * leftSign;
         double rightPower = ((speedScale - minDrivePower) * Math.abs(rightSpeed) + minDrivePower) * rightSign;
+
+        SmartDashboard.putNumber("Left power", leftPower);
+        SmartDashboard.putNumber("Right power", rightPower);
 
         drive.tankDrive(leftPower, rightPower);
 
@@ -282,15 +288,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
     }
 
-    public double calculateTrapezoid(PIDController pid, long startTime, double maxSpeed){
+    public double calculateTrapezoid(PIDController pid, long startTime, double maxSpeed, double trapezoidTime) {
         long elapsedTime = System.currentTimeMillis() - startTime;
-        double trapezoidTime = 2000;
-        if(elapsedTime <= trapezoidTime){
+        if (elapsedTime <= trapezoidTime) {
             return pid.calculate(getRightEncoderDistance()) >= 0 ?
                     Math.min(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), maxSpeed) :
                     Math.max(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), -maxSpeed);
-        }
-        else{
+        } else {
             return pid.calculate(getRightEncoderDistance()) >= 0 ?
                     Math.min(pid.calculate(getRightEncoderDistance()), maxSpeed) :
                     Math.max(pid.calculate(getRightEncoderDistance()), -maxSpeed);

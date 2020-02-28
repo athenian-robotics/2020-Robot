@@ -15,32 +15,27 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
-
-import frc.robot.commands.autonomous.AutoDriveForwardDistanceCustomTrapezoid;
+import frc.robot.commands.autonomous.AutoForwardDistance;
 import frc.robot.commands.climber.RunLeftTelescope;
 import frc.robot.commands.climber.RunLeftWinch;
 import frc.robot.commands.climber.RunRightTelescope;
 import frc.robot.commands.climber.RunRightWinch;
-//import frc.robot.commands.climber.WinchTestUp;
 import frc.robot.commands.color_wheel.RunColorWheel;
-import frc.robot.commands.drive.DriveArcade;
-import frc.robot.commands.drive.FastTurnSpeed;
-import frc.robot.commands.drive.SlowTurnSpeed;
+import frc.robot.commands.drive.*;
+import frc.robot.commands.intake.ChangeIntakeMode;
+import frc.robot.commands.miscellaneous.Abort;
 import frc.robot.commands.miscellaneous.LEDCommand;
 import frc.robot.commands.outtake.DumperCommand;
-import frc.robot.commands.vision.TurnToBall;
-import frc.robot.commands.intake.ChangeIntakeMode;
-import frc.robot.commands.intake.RunIntake;
-import frc.robot.commands.drive.SetIntakeForward;
-import frc.robot.commands.miscellaneous.Abort;
-import frc.robot.commands.drive.SetShooterForward;
 import frc.robot.commands.outtake.ShootLowGoal;
-//import frc.robot.commands.outtake.TestGate;
+import frc.robot.commands.vision.TurnToBall;
 import frc.robot.lib.RobotType;
 import frc.robot.lib.controllers.FightStick;
 import frc.robot.subsystems.*;
 
 import static frc.robot.lib.controllers.FightStick.*;
+
+//import frc.robot.commands.climber.WinchTestUp;
+//import frc.robot.commands.outtake.TestGate;
 
 //import frc.robot.subsystems.AutonomousDrivetrainSubsystem;
 //import frc.robot.subsystems.ColorWheelSubsystem;
@@ -138,7 +133,7 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
-    xboxA.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
+    xboxA.whenPressed(new AutoForwardDistance(drivetrain, 1));
 
     //xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
     //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));

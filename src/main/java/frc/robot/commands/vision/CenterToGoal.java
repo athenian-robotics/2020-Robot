@@ -1,8 +1,8 @@
 package frc.robot.commands.vision;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.autonomous.AutoDriveForwardDistance;
-import frc.robot.commands.autonomous.AutoTurnAngle;
+import frc.robot.commands.autonomous.old.AutoDriveForwardDistance;
+import frc.robot.commands.autonomous.old.AutoTurnAngle;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LimeLightSubsystem;
 
