@@ -14,7 +14,6 @@ public class LeftClimberSubsystem extends SubsystemBase {
     private final CANSparkMax leftWinch = new CANSparkMax(leftWinchMotorPort, CANSparkMaxLowLevel.MotorType.kBrushed);
     private final CANEncoder leftTelescopeEncoder = leftTelescope.getEncoder();
 
-
     public LeftClimberSubsystem() { }
 
     public void leftTelescopeUp() { leftTelescope.set(-0.2); }
@@ -28,6 +27,5 @@ public class LeftClimberSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Left Telescope Encoder", leftTelescopeEncoder.getPosition());
-
     }
 }

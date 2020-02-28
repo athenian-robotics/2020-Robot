@@ -28,4 +28,7 @@ public class RunLeftWinch extends CommandBase {
         }
     }
 
+    public void end(){
+        leftClimber.leftWinchStop();
+    }
 }

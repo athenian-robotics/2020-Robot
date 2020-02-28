@@ -23,4 +23,7 @@ public class RunRightTelescope extends CommandBase {
         if (POVDown.get()) {climber.rightTelescopeDown(); }
     }
 
+    public void end(){
+        climber.rightTelescopeStop();
+    }
 }

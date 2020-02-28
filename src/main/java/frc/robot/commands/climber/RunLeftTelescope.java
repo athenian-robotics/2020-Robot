@@ -22,7 +22,11 @@ public class RunLeftTelescope extends CommandBase {
         if (POVCenter.get()) { leftClimber.leftTelescopeStop(); }
         if (POVUp.get()) { leftClimber.leftTelescopeUp(); }
         if (POVDown.get()) { leftClimber.leftTelescopeDown(); }
+
     }
 
+    public void end(){
+        leftClimber.leftTelescopeStop();
+    }
 
 }

@@ -29,4 +29,8 @@ public class RunRightWinch extends CommandBase {
         }
     }
 
+    public void end(){
+        rightClimber.rightTelescopeStop();
+    }
+
 }
