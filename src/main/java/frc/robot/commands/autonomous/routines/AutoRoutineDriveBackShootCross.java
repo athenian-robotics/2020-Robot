@@ -13,7 +13,7 @@ public class AutoRoutineDriveBackShootCross extends SequentialCommandGroup {
         addRequirements(drivetrain, shooter);
         addCommands(
                 new AutoDumperUp(shooter, 300),
-                new AutoDriveForwardUltrasonic(drivetrain, 9),
+                new AutoDriveForwardUltrasonic(drivetrain, 8),
                 new AutoShooterTime(shooter, 1000),
                 new AutoForwardDistance(drivetrain, 2.8)
         );

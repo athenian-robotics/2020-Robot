@@ -59,7 +59,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-        encoderPID = new PIDController(0.1, 0.0, 0.08);
+        encoderPID = new PIDController(9, 0.0, 0.0);
 
         switch (robotType) {
             case JANKBOT:
@@ -285,13 +285,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public double rightEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
-        return encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+        System.out.println( -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance()));
+        return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
 
     }
 
     public double leftEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
-        return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+        System.out.println(encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance()));
+        return encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
     }
 
     public double calculateTrapezoid(PIDController pid, long startTime, double maxSpeed, double trapezoidTime) {
