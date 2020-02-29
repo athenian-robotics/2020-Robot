@@ -1,4 +1,4 @@
-package frc.robot.commands.autonomous;
+package frc.robot.commands.autonomous.components;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -52,21 +52,21 @@ public class AutoAngleTurn extends CommandBase {
         double trapezoidTime = 1000;
         double power;
 
-        if(elapsedTime <= trapezoidTime){
-            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
-                    Math.min(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),Constants.DriveConstants.maxDriveSpeed); //:
-                    //Math.max(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),-Constants.DriveConstants.maxDriveSpeed);
+        if(elapsedTime <= trapezoidTime) {
+            power = //pid.calculate(drivetrain.getGyroAngle()) >= setpoint ? // >= 0
+                    Math.min(pid.calculate(drivetrain.getGyroAngle()) * (elapsedTime / trapezoidTime), Constants.DriveConstants.maxDriveSpeed); //:
+            //Math.max(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),-Constants.DriveConstants.maxDriveSpeed);
         }
-        else{
-            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
-                    Math.min(pid.calculate(drivetrain.getGyroAngle()),Constants.DriveConstants.maxDriveSpeed); //:
-                    //Math.max(pid.calculate(drivetrain.getGyroAngle()),-Constants.DriveConstants.maxDriveSpeed);
+        else {
+            power = //pid.calculate(drivetrain.getGyroAngle()) >= setpoint ? // >= 0
+                    Math.min(pid.calculate(drivetrain.getGyroAngle()), Constants.DriveConstants.maxDriveSpeed); //:
+            //Math.max(pid.calculate(drivetrain.getGyroAngle()),-Constants.DriveConstants.maxDriveSpeed);
         }
         /*if(power < Constants.DriveConstants.minDrivePower){
             power = Constants.DriveConstants.minDrivePower;
         }*/
         drivetrain.tankDriveTurn(power, -power);
-
+        System.out.println(power);
         SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
 
     }

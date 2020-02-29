@@ -1,4 +1,4 @@
-package frc.robot.commands.autonomous;
+package frc.robot.commands.autonomous.components;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -9,7 +9,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class AutoForwardDistance extends CommandBase {
     DrivetrainSubsystem drivetrain;
     Timer driveTimer = new Timer();
-    PIDController pid = new PIDController(0.25, 0.0, 0.02); // 0.39, 0.0, 0.01
+    PIDController pid = new PIDController(1, 0.0, 0.02); // 0.39, 0.0, 0.01
     private double metersToDrive;
     private long startTime;
     private double encoderDifferenceSetpoint;
@@ -34,15 +34,15 @@ public class AutoForwardDistance extends CommandBase {
     public void execute() {
         double power =
                 drivetrain.calculateTrapezoid(pid, startTime, Constants.DriveConstants.maxDriveSpeed, 250);
-                //pid.calculate(drivetrain.getRightEncoderDistance());
-        System.out.println(power);
+        //pid.calculate(drivetrain.getRightEncoderDistance());
+//        System.out.println(power);
         double leftCorrection = drivetrain.leftEncoderCorrection(encoderDifferenceSetpoint);
         double rightCorrection =  drivetrain.rightEncoderCorrection(encoderDifferenceSetpoint);
         drivetrain.tankDrive(power + leftCorrection, power + rightCorrection);
     }
 
     public boolean isFinished() {
-        System.out.println("finished");
+//        System.out.println("finished");
         return pid.atSetpoint();
     }
 

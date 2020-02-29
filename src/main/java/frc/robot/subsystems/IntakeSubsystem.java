@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
-import static frc.robot.Constants.DriveConstants.leftMotor1Port;
 import static frc.robot.Constants.MechanismConstants.intakeMotorPort;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -40,11 +38,12 @@ public class IntakeSubsystem extends SubsystemBase {
         isRunning = false;
     }
 
-    public void toggleIntake() {
+    public void toggleIntake(ShooterSubsystem shooterSubsystem) {
         if (isRunning) {
             stopIntake();
         } else {
             startIntake();
+            shooterSubsystem.dumperDown();
         }
     }
 

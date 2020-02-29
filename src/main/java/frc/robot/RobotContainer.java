@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.autonomous.AutoAngleTurn;
-import frc.robot.commands.autonomous.AutoForwardDistance;
+import frc.robot.commands.autonomous.components.AutoAngleTurn;
+import frc.robot.commands.autonomous.routines.AutoRoutineDriveBackShootCross;
 import frc.robot.commands.climber.RunLeftTelescope;
 import frc.robot.commands.climber.RunLeftWinch;
 import frc.robot.commands.climber.RunRightTelescope;
@@ -134,15 +134,15 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
-    xboxA.whenPressed(new AutoForwardDistance(drivetrain, 1));
-    xboxB.whenPressed(new AutoAngleTurn(drivetrain,90));
+    xboxA.whenPressed(new AutoRoutineDriveBackShootCross(drivetrain, shooterSubsystem));
+    xboxB.whenPressed(new AutoAngleTurn(drivetrain, 90));
 
     //xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
     //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));
 
     //FIGHT STICK CONTROLS
 
-    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem));
+    fightStickA.whenPressed(new ChangeIntakeMode(intakeSubsystem, shooterSubsystem));
     fightStickB.whenPressed(new DumperCommand(shooterSubsystem));
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
@@ -162,10 +162,16 @@ public class RobotContainer {
 
     // When held, this command changes the intake to backward, but doesn't change the speed/status
     fightStickShare.whenHeld(new FunctionalCommand(
-            shooterSubsystem::invert,
+            () -> {
+              shooterSubsystem.invert();
+              shooterSubsystem.startShooter(0.3);
+            },
             () -> {
             },
-            interrupted -> shooterSubsystem.invert(),
+            interrupted -> {
+              shooterSubsystem.invert();
+              shooterSubsystem.startShooter(1.0);
+            },
             () -> false,
             intakeSubsystem));
 
@@ -238,6 +244,6 @@ public class RobotContainer {
 
       //Autonomous Command that doesnt work
       //return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
-      return null;
+    return new AutoRoutineDriveBackShootCross(drivetrain, shooterSubsystem);
   }
 }

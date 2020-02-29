@@ -2,19 +2,22 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class ChangeIntakeMode extends CommandBase {
 
     private final IntakeSubsystem intake;
+    private final ShooterSubsystem shooter;
 
-    public ChangeIntakeMode(IntakeSubsystem intakeSubsystem){
+    public ChangeIntakeMode(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
         this.intake = intakeSubsystem;
+        this.shooter = shooterSubsystem;
         addRequirements(intakeSubsystem);
     }
 
     @Override
     public void initialize() {
-        intake.toggleIntake();
+        intake.toggleIntake(shooter);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

@@ -3,18 +3,19 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class AutoDeadReckoning extends CommandBase {
+public class AutoFindTurnStaticFriction extends CommandBase {
     private final DrivetrainSubsystem drive;
-    private final double power;
+    double power = 0.01;
 
-    public AutoDeadReckoning(DrivetrainSubsystem drive, double power) {
+    public AutoFindTurnStaticFriction(DrivetrainSubsystem drive) {
         this.drive = drive;
-        this.power = power;
     }
 
     public void execute() {
         System.out.println("Initialize");
-        drive.tankDrive(power, power);
+        drive.drive.tankDrive(power, -power);
+        power += 0.0002;
+        System.out.println(power);
     }
 
     public void end() {

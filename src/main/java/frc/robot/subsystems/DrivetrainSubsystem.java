@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
+import frc.robot.lib.SimpleMovingAverage;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -29,7 +30,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     public final SpeedControllerGroup motorTest = new SpeedControllerGroup(new WPI_VictorSPX(0));
 
 
-    private final DifferentialDrive drive;
+    public static SimpleMovingAverage ultrasonicAvg = new SimpleMovingAverage(10);
     private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, false, Encoder.EncodingType.k2X);
     private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, true, Encoder.EncodingType.k2X);
     //private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
@@ -37,6 +38,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0, 512);
     private final DifferentialDriveOdometry m_odometry;
     public static double maxDriverSpeed = speedScale;
+    public final DifferentialDrive drive;
 
 
     SpeedControllerGroup leftMotors;
@@ -110,8 +112,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         int leftSign = leftSpeed >= 0 ? 1 : -1;
         int rightSign = rightSpeed >= 0 ? 1 : -1;
 
-        double leftPower = ((speedScale - mineDrivePowerTurn) * Math.abs(leftSpeed) + mineDrivePowerTurn) * leftSign;
-        double rightPower = ((speedScale - mineDrivePowerTurn) * Math.abs(rightSpeed) + mineDrivePowerTurn) * rightSign;
+        double leftPower = ((speedScale - minDrivePowerTurn) * Math.abs(leftSpeed) + minDrivePowerTurn) * leftSign;
+        double rightPower = ((speedScale - minDrivePowerTurn) * Math.abs(rightSpeed) + minDrivePowerTurn) * rightSign;
 
         drive.tankDrive(leftPower, rightPower);
     }
@@ -169,25 +171,28 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Ultrasonic Distance", ultrasonic.get());
         SmartDashboard.putNumber("AverageUltraSonic", movingAverageUltrasonic);
-        SmartDashboard.putNumber("Encoder Difference", getRightEncoderDistance()-getLeftEncoderDistance());
+        SmartDashboard.putNumber("Encoder Difference", getRightEncoderDistance() - getLeftEncoderDistance());
 
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
                 rightEncoder.getDistance());
 
         //Moving Average of ultrasonic values
-        if(count <= queueSize){
-            queue.add(getUltrasonicDistance());
-            sum += getUltrasonicDistance();
-            movingAverageUltrasonic = sum/count;
-            count++;
-        }
-        else{
-            sum -= queue.remove();
-            sum += getUltrasonicDistance();
-            queue.offer(getUltrasonicDistance());
-            movingAverageUltrasonic = sum / queueSize;
-        }
+        ultrasonicAvg.addData(getUltrasonicDistance());
+        movingAverageUltrasonic = ultrasonicAvg.getMean();
+
+//        if(count <= queueSize){
+//            queue.add(getUltrasonicDistance());
+//            sum += getUltrasonicDistance();
+//            movingAverageUltrasonic = sum/count;
+//            count++;
+//        }
+//        else{
+//            sum -= queue.remove();
+//            sum += getUltrasonicDistance();
+//            queue.offer(getUltrasonicDistance());
+//            movingAverageUltrasonic = sum / queueSize;
+//        }
     }
 
     /**

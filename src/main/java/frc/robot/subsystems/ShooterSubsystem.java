@@ -1,13 +1,11 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 
+import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
 import static frc.robot.Constants.PneumaticsConstants.dumperPort;
 import static frc.robot.Constants.PneumaticsConstants.gatePort;
@@ -29,10 +27,13 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void startShooter() {
-        shooterMotor.set(1);
+        startShooter(1.0);
+    }
+
+    public void startShooter(double power) {
+        shooterMotor.set(power);
         System.out.println("Low goal shooter now shooting!");
         isRunning = true;
-//        solenoidlift.set(DoubleSolenoid.Value.kForward);
     }
 
     public void stopShooter() {
@@ -75,6 +76,7 @@ public class ShooterSubsystem extends SubsystemBase {
             stopShooter();
         } else {
             startShooter();
+            dumperUp();
         }
     }
 

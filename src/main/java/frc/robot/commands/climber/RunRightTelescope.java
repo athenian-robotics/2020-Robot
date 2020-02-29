@@ -6,24 +6,36 @@ import frc.robot.subsystems.RightClimberSubsystem;
 import static frc.robot.lib.controllers.FightStick.*;
 
 public class RunRightTelescope extends CommandBase {
-    RightClimberSubsystem climber;
+    RightClimberSubsystem rightClimber;
 
     public RunRightTelescope(RightClimberSubsystem rightClimber) {
-        this.climber = rightClimber;
+        this.rightClimber = rightClimber;
         addRequirements(rightClimber);
     }
 
     @Override
-    public void initialize() { }
+    public void initialize() {
+    }
 
     @Override
     public void execute() {
-        if (POVCenter.get()) { climber.rightTelescopeStop(); }
-        if (POVUp.get()) { climber.rightTelescopeUp(); }
-        if (POVDown.get()) {climber.rightTelescopeDown(); }
+        if (POVCenter.get()) {
+            rightClimber.rightTelescopeStop();
+        }
+        if (POVUp.get()) {
+            rightClimber.rightTelescopeUp();
+        }
+        if (POVDown.get()) {
+            rightClimber.rightTelescopeDown();
+        }
     }
 
-    public void end(){
-        climber.rightTelescopeStop();
+    public boolean isFinished() {
+        return rightClimber.getEncoderValue() < -250;
+    }
+
+
+    public void end() {
+        rightClimber.rightTelescopeStop();
     }
 }
