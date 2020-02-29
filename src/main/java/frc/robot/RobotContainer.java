@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.autonomous.AutoAngleTurn;
 import frc.robot.commands.autonomous.AutoForwardDistance;
 import frc.robot.commands.climber.RunLeftTelescope;
 import frc.robot.commands.climber.RunLeftWinch;
@@ -134,6 +135,7 @@ public class RobotContainer {
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
     xboxA.whenPressed(new AutoForwardDistance(drivetrain, 1));
+    xboxB.whenPressed(new AutoAngleTurn(drivetrain,90));
 
     //xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
     //xboxA.whenPressed(new TestAutonomousRoutine(drivetrain, 90, 15, 3.5, 3));

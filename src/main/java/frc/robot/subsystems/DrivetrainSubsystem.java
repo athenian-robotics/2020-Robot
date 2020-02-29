@@ -57,7 +57,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-        encoderPID = new PIDController(2, 0.0, 0.5);
+        encoderPID = new PIDController(0.1, 0.0, 0.08);
 
         switch (robotType) {
             case JANKBOT:
@@ -169,6 +169,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Ultrasonic Distance", ultrasonic.get());
         SmartDashboard.putNumber("AverageUltraSonic", movingAverageUltrasonic);
+        SmartDashboard.putNumber("Encoder Difference", getRightEncoderDistance()-getLeftEncoderDistance());
 
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),

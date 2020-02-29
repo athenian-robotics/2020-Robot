@@ -3,6 +3,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoForwardDistance extends CommandBase {
@@ -31,10 +32,12 @@ public class AutoForwardDistance extends CommandBase {
     }
 
     public void execute() {
-        double power = pid.calculate(drivetrain.getRightEncoderDistance()); //drivetrain.calculateTrapezoid(pid, startTime, Constants.DriveConstants.maxDriveSpeed, 2000);
+        double power =
+                drivetrain.calculateTrapezoid(pid, startTime, Constants.DriveConstants.maxDriveSpeed, 250);
+                //pid.calculate(drivetrain.getRightEncoderDistance());
         System.out.println(power);
-        double leftCorrection = 0; //drivetrain.leftEncoderCorrection(encoderDifferenceSetpoint);
-        double rightCorrection = 0; // drivetrain.rightEncoderCorrection(encoderDifferenceSetpoint);
+        double leftCorrection = drivetrain.leftEncoderCorrection(encoderDifferenceSetpoint);
+        double rightCorrection =  drivetrain.rightEncoderCorrection(encoderDifferenceSetpoint);
         drivetrain.tankDrive(power + leftCorrection, power + rightCorrection);
     }
 
