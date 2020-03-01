@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.autonomous.components.AutoAngleTurn;
-import frc.robot.commands.autonomous.routines.AutoRoutineDriveBackShootCross;
+import frc.robot.commands.autonomous.routines.AutoRoutine2;
 import frc.robot.commands.climber.RunLeftTelescope;
 import frc.robot.commands.climber.RunLeftWinch;
 import frc.robot.commands.climber.RunRightTelescope;
@@ -134,7 +134,7 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
-    xboxA.whenPressed(new AutoRoutineDriveBackShootCross(drivetrain, shooterSubsystem));
+    xboxA.whenPressed(new AutoRoutine2(drivetrain, shooterSubsystem, intakeSubsystem));
     xboxB.whenPressed(new AutoAngleTurn(drivetrain, 90));
 
     //xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
@@ -244,6 +244,6 @@ public class RobotContainer {
 
       //Autonomous Command that doesnt work
       //return new FollowTrajectory(drivetrain).ExampleAutonomousCommand();
-    return new AutoRoutineDriveBackShootCross(drivetrain, shooterSubsystem);
+    return new AutoRoutine2(drivetrain, shooterSubsystem, intakeSubsystem);
   }
 }

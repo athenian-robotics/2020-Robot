@@ -74,6 +74,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void toggleShooter() {
         if (isRunning) {
             stopShooter();
+            dumperDown();
         } else {
             startShooter();
             dumperUp();

@@ -41,7 +41,7 @@ public final class Constants {
 
         public static final double minDrivePowerTurn = 0.36; //0.35, 40
 
-        public static final double maxDriveSpeed = 0.8;
+        public static final double maxDriveSpeed = 1; //0.8
 
     }
 

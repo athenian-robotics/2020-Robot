@@ -13,7 +13,7 @@ public class AutoAngleTurn extends CommandBase {
     double tolerance;
     double angleToTurn;
     double setpoint;
-    double Kp = 0.02; // 0.004
+    double Kp = 0.016; // 0.02
     double Ki = 0.0;
     double Kd = 0.001; //0.001
 

@@ -49,6 +49,7 @@ public class AutoDriveForwardUltrasonic extends CommandBase {
             power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance())), Constants.DriveConstants.maxDriveSpeed);
         }
 
+
 //        System.out.println(power);
         //System.out.println("Right: "+drivetrain.RightEncoderCorrection(encoderSetPoint));
         //System.out.println("Left: "+drivetrain.LeftEncoderCorrection(encoderSetPoint));
