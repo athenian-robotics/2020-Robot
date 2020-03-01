@@ -1,9 +1,11 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.LeftClimberSubsystem;
 
-import static frc.robot.lib.controllers.FightStick.*;
+import static frc.robot.lib.controllers.FightStick.POVDown;
+import static frc.robot.lib.controllers.FightStick.POVUp;
 
 public class RunLeftTelescope extends CommandBase {
     LeftClimberSubsystem leftClimber;
@@ -19,20 +21,28 @@ public class RunLeftTelescope extends CommandBase {
 
     @Override
     public void execute() {
-        if (POVCenter.get()) {
+        int pov = RobotContainer.xboxController.getPOV();
+        if (pov == 0) {
+            leftClimber.leftTelescopeUp();
+        } else if (pov == 180) {
+            leftClimber.leftTelescopeDown();
+            ;
+        } else {
             leftClimber.leftTelescopeStop();
+            ;
         }
         if (POVUp.get()) {
             leftClimber.leftTelescopeUp();
-        }
-        if (POVDown.get()) {
+        } else if (POVDown.get()) {
             leftClimber.leftTelescopeDown();
+        } else {
+            leftClimber.leftTelescopeStop();
         }
 
     }
 
     public boolean isFinished() {
-        return leftClimber.getEncoderValue() < -250;
+        return leftClimber.getEncoderValue() < -272;
     }
 
 

@@ -134,7 +134,7 @@ public class RobotContainer {
     xboxLB.whenPressed(new SetShooterForward());
     xboxBurger.whenPressed(new TurnToBall(limeLightSubsystem, drivetrain));
     xboxSquares.whenPressed(new Abort(shooterSubsystem, drivetrain, intakeSubsystem, colorWheelSubsystem));
-    xboxA.whenPressed(new AutoRoutine2(drivetrain, shooterSubsystem, intakeSubsystem));
+//    xboxA.whenPressed(new AutoRoutine2(drivetrain, shooterSubsystem, intakeSubsystem));
     xboxB.whenPressed(new AutoAngleTurn(drivetrain, 90));
 
     //xboxB.whenPressed(new AutoDriveForwardDistanceCustomTrapezoid(drivetrain, 1));
@@ -146,8 +146,11 @@ public class RobotContainer {
     fightStickB.whenPressed(new DumperCommand(shooterSubsystem));
     fightStickX.whenPressed(new ShootLowGoal(shooterSubsystem));
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
-    fightStickLB.whenHeld(new RunLeftTelescope(leftClimberSubsystem));
-    fightStickRB.whenHeld(new RunRightTelescope(rightClimberSubsystem));
+//    fightStickLB.whenHeld(new RunLeftTelescope(leftClimberSubsystem));
+//    fightStickRB.whenHeld(new RunRightTelescope(rightClimberSubsystem));
+    xboxA.whenHeld(new RunLeftTelescope(leftClimberSubsystem));
+    xboxB.whenHeld(new RunRightTelescope(rightClimberSubsystem));
+
     fightStickLT.whileActiveContinuous(new RunLeftWinch(leftClimberSubsystem));
     fightStickRT.whileActiveContinuous(new RunRightWinch(rightClimberSubsystem));
 

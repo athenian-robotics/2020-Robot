@@ -1,9 +1,11 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.RightClimberSubsystem;
 
 import static frc.robot.lib.controllers.FightStick.*;
+
 
 public class RunRightTelescope extends CommandBase {
     RightClimberSubsystem rightClimber;
@@ -19,6 +21,16 @@ public class RunRightTelescope extends CommandBase {
 
     @Override
     public void execute() {
+        int pov = RobotContainer.xboxController.getPOV();
+        if (pov == 0) {
+            rightClimber.rightTelescopeUp();
+        } else if (pov == 180) {
+            rightClimber.rightTelescopeDown();
+            ;
+        } else {
+            rightClimber.rightTelescopeStop();
+            ;
+        }
         if (POVCenter.get()) {
             rightClimber.rightTelescopeStop();
         }
@@ -31,7 +43,7 @@ public class RunRightTelescope extends CommandBase {
     }
 
     public boolean isFinished() {
-        return rightClimber.getEncoderValue() < -250;
+        return rightClimber.getEncoderValue() < -272;
     }
 
 
