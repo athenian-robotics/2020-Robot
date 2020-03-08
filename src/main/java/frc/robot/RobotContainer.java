@@ -24,6 +24,7 @@ import frc.robot.commands.climber.RunRightWinch;
 import frc.robot.commands.color_wheel.RunColorWheel;
 import frc.robot.commands.drive.*;
 import frc.robot.commands.intake.ChangeIntakeMode;
+import frc.robot.commands.intake.IntakeBackward;
 import frc.robot.commands.miscellaneous.Abort;
 import frc.robot.commands.miscellaneous.LEDCommand;
 import frc.robot.commands.outtake.DumperCommand;
@@ -148,26 +149,25 @@ public class RobotContainer {
     fightStickY.whenHeld(new RunColorWheel(colorWheelSubsystem));
 //    fightStickLB.whenHeld(new RunLeftTelescope(leftClimberSubsystem));
 //    fightStickRB.whenHeld(new RunRightTelescope(rightClimberSubsystem));
-    xboxA.whenHeld(new RunLeftTelescope(leftClimberSubsystem));
-    xboxB.whenHeld(new RunRightTelescope(rightClimberSubsystem));
+    fightStickLB.whenHeld(new RunLeftTelescope(leftClimberSubsystem));
+    fightStickRB.whenHeld(new RunRightTelescope(rightClimberSubsystem));
 
     fightStickLT.whileActiveContinuous(new RunLeftWinch(leftClimberSubsystem));
     fightStickRT.whileActiveContinuous(new RunRightWinch(rightClimberSubsystem));
 
     // When held, this command changes the intake to backward (note: it does not change the status of the intake [on/off], just the direction)
-    fightStickOption.whenHeld(new FunctionalCommand(
-            intakeSubsystem::invert,
-            () -> {
-            },
-            interrupted -> intakeSubsystem.invert(),
-            () -> false,
-            intakeSubsystem));
+    fightStickOption.whenPressed(new IntakeBackward(intakeSubsystem));
+//    fightStickOption.whenHeld(new FunctionalCommand(
+//            intakeSubsystem::invert,
+//            () -> {
+//            },
+//            interrupted -> intakeSubsystem.invert(),
+//            () -> false,
+//            intakeSubsystem));
 
     // When held, this command changes the intake to backward, but doesn't change the speed/status
     fightStickShare.whenHeld(new FunctionalCommand(
             () -> {
-              shooterSubsystem.invert();
-              shooterSubsystem.startShooter(0.3);
             },
             () -> {
             },

@@ -19,9 +19,9 @@ public class AutoRoutine4 extends SequentialCommandGroup {
                 new AutoIntakeOff(intake),
                 new AutoForwardDistance(drivetrain, -5.96),
                 new AutoAngleTurn(drivetrain, -58),
-                new AutoDriveForwardUltrasonic(drivetrain, 8),
                 new AutoIntakeOn(intake),
-                new AutoDelay(1000),
+                new AutoDriveForwardUltrasonic(drivetrain, 8),
+                new AutoDelay(400),
                 new AutoIntakeOff(intake),
                 new AutoDumperUp(shooter, 0),
                 new AutoShooterTime(shooter, 1000)

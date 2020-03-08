@@ -19,11 +19,15 @@ public class RightClimberSubsystem extends SubsystemBase {
     }
 
     public void rightTelescopeUp() {
-        rightTelescope.set(-0.2);
+        if (getEncoderValue() > -260) {
+            rightTelescope.set(-0.4);
+        }
     }
 
     public void rightTelescopeDown() {
-        rightTelescope.set(0.2);
+        if (getEncoderValue() < 0) {
+            rightTelescope.set(0.4);
+        }
     }
 
     public void rightTelescopeStop() {

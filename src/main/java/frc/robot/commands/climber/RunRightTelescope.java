@@ -43,11 +43,12 @@ public class RunRightTelescope extends CommandBase {
     }
 
     public boolean isFinished() {
-        return rightClimber.getEncoderValue() < -272;
+        return false;
     }
 
 
     public void end() {
         rightClimber.rightTelescopeStop();
+        rightClimber.rightWinchStop();
     }
 }
