@@ -19,7 +19,7 @@ public class RightClimberSubsystem extends SubsystemBase {
     }
 
     public void rightTelescopeUp() {
-        if (getEncoderValue() > -260) {
+        if (getEncoderValue() > -150) {
             rightTelescope.set(-0.4);
         } else {
             rightTelescope.set(0);
@@ -37,7 +37,7 @@ public class RightClimberSubsystem extends SubsystemBase {
     }
 
     public void rightWinchExtend() {
-        rightWinch.set(-0.3);
+        rightWinch.set(- 0.3);
     }
 
     public void rightWinchRetract() {
