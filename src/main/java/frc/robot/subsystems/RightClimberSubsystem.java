@@ -21,6 +21,8 @@ public class RightClimberSubsystem extends SubsystemBase {
     public void rightTelescopeUp() {
         if (getEncoderValue() > -260) {
             rightTelescope.set(-0.4);
+        } else {
+            rightTelescope.set(0);
         }
     }
 

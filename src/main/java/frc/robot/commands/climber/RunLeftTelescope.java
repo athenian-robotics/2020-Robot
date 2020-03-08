@@ -46,7 +46,7 @@ public class RunLeftTelescope extends CommandBase {
     }
 
 
-    public void end() {
+    public void end(boolean interrupted) {
         leftClimber.leftTelescopeStop();
         leftClimber.leftWinchStop();
     }
