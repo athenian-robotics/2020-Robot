@@ -88,6 +88,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
+        RobotContainer.disableAll(m_robotContainer);
     }
 
     @Override

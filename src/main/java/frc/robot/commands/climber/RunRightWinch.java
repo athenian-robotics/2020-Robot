@@ -1,39 +1,39 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.RightClimberSubsystem;
+import frc.robot.subsystems.RightWinchSubsystem;
 
 import static frc.robot.lib.controllers.FightStick.*;
 
 public class RunRightWinch extends CommandBase {
-    RightClimberSubsystem rightClimber;
+    RightWinchSubsystem rightWinchSubsystem;
 
-    public RunRightWinch(RightClimberSubsystem rightClimber) {
-        this.rightClimber = rightClimber;
-        addRequirements(rightClimber);
+    public RunRightWinch(RightWinchSubsystem rightWinchSubsystem) {
+        this.rightWinchSubsystem = rightWinchSubsystem;
+        addRequirements(rightWinchSubsystem);
     }
 
     @Override
-    public void initialize() { }
+    public void initialize() {
+    }
 
     @Override
     public void execute() {
         if (POVCenter.get()) {
-            rightClimber.rightWinchStop();
+            rightWinchSubsystem.rightWinchStop();
         }
         if (POVDown.get()) {
             System.out.println("Right Winch Up");
-            rightClimber.rightWinchRetract();
+            rightWinchSubsystem.rightWinchRetract();
         }
         if (POVUp.get()) {
             System.out.println("Right Winch Down");
-            rightClimber.rightWinchExtend();
+            rightWinchSubsystem.rightWinchExtend();
         }
     }
 
     public void end(boolean interrupted) {
-        rightClimber.rightWinchStop();
-        rightClimber.rightTelescopeStop();
+        rightWinchSubsystem.rightWinchStop();
     }
 
 }

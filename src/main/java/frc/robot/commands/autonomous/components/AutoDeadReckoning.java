@@ -17,7 +17,7 @@ public class AutoDeadReckoning extends CommandBase {
         drive.tankDrive(power, power);
     }
 
-    public void end() {
+    public void end(boolean interrupted) {
         drive.tankDrive(0, 0);
     }
 

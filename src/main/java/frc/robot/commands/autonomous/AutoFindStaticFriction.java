@@ -18,7 +18,7 @@ public class AutoFindStaticFriction extends CommandBase {
         System.out.println(power);
     }
 
-    public void end() {
+    public void end(boolean interrupted) {
         drive.tankDrive(0, 0);
     }
 

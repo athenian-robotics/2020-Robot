@@ -2,17 +2,17 @@ package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.RightClimberSubsystem;
+import frc.robot.subsystems.RightTelescopeSubsystem;
 
 import static frc.robot.lib.controllers.FightStick.*;
 
 
 public class RunRightTelescope extends CommandBase {
-    RightClimberSubsystem rightClimber;
+    RightTelescopeSubsystem rightTelescopeSubsystem;
 
-    public RunRightTelescope(RightClimberSubsystem rightClimber) {
-        this.rightClimber = rightClimber;
-        addRequirements(rightClimber);
+    public RunRightTelescope(RightTelescopeSubsystem rightTelescopeSubsystem) {
+        this.rightTelescopeSubsystem = rightTelescopeSubsystem;
+        addRequirements(rightTelescopeSubsystem);
     }
 
     @Override
@@ -23,22 +23,22 @@ public class RunRightTelescope extends CommandBase {
     public void execute() {
         int pov = RobotContainer.xboxController.getPOV();
         if (pov == 0) {
-            rightClimber.rightTelescopeUp();
+            rightTelescopeSubsystem.rightTelescopeUp();
         } else if (pov == 180) {
-            rightClimber.rightTelescopeDown();
+            rightTelescopeSubsystem.rightTelescopeDown();
             ;
         } else {
-            rightClimber.rightTelescopeStop();
+            rightTelescopeSubsystem.rightTelescopeStop();
             ;
         }
         if (POVCenter.get()) {
-            rightClimber.rightTelescopeStop();
+            rightTelescopeSubsystem.rightTelescopeStop();
         }
         if (POVUp.get()) {
-            rightClimber.rightTelescopeUp();
+            rightTelescopeSubsystem.rightTelescopeUp();
         }
         if (POVDown.get()) {
-            rightClimber.rightTelescopeDown();
+            rightTelescopeSubsystem.rightTelescopeDown();
         }
     }
 
@@ -48,7 +48,6 @@ public class RunRightTelescope extends CommandBase {
 
 
     public void end(boolean interrupted) {
-        rightClimber.rightTelescopeStop();
-        rightClimber.rightWinchStop();
+        rightTelescopeSubsystem.rightTelescopeStop();
     }
 }

@@ -12,11 +12,12 @@ public class TurnToBall extends CommandBase {
     double tolerance;
     double setpoint;
     double validTarget;
-    double Kp = 0.01;
+    double Kp = 0.035;
     double Ki = 0.0;
     double Kd = 0.001;
 
     PIDController pid = new PIDController(Kp, Ki, Kd);
+    private long startTime;
 
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
@@ -26,7 +27,7 @@ public class TurnToBall extends CommandBase {
         addRequirements(this.limelight);
         this.drivetrain = drivetrain;
         addRequirements(this.drivetrain);
-
+        startTime = System.currentTimeMillis();
         this.tolerance = 0.5;
         pid.setTolerance(tolerance);
     }
@@ -34,6 +35,7 @@ public class TurnToBall extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        startTime = System.currentTimeMillis();
         this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(1);
         double[] list = this.limelight.grabValues();
         double angleToTurn = list[3];
@@ -54,6 +56,7 @@ public class TurnToBall extends CommandBase {
             double power = pid.calculate(drivetrain.getGyroAngle());
             drivetrain.tankDrive(power, -power);
         }
+        System.out.println(pid.getPositionError());
     }
 
     // Called once the command ends or is interrupted.
@@ -65,7 +68,7 @@ public class TurnToBall extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return ((pid.getPositionError() < 1) && (pid.getPositionError() > -1));
+        return ((pid.getPositionError() < 3) && (pid.getPositionError() > -3)) || (System.currentTimeMillis() - startTime > 150);
     }
 }
 

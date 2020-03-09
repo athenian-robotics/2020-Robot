@@ -59,6 +59,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+        encoderPID = new PIDController(9, 0.0, 0.0);
 
         switch (robotType) {
             case JANKBOT:
