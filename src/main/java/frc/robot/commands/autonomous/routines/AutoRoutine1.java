@@ -16,7 +16,7 @@ public class AutoRoutine1 extends SequentialCommandGroup {
                 new AutoDumperUp(shooter, 300),
                 new AutoDriveForwardUltrasonic(drivetrain, 8),
                 new AutoShooterTime(shooter, 1000),
-                new AutoForwardDistance(drivetrain, 4)
+                new AutoForwardDistance(drivetrain, 3)
         );
     }
 }

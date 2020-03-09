@@ -14,7 +14,7 @@ public class AutoRoutine2 extends SequentialCommandGroup {
         final double FIELD_WIDTH = 8.21;
         final double POWER_PORT_LOCATION = 2.4;
 
-        final double distanceFromWallInches = 95;
+        final double distanceFromWallInches = 129;
         double distanceFromWall = distanceFromWallInches * 0.0254;
         boolean rightTurn = false;
         double distanceFromPowerPort = rightTurn
