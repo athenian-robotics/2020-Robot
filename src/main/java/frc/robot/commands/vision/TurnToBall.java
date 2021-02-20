@@ -13,7 +13,7 @@ public class TurnToBall extends CommandBase {
     double setpoint;
     double validTarget;
     double Kp = 0.01;
-    double Ki = 0.0;
+    double Ki = 0.0;  //@TODO Fix PID values!
     double Kd = 0.001;
 
     PIDController pid = new PIDController(Kp, Ki, Kd);
@@ -37,13 +37,13 @@ public class TurnToBall extends CommandBase {
         this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(1);
         double[] list = this.limelight.grabValues();
         double angleToTurn = list[3];
-
-        double validTarget = list[0];
-        this.validTarget = validTarget;
+        this.validTarget = list[0];
 
         if (this.validTarget == 1) {
-            setpoint = drivetrain.getGyroAngle() + angleToTurn + tolerance;
+            setpoint = drivetrain.getGyroAngle() + angleToTurn;
             pid.setSetpoint(setpoint);
+        } else {
+            end(true); //if there is no valid target don't do anything
         }
     }
 
@@ -60,6 +60,8 @@ public class TurnToBall extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         this.limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
+        drivetrain.tankDrive(0, 0);
+        System.out.println("reached ball");
     }
 
     // Returns true when the command should end.
