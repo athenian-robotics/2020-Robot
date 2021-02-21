@@ -14,7 +14,7 @@ public class AutoRoutineGalacticSearch extends CommandBase {
     private final LimeLightSubsystem limelight;
 
     private int ballCount;
-    private final double areaWeight = 1; //TODO determine what this weight should be so that the robot always gets the balls -- the higher this is, the farther the robot will go (and it might need to be quadratic or cubic)
+    private final double areaWeight = 1; //TODO determine what this weight should be so that the robot always gets the balls -- the higher this is, the farther the robot will go
     private final int tolerance = 1; //TODO determine how much farther than 30 meters we should go to clear the field
 
     public AutoRoutineGalacticSearch(DrivetrainSubsystem drivetrain, IntakeSubsystem intake, LimeLightSubsystem limelight, int ballCount) {
@@ -38,7 +38,7 @@ public class AutoRoutineGalacticSearch extends CommandBase {
             double[] values = limelight.grabValues();
             if (values[0] == 1) {
                 new TurnToBall(limelight, drivetrain).schedule();
-                new AutoForwardDistance(drivetrain, values[1] * areaWeight).schedule();
+                new AutoForwardDistance(drivetrain, Math.sqrt(values[1]) * areaWeight).schedule();        //Math.sqrt() is necessary because the robot's distance from the ball, how far we want to drive, is proportional to its radius, which is the square root of the area, or values[1]
                 new AutoRoutineGalacticSearch(drivetrain, intake, limelight, ballCount-1).schedule();        //We got a ball! Look for more.
             } else {
                 new AutoAngleTurn(drivetrain, -45).schedule();
