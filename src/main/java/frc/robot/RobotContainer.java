@@ -29,6 +29,7 @@ import frc.robot.commands.drive.*;
 import frc.robot.commands.intake.ChangeIntakeMode;
 import frc.robot.commands.intake.IntakeBackward;
 import frc.robot.commands.miscellaneous.Abort;
+import frc.robot.commands.miscellaneous.AutoRoutineGalacticSearchWrapper;
 import frc.robot.commands.miscellaneous.LEDCommand;
 import frc.robot.commands.outtake.DumperCommand;
 import frc.robot.commands.outtake.ShootLowGoal;
@@ -95,6 +96,7 @@ public class RobotContainer {
         chooser.addOption("2: ShootPreloadsTurn", new AutoRoutine2(drivetrain, shooterSubsystem, intakeSubsystem));
         chooser.addOption("3: GrabTwoStraightShoot", new AutoRoutine3(drivetrain, shooterSubsystem, intakeSubsystem));
         chooser.addOption("4: GrabTwoTrenchShoot", new AutoRoutine4(drivetrain, shooterSubsystem, intakeSubsystem));
+        chooser.addOption("5: GalacticSearch", new AutoRoutineGalacticSearchWrapper(drivetrain, intakeSubsystem, limeLightSubsystem, 3));
 
 
         //  CommandScheduler.getInstance().registerSubsystem(colorWheelSubsystem, shooterSubsystem);
