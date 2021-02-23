@@ -50,10 +50,8 @@ public class TurnToBall extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (this.validTarget == 1) {
-            double power = pid.calculate(drivetrain.getGyroAngle());
-            drivetrain.tankDrive(power, -power);
-        }
+        double power = pid.calculate(drivetrain.getGyroAngle());
+        drivetrain.tankDrive(power, -power);
     }
 
     // Called once the command ends or is interrupted.
