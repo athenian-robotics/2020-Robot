@@ -38,7 +38,7 @@ public class AutoRoutineGalacticSearch extends CommandBase {
             double[] values = limelight.grabValues();
             if (values[0] == 1) {
                 new TurnToBall(limelight, drivetrain).schedule();
-                new AutoForwardDistance(drivetrain, Math.sqrt(values[1]) * areaWeight).schedule();        //Math.sqrt() is necessary because the robot's distance from the ball, how far we want to drive, is proportional to its radius, which is the square root of the area, or values[1]
+                new AutoForwardDistance(drivetrain, areaWeight/Math.sqrt(values[1])).schedule();        //Math.sqrt() is necessary because the robot's distance from the ball, how far we want to drive, is proportional to its radius, which is the square root of the area, or values[1]
                 new AutoRoutineGalacticSearch(drivetrain, intake, limelight, ballCount-1).schedule();        //We got a ball! Look for more.
             } else {
                 new AutoAngleTurn(drivetrain, -45).schedule();
