@@ -1,6 +1,7 @@
 package frc.robot.commands.autonomous.routines;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autonomous.components.*;
 import frc.robot.commands.vision.TurnToBall;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -37,18 +38,24 @@ public class AutoRoutineGalacticSearch extends CommandBase {
         if (ballCount > 0) {
             double[] values = limelight.grabValues();
             if (values[0] == 1) {
-                new TurnToBall(limelight, drivetrain).schedule();
-                new AutoForwardDistance(drivetrain, areaWeight/Math.sqrt(values[1])).schedule();          //Math.sqrt() is necessary because the robot's distance from the ball, how far we want to drive, is proportional to its radius, which is the square root of the area, or values[1]
-                new AutoRoutineGalacticSearch(drivetrain, intake, limelight, ballCount-1).schedule();        //We got a ball! Look for more.
+                new SequentialCommandGroup(
+                        new TurnToBall(limelight, drivetrain),
+                        new AutoForwardDistance(drivetrain, areaWeight/Math.sqrt(values[1])),             //Math.sqrt() is necessary because the robot's distance from the ball, how far we want to drive, is proportional to its radius, which is the square root of the area, or values[1]
+                        new AutoRoutineGalacticSearch(drivetrain, intake, limelight, ballCount-1)
+                ).schedule(); // We got a ball! Look for more.
             } else {
-                new AutoAngleTurn(drivetrain, -45).schedule();
-                new AutoRoutineGalacticSearch(drivetrain, intake, limelight, ballCount).schedule();                    //No ball in sight, turn around and look again.
+                new SequentialCommandGroup(
+                        new AutoAngleTurn(drivetrain, -45),
+                        new AutoRoutineGalacticSearch(drivetrain, intake, limelight, ballCount)
+                ).schedule(); //No ball in sight, turn around and look again.
             }
         } else {
-            limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);                                       //We got all the balls, turn everything off and run for the exit. :p
-            new AutoIntakeOff(intake).schedule();
-            new AutoAngleTurn(drivetrain, -drivetrain.getGyroAngle()).schedule();
-            new AutoForwardDistance(drivetrain, 9-drivetrain.getOdometryPosX()+tolerance).schedule();
+            limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
+            new SequentialCommandGroup(
+                    new AutoIntakeOff(intake),
+                    new AutoAngleTurn(drivetrain, -drivetrain.getGyroAngle()),
+                    new AutoForwardDistance(drivetrain, 9-drivetrain.getOdometryPosX()+tolerance)
+            ).schedule(); //We got all the balls, turn everything off and run for the exit. :p
         }
     }
 
