@@ -2,8 +2,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -13,6 +17,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.RobotType;
+import frc.robot.lib.SimpleMovingAverage;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -24,13 +29,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public final SpeedControllerGroup motorTest = new SpeedControllerGroup(new WPI_VictorSPX(0));
 
-    private final DifferentialDrive drive;
-    private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, true, Encoder.EncodingType.k2X);
-    private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, false, Encoder.EncodingType.k2X);
-    private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+
+    public static SimpleMovingAverage ultrasonicAvg = new SimpleMovingAverage(10);
+    private final Encoder leftEncoder = new Encoder(encoderLeftA, encoderLeftB, false, Encoder.EncodingType.k2X);
+    private final Encoder rightEncoder = new Encoder(encoderRightA, encoderRightB, true, Encoder.EncodingType.k2X);
+    //private final ADXRS450_Gyro gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+    private final AHRS gyro = new AHRS(SerialPort.Port.kUSB1);
     private final AnalogPotentiometer ultrasonic = new AnalogPotentiometer(0, 512);
     private final DifferentialDriveOdometry m_odometry;
     public static double maxDriverSpeed = speedScale;
+    public final DifferentialDrive drive;
 
 
     SpeedControllerGroup leftMotors;
@@ -39,10 +47,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     //Variables for moving average calculation
     Queue<Double> queue = new LinkedList<>();
 
-    double queueSize = 5;
-    double sum = 0;
-    double count = 1;
-    double movingAverageUltrasonic = 0;
+    private double queueSize = 5;
+    private double sum = 0;
+    private double count = 1;
+    public static double movingAverageUltrasonic = 0;
 
     //Encoder PID
     PIDController encoderPID;
@@ -51,7 +59,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         leftEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         rightEncoder.setDistancePerPulse(6.0 * 0.0254 * Math.PI / 2048); // 6 inch wheel, to meters, 2048 ticks
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
-        encoderPID = new PIDController(2, 0.0, 0.5);
+        encoderPID = new PIDController(9, 0.0, 0.0);
 
         switch (robotType) {
             case JANKBOT:
@@ -89,6 +97,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
         double leftPower = ((speedScale - minDrivePower) * Math.abs(leftSpeed) + minDrivePower) * leftSign;
         double rightPower = ((speedScale - minDrivePower) * Math.abs(rightSpeed) + minDrivePower) * rightSign;
 
+        SmartDashboard.putNumber("Left power", leftPower);
+        SmartDashboard.putNumber("Right power", rightPower);
+
         drive.tankDrive(leftPower, rightPower);
 
         //SmartDashboard.putNumber("Left Power:", leftPower);
@@ -101,8 +112,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         int leftSign = leftSpeed >= 0 ? 1 : -1;
         int rightSign = rightSpeed >= 0 ? 1 : -1;
 
-        double leftPower = ((speedScale - mineDrivePowerTurn) * Math.abs(leftSpeed) + mineDrivePowerTurn) * leftSign;
-        double rightPower = ((speedScale - mineDrivePowerTurn) * Math.abs(rightSpeed) + mineDrivePowerTurn) * rightSign;
+        double leftPower = ((speedScale - minDrivePowerTurn) * Math.abs(leftSpeed) + minDrivePowerTurn) * leftSign;
+        double rightPower = ((speedScale - minDrivePowerTurn) * Math.abs(rightSpeed) + minDrivePowerTurn) * rightSign;
 
         drive.tankDrive(leftPower, rightPower);
     }
@@ -154,30 +165,34 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Right Encoder Distance", getRightEncoderDistance());
         SmartDashboard.putNumber("Left Encoder Rate", getLeftEncoderRate());
         SmartDashboard.putNumber("Right Encoder Rate", getRightEncoderRate());
-        SmartDashboard.putNumber("Gyro0", gyro.getAngle());
+        SmartDashboard.putNumber("Gyro", gyro.getAngle());
         SmartDashboard.putNumber("PoseX", getPose().getTranslation().getX());
         SmartDashboard.putNumber("PoseY", getPose().getTranslation().getY());
         SmartDashboard.putNumber("Pose˚", getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Ultrasonic Distance", ultrasonic.get());
         SmartDashboard.putNumber("AverageUltraSonic", movingAverageUltrasonic);
+        SmartDashboard.putNumber("Encoder Difference", getRightEncoderDistance() - getLeftEncoderDistance());
 
         // Update the odometry in the periodic block
         m_odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(),
                 rightEncoder.getDistance());
 
         //Moving Average of ultrasonic values
-        if(count <= queueSize){
-            queue.add(getUltrasonicDistance());
-            sum += getUltrasonicDistance();
-            movingAverageUltrasonic = sum/count;
-            count++;
-        }
-        else{
-            sum -= queue.remove();
-            sum += getUltrasonicDistance();
-            queue.offer(getUltrasonicDistance());
-            movingAverageUltrasonic = sum / queueSize;
-        }
+        ultrasonicAvg.addData(getUltrasonicDistance());
+        movingAverageUltrasonic = ultrasonicAvg.getMean();
+
+//        if(count <= queueSize){
+//            queue.add(getUltrasonicDistance());
+//            sum += getUltrasonicDistance();
+//            movingAverageUltrasonic = sum/count;
+//            count++;
+//        }
+//        else{
+//            sum -= queue.remove();
+//            sum += getUltrasonicDistance();
+//            queue.offer(getUltrasonicDistance());
+//            movingAverageUltrasonic = sum / queueSize;
+//        }
     }
 
     /**
@@ -270,13 +285,28 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public double rightEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
-        return encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+        System.out.println( -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance()));
+        return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
 
     }
 
     public double leftEncoderCorrection(double encoderSetPoint){
         encoderPID.setSetpoint(encoderSetPoint);
-        return -encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+        System.out.println(encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance()));
+        return encoderPID.calculate(getRightEncoderDistance()-getLeftEncoderDistance());
+    }
+
+    public double calculateTrapezoid(PIDController pid, long startTime, double maxSpeed, double trapezoidTime) {
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        if (elapsedTime <= trapezoidTime) {
+            return pid.calculate(getRightEncoderDistance()) >= 0 ?
+                    Math.min(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), maxSpeed) :
+                    Math.max(pid.calculate(getRightEncoderDistance()) * (elapsedTime / trapezoidTime), -maxSpeed);
+        } else {
+            return pid.calculate(getRightEncoderDistance()) >= 0 ?
+                    Math.min(pid.calculate(getRightEncoderDistance()), maxSpeed) :
+                    Math.max(pid.calculate(getRightEncoderDistance()), -maxSpeed);
+        }
     }
 
 }

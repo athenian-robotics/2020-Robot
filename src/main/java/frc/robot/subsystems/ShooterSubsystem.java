@@ -1,33 +1,39 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static com.revrobotics.CANSparkMaxLowLevel.MotorType.kBrushless;
 import static frc.robot.Constants.MechanismConstants.shooterMotorPort;
+import static frc.robot.Constants.PneumaticsConstants.dumperPort;
+import static frc.robot.Constants.PneumaticsConstants.gatePort;
 
 public class ShooterSubsystem extends SubsystemBase {
 
     private boolean isRunning = false;
     private boolean isOpen = false;
     private boolean isUp = false;
-    private final WPI_TalonSRX shooterMotor = new WPI_TalonSRX(shooterMotorPort);
-    private final DoubleSolenoid dumperSolenoid = new DoubleSolenoid(2,3);
-    private final DoubleSolenoid gateSolenoid = new DoubleSolenoid(0,1);
+    private final CANSparkMax shooterMotor = new CANSparkMax(shooterMotorPort, kBrushless);
+    private final Solenoid dumperSolenoid = new Solenoid(dumperPort);
+    private final Solenoid gateSolenoid = new Solenoid(gatePort);
 
     public ShooterSubsystem() {
-        shooterMotor.setInverted(true);
+        shooterMotor.setInverted(false);
         //final motor_placeholder shooterMotor;
         //final pneumatic_placeholder shooterPiston;
 
     }
 
     public void startShooter() {
-        shooterMotor.set(1);
+        startShooter(1.0);
+    }
+
+    public void startShooter(double power) {
+        shooterMotor.set(power);
         System.out.println("Low goal shooter now shooting!");
         isRunning = true;
-//        solenoidlift.set(DoubleSolenoid.Value.kForward);
     }
 
     public void stopShooter() {
@@ -38,22 +44,22 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void dumperUp() {
-        dumperSolenoid.set(DoubleSolenoid.Value.kForward);
+        dumperSolenoid.set(true);
         isUp = true;
     }
 
     public void dumperDown() {
-        dumperSolenoid.set((DoubleSolenoid.Value.kReverse));
+        dumperSolenoid.set(false);
         isUp = false;
     }
 
     public void gateUp() {
-        gateSolenoid.set(DoubleSolenoid.Value.kForward);
+        gateSolenoid.set(true);
         isOpen = true;
     }
 
     public void gateDown() {
-        gateSolenoid.set(DoubleSolenoid.Value.kReverse);
+        gateSolenoid.set(false);
         isOpen = false;
     }
 
@@ -68,8 +74,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public void toggleShooter() {
         if (isRunning) {
             stopShooter();
+            dumperDown();
         } else {
             startShooter();
+            dumperUp();
         }
     }
 
@@ -87,5 +95,6 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void invert() {
+        shooterMotor.setInverted(!shooterMotor.getInverted());
     }
 }

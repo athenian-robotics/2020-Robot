@@ -7,7 +7,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -52,8 +54,33 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
 
+        String gameData = DriverStation.getInstance().getGameSpecificMessage();
+        String color;
+
+        color = "None";
+        if (gameData.length() > 0) {
+            switch (gameData.charAt(0)) {
+                case 'B':
+                    color = "Blue";
+                    break;
+                case 'G':
+                    color = "Green";
+                    break;
+                case 'R':
+                    color = "Red";
+                    break;
+                case 'Y':
+                    color = "Yellow";
+                    break;
+                default:
+                    //This is corrupt data
+                    break;
+            }
+        }
+
         // This will publish the test data
-        // SmartDashboard.putNumber("Test Data: ", generator.getValue());
+        SmartDashboard.putString("Color:", color);
+
     }
 
     /**
@@ -61,6 +88,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
+        RobotContainer.disableAll(m_robotContainer);
     }
 
     @Override

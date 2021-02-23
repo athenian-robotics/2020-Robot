@@ -1,24 +1,24 @@
-package frc.robot.commands.autonomous;
+package frc.robot.commands.autonomous.components;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class AutoDriveForwardOdometry extends CommandBase {
+public class AutoDriveForwardUltrasonic extends CommandBase {
 
     private DrivetrainSubsystem drivetrain;
 
 
-    //Odometry PID
-    private PIDController pid = new PIDController(0.35, 0.0, 0.1); // 0.39, 0.0, 0.01
+    //Ultrasonic PID
+    private PIDController pid = new PIDController(0.046, 0.0, 0.01); // 0.022
     private long startTime;
     private double tolerance = 1;
-    private double trapezoidTime = 1000;
+    private double trapezoidTime = 2000;
     private double distance;
     private double encoderSetPoint;
 
-    public AutoDriveForwardOdometry(DrivetrainSubsystem drivetrain, double distance) {
+    public AutoDriveForwardUltrasonic(DrivetrainSubsystem drivetrain, double distance) {
         this.drivetrain = drivetrain;
         this.distance = distance;
         pid.setTolerance(0.5);
@@ -26,10 +26,10 @@ public class AutoDriveForwardOdometry extends CommandBase {
     }
 
     public void initialize() {
-        //Custom Trapezoid
+        //Custom Trapezoid Initializations
         startTime = System.currentTimeMillis();
 
-        //Setpoint for Odometry PID
+        //Setpoint for Ultrasonic PID
         double setpoint = distance;
         pid.setSetpoint(setpoint);
 
@@ -43,25 +43,24 @@ public class AutoDriveForwardOdometry extends CommandBase {
         long elapsedTime = System.currentTimeMillis() - startTime;
         double power;
         //PID calculations
-        if(elapsedTime <= trapezoidTime){
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())*(elapsedTime/trapezoidTime)), 0.3);
+        if (elapsedTime <= trapezoidTime) {
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance()) * (elapsedTime / trapezoidTime)), Constants.DriveConstants.maxDriveSpeed);
+        } else {
+            power = Math.min(Math.abs(pid.calculate(drivetrain.getAverageUltrasonicDistance())), Constants.DriveConstants.maxDriveSpeed);
         }
-        else{
-            power = Math.min(Math.abs(pid.calculate(drivetrain.getPose().getTranslation().getX())), 0.3);
-        }
+
+
+//        System.out.println(power);
         //System.out.println("Right: "+drivetrain.RightEncoderCorrection(encoderSetPoint));
         //System.out.println("Left: "+drivetrain.LeftEncoderCorrection(encoderSetPoint));
-        System.out.println("power: " + power);
-        SmartDashboard.putNumber("Odometry Power", power);
-        //if(power < Constants.DriveConstants.minDrivePower){
 
-        drivetrain.tankDrive(power + drivetrain.leftEncoderCorrection(encoderSetPoint),
-                power + drivetrain.rightEncoderCorrection(encoderSetPoint));
+        drivetrain.tankDrive(-power + drivetrain.leftEncoderCorrection(encoderSetPoint),
+                -power + drivetrain.rightEncoderCorrection(encoderSetPoint));
     }
 
     public boolean isFinished() {
         //Check if ultrasonic values are within tolerance to stop
-        if(drivetrain.getPose().getTranslation().getX() <= distance+tolerance && drivetrain.getPose().getTranslation().getX() >= distance-tolerance){
+        if (drivetrain.getUltrasonicDistance() <= distance + tolerance && drivetrain.getUltrasonicDistance() >= distance - tolerance) {
             return true;
         }
         return false;

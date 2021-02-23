@@ -1,10 +1,9 @@
-package frc.robot.commands.autonomous;
+package frc.robot.commands.autonomous.old;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class AutoTurnAngle extends CommandBase {
@@ -13,7 +12,7 @@ public class AutoTurnAngle extends CommandBase {
     double tolerance;
     double angleToTurn;
     double setpoint;
-    double Kp = 0.009; // 0.004
+    double Kp = 1; // 0.004
     double Ki = 0.0;
     double Kd = 0.001; //0.001
 
@@ -47,24 +46,28 @@ public class AutoTurnAngle extends CommandBase {
     }
 
     public void execute() {
+
         long elapsedTime = System.currentTimeMillis() - startTime;
         double trapezoidTime = 1000;
         double power;
 
-        if(elapsedTime <= trapezoidTime){
-            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
-                    Math.min(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),Constants.DriveConstants.maxDriveSpeed); //:
-                    //Math.max(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),-Constants.DriveConstants.maxDriveSpeed);
-        }
-        else{
-            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
-                    Math.min(pid.calculate(drivetrain.getGyroAngle()),Constants.DriveConstants.maxDriveSpeed); //:
-                    //Math.max(pid.calculate(drivetrain.getGyroAngle()),-Constants.DriveConstants.maxDriveSpeed);
-        }
+        power = pid.calculate(drivetrain.getGyroAngle());
+
+//        if(elapsedTime <= trapezoidTime){
+//            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
+//                    Math.min(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),Constants.DriveConstants.maxDriveSpeed); //:
+//                    //Math.max(pid.calculate(drivetrain.getGyroAngle())*(elapsedTime/ trapezoidTime),-Constants.DriveConstants.maxDriveSpeed);
+//        }
+//        else{
+//            power = //pid.calculate(drivetrain.getGyroAngle()) >= 0 ?
+//                    Math.min(pid.calculate(drivetrain.getGyroAngle()),Constants.DriveConstants.maxDriveSpeed); //:
+//                    //Math.max(pid.calculate(drivetrain.getGyroAngle()),-Constants.DriveConstants.maxDriveSpeed);
+//        }
         /*if(power < Constants.DriveConstants.minDrivePower){
             power = Constants.DriveConstants.minDrivePower;
         }*/
         drivetrain.tankDriveTurn(power, -power);
+
         SmartDashboard.putNumber("Angle PID Error:", pid.getPositionError());
 
     }
