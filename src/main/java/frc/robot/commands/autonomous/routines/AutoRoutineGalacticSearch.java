@@ -50,7 +50,6 @@ public class AutoRoutineGalacticSearch extends CommandBase {
                 ).schedule(); //No ball in sight, turn around and look again.
             }
         } else {
-            limelight.grabNetworkTable().getEntry("pipeline").setNumber(0);
             new SequentialCommandGroup(
                     new AutoIntakeOff(intake),
                     new AutoAngleTurn(drivetrain, -drivetrain.getGyroAngle()),
